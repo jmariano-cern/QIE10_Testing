@@ -813,79 +813,79 @@ loop_vars loop(std::string parameter, float val, int suite_code, loop_vars globa
       }
     }
     if ( val == 0 ) {
-      TH2F_perCHs[11][nCH]->Fill ( nTS, charge );
-    }
-    if ( val == 1 ) {
       TH2F_perCHs[12][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 2 ) {
+    if ( val == 1 ) {
       TH2F_perCHs[13][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 3 ) {
+    if ( val == 2 ) {
       TH2F_perCHs[14][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 4 ) {
+    if ( val == 3 ) {
       TH2F_perCHs[15][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 5 ) {
+    if ( val == 4 ) {
       TH2F_perCHs[16][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 6 ) {
+    if ( val == 5 ) {
       TH2F_perCHs[17][nCH]->Fill ( nTS, charge );
     }
-    if ( val == 7 ) {
+    if ( val == 6 ) {
       TH2F_perCHs[18][nCH]->Fill ( nTS, charge );
     }
+    if ( val == 7 ) {
+      TH2F_perCHs[19][nCH]->Fill ( nTS, charge );
+    }
     if ( val == 2.5 ) {
-      TH2F_perCHs[21][nCH]->Fill (nTS,charge);
+      TH2F_perCHs[22][nCH]->Fill (nTS,charge);
     }
     if ( val == 0 ) {
-      TH2F_perCHs[23][nCH]->Fill (nTS,adc);
-    }
-    if ( val == 1 ) {
       TH2F_perCHs[24][nCH]->Fill (nTS,adc);
     }
-    if ( val == 2 ) {
+    if ( val == 1 ) {
       TH2F_perCHs[25][nCH]->Fill (nTS,adc);
     }
-    if ( val == 3 ) {
+    if ( val == 2 ) {
       TH2F_perCHs[26][nCH]->Fill (nTS,adc);
     }
-    if ( val == 4 ) {
+    if ( val == 3 ) {
       TH2F_perCHs[27][nCH]->Fill (nTS,adc);
     }
-    if ( val == 5 ) {
+    if ( val == 4 ) {
       TH2F_perCHs[28][nCH]->Fill (nTS,adc);
     }
-    if ( val == 6 ) {
+    if ( val == 5 ) {
       TH2F_perCHs[29][nCH]->Fill (nTS,adc);
     }
-    if ( val == 7 ) {
+    if ( val == 6 ) {
       TH2F_perCHs[30][nCH]->Fill (nTS,adc);
     }
-    if ( val == 8 ) {
+    if ( val == 7 ) {
       TH2F_perCHs[31][nCH]->Fill (nTS,adc);
     }
-    if ( val == 9 ) {
+    if ( val == 8 ) {
       TH2F_perCHs[32][nCH]->Fill (nTS,adc);
     }
-    if ( val == 10 ) {
+    if ( val == 9 ) {
       TH2F_perCHs[33][nCH]->Fill (nTS,adc);
     }
-    if ( val == 11 ) {
+    if ( val == 10 ) {
       TH2F_perCHs[34][nCH]->Fill (nTS,adc);
     }
-    if ( val == 12 ) {
+    if ( val == 11 ) {
       TH2F_perCHs[35][nCH]->Fill (nTS,adc);
     }
-    if ( val == 13 ) {
+    if ( val == 12 ) {
       TH2F_perCHs[36][nCH]->Fill (nTS,adc);
     }
-    if ( val == 14 ) {
+    if ( val == 13 ) {
       TH2F_perCHs[37][nCH]->Fill (nTS,adc);
     }
-    if ( val == 15 ) {
+    if ( val == 14 ) {
       TH2F_perCHs[38][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 15 ) {
+      TH2F_perCHs[39][nCH]->Fill (nTS,adc);
     }
 
   }
@@ -1369,34 +1369,44 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
         TH2F_perEVs[7]->Fill ( global.pdac2poff[(int)val] , global.qsum/(float)digis.samples() );
       }
     }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        if ( val < 50 ) {
+          TH2F_perEVs[9]->Fill (val/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+        if (( val > 63 ) && ( val < 114 )) {
+          TH2F_perEVs[9]->Fill ((val-14.0)/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+      }
+    }
     if (val < 8 ) {
       if (global.corrupt == 0) {
         if (_event_num > 2) {
-          TH2F_perEVs[9]->Fill ( global.ici2q[(int)val] , global.qsum );
+          TH2F_perEVs[10]->Fill ( global.ici2q[(int)val] , global.qsum );
         }
       }
     }
     if (global.corrupt == 0) {
       if (_event_num > 2) {
-        TH2F_perEVs[10]->Fill ( val , global.qmax / global.qsum );
+        TH2F_perEVs[11]->Fill ( val , global.qmax / global.qsum );
       }
     }
     if ( global.corrupt == 0 ) {
       if (_event_num > 2) {
-        TH2F_perEVs[11]->Fill ( val , global.qsum );
+        TH2F_perEVs[12]->Fill ( val , global.qsum );
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perEVs[12]->Fill ( val , global.qmax3 / global.qsum );
+          TH2F_perEVs[13]->Fill ( val , global.qmax3 / global.qsum );
         }
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perEVs[13]->Fill ( val , (global.qmax3) / global.qsum );
+          TH2F_perEVs[14]->Fill ( val , (global.qmax3) / global.qsum );
         }
       }
     }
@@ -1430,34 +1440,44 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
         TH2F_perCHs[7][nCH]->Fill ( global.pdac2poff[(int)val] , global.qsum/(float)digis.samples() );
       }
     }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        if ( val < 50 ) {
+          TH2F_perCHs[9][nCH]->Fill (val/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+        if (( val > 63 ) && ( val < 114 )) {
+          TH2F_perCHs[9][nCH]->Fill ((val-14.0)/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+      }
+    }
     if (val < 8 ) {
       if (global.corrupt == 0) {
         if (_event_num > 2) {
-          TH2F_perCHs[9][nCH]->Fill ( global.ici2q[(int)val] , global.qsum );
+          TH2F_perCHs[10][nCH]->Fill ( global.ici2q[(int)val] , global.qsum );
         }
       }
     }
     if (global.corrupt == 0) {
       if (_event_num > 2) {
-        TH2F_perCHs[10][nCH]->Fill ( val , global.qmax / global.qsum );
+        TH2F_perCHs[11][nCH]->Fill ( val , global.qmax / global.qsum );
       }
     }
     if ( global.corrupt == 0 ) {
       if (_event_num > 2) {
-        TH2F_perCHs[19][nCH]->Fill ( val , global.qsum );
+        TH2F_perCHs[20][nCH]->Fill ( val , global.qsum );
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perCHs[20][nCH]->Fill ( val , global.qmax3 / global.qsum );
+          TH2F_perCHs[21][nCH]->Fill ( val , global.qmax3 / global.qsum );
         }
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perCHs[22][nCH]->Fill ( val , (global.qmax3) / global.qsum );
+          TH2F_perCHs[23][nCH]->Fill ( val , (global.qmax3) / global.qsum );
         }
       }
     }
@@ -1561,6 +1581,42 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
 
   if (suite_code == 5) {
 
+    if (global.ts_TDC1 > -1) {
+      float t_abs_ev = ((global.ts_TDC1-1)*25.0) + (digis[global.ts_TDC1].le_tdc()*0.5);
+      if (global.corrupt == 0) {
+        if (_event_num > 2) {
+          TH1F_perEVs[0]->Fill (t_abs_ev);
+        }
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        if ( val < 50 ) {
+          TH2F_perEVs[1]->Fill (val/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+        if (( val > 63 ) && ( val < 114 )) {
+          TH2F_perEVs[1]->Fill ((val-14.0)/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+      }
+    }
+    if (global.ts_TDC1 > -1) {
+      float t_abs_ch = ((global.ts_TDC1-1)*25.0) + (digis[global.ts_TDC1].le_tdc()*0.5);
+      if (global.corrupt == 0) {
+        if (_event_num > 2) {
+          TH1F_perCHs[0][nCH]->Fill (t_abs_ch);
+        }
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        if ( val < 50 ) {
+          TH2F_perCHs[1][nCH]->Fill (val/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+        if (( val > 63 ) && ( val < 114 )) {
+          TH2F_perCHs[1][nCH]->Fill ((val-14.0)/2.0,digis[global.ts_TDC1].le_tdc()*0.5);
+        }
+      }
+    }
 
   }
 
