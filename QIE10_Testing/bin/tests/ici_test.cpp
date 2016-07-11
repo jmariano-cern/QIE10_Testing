@@ -78,7 +78,7 @@ void ici_test(Int_t run_num) {
   c1->Clear();
   h4_temp->Delete();
 
-  sprintf(hist5_name,"%s/%s","qratio2_EV","qratio2_EV");
+  sprintf(hist5_name,"%s/%s","qratio_EV","qratio_EV");
   sprintf(figure2_name,"../../img/%i/ici_test/Ratio.png",run_num);
   h5_temp = (TH1F*)_file0->Get(hist5_name);
   h5_temp->Draw("box");
@@ -109,7 +109,7 @@ void ici_test(Int_t run_num) {
 	    if (lv2_mask[h][s][q] == 1) {
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","ici_scan_CH","ici_scan_CH",h+1,s+1,q+1);
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","T_abs_CH","T_abs_CH",h+1,s+1,q+1);
-	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","ICI7_CH","ICI7_CH",h+1,s+1,q+1);
+	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_ICI7_CH","qratio_ICI7_CH",h+1,s+1,q+1);
 	      sprintf(hist3_name,"%s/%s_HF%i_Slot%i_QIE%i","pulse_ICI7_CH","pulse_ICI7_CH",h+1,s+1,q+1);
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);

@@ -103,7 +103,7 @@ void sift(Int_t run0_num, Int_t run1_num) {
  	      h3_temp->Write();
 	      h3_temp->Delete();
 
-	      sprintf(hist4_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio2_CH","qratio2_CH",h+1,s+1,q+1);
+	      sprintf(hist4_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_CH","qratio_CH",h+1,s+1,q+1);
 	      h4_temp = (TH1F*)_file2->Get(hist4_name);
  	      h4_temp->Write();
 	      h4_temp->Delete();

@@ -65,7 +65,7 @@ void ped_test(Int_t run_num) {
   gStyle->SetOptStat(0);
 
   TCanvas *c1 = new TCanvas("c1","c1",100,100,1024,768);
-  sprintf(hist2_name,"%s/%s","PedScan_qav_EV","PedScan_qav_EV");
+  sprintf(hist2_name,"%s/%s","PedScanQav_EV","PedScanQav_EV");
   sprintf(figure0_name,"../../img/%i/ped_test/Scan.png",run_num);
   h2_temp = (TH1F*)_file0->Get(hist2_name);
   h2_temp->Draw("box");
@@ -89,7 +89,7 @@ void ped_test(Int_t run_num) {
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","DefaultPed_CH","DefaultPed_CH",h+1,s+1,q+1);
-	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","PedScan_qav_CH","PedScan_qav_CH",h+1,s+1,q+1);
+	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","PedScanQav_CH","PedScanQav_CH",h+1,s+1,q+1);
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);
 	      if ((h0_temp->GetMean() < ped_mean_low) || (h0_temp->GetMean() > ped_mean_high) || (h0_temp->GetEntries() < 10)) {
