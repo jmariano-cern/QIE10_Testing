@@ -102,6 +102,9 @@ void vbs_test(Int_t run_num) {
 	      vbs_a = vb_scan->GetParameter(1);
 	      vbs_b = vb_scan->GetParameter(2);
 	      //cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " -- TurnOnPoint: " << vbs_top << ", a(x-top)^2: " << vbs_a << ", +b: " << vbs_b << endl;
+	      cout << vbs_top << endl;
+	      cout << vbs_a << endl;
+	      cout << vbs_b << endl;
 	      sprintf(figure0_name,"../../img/%i/vbs_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 	      //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
 	      h0_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
