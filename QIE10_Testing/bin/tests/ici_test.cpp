@@ -11,6 +11,7 @@
 #include "TStyle.h"
 #include "TPad.h"
 #include "TF1.h"
+#include "TError.h"
 
 #include "../../src/mask.h"
 #include "../../src/draw_map.h"
@@ -24,6 +25,8 @@ Double_t linear_fit(Double_t *x,Double_t *par) {
 using namespace std;
 
 void ici_test(Int_t run_num) {
+
+  gErrorIgnoreLevel = kWarning;
 
   float ici_slope_low = 1.0;
   float ici_slope_high = 1.1;
@@ -101,6 +104,7 @@ void ici_test(Int_t run_num) {
   bool*** lv2_err_map_rms = create_error_map();
   bool*** lv2_err_map_ratio = create_error_map();
   bool*** lv2_err_map_gen = create_error_map();
+  bool*** lv2_err_map_ref = create_error_map();
   for (Int_t h = 0; h < HF_num; h++) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
@@ -119,7 +123,7 @@ void ici_test(Int_t run_num) {
 	      fit_ici->SetParNames("slope","offset");
 	      h0_temp->Fit("fit_ici","Q");
 	      ici_slope = fit_ici->GetParameter(0);
-	      ici_offset = fit_ici->GetParameter(1);	      
+	      ici_offset = fit_ici->GetParameter(1);
 	      if ((ici_slope < ici_slope_low) || (ici_slope > ici_slope_high) || (h0_temp->GetEntries() < 10)) {
 		h0_temp->Draw("color");
 		sprintf(figure0_name,"../../img/%i/ici_test/ici_scan_HF%i_Slot%i_QIE%i.png",run_num,h+1,s+1,q+1);
@@ -138,7 +142,7 @@ void ici_test(Int_t run_num) {
 		lv2_err_map_offset[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
-	      cout << "Timing mean: " << h1_temp->GetMean() << ", rms: " << h1_temp->GetRMS() << ", nentries: " << h1_temp->GetEntries() << endl;
+	      //cout << "Timing mean: " << h1_temp->GetMean() << ", rms: " << h1_temp->GetRMS() << ", nentries: " << h1_temp->GetEntries() << endl;
 	      if ((h1_temp->GetRMS() > ici_rms_high) || (h1_temp->GetEntries() < 10)) {
 		lv2_err_map_rms[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
@@ -147,14 +151,23 @@ void ici_test(Int_t run_num) {
 		h3_temp->Draw("box");
 		sprintf(figure0_name,"../../img/%i/ici_test/pulse_ICI7_HF%i_Slot%i_QIE%i.png",run_num,h+1,s+1,q+1);
 		c1->SaveAs(figure0_name);
-		cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << endl;
-		cout << "Slope: " << ici_slope << ", Offset: " << ici_offset << ", RMS: " << h1_temp->GetRMS() << ", Ratio: " << h2_temp->GetMean() << endl;
+		//cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << endl;
+		//cout << "Slope: " << ici_slope << ", Offset: " << ici_offset << ", RMS: " << h1_temp->GetRMS() << ", Ratio: " << h2_temp->GetMean() << endl;
 		lv2_err_map_ratio[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
+	      h3_temp->GetXaxis()->SetRangeUser(6.5,7.5);
+	      cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " -- " << h3_temp->GetMean(2) ;
+	      if (h3_temp->GetMean(2) > 10) {
+		cout << " <<< AFTERPULSE";
+		lv2_err_map_ref[h][s][q] = 0;
+		lv2_err_map_gen[h][s][q] = 0;
+	      }
+	      cout << endl;
 	      h0_temp->Delete();
 	      h1_temp->Delete();
 	      h2_temp->Delete();
+	      h3_temp->Delete();
 	      fit_ici->Delete();
 	      c1->Clear();
 	    }
@@ -168,5 +181,6 @@ void ici_test(Int_t run_num) {
   draw_map(lv2_err_map_rms, run_num, "ici_test", "ICItimingRMS");
   draw_map(lv2_err_map_ratio, run_num, "ici_test", "ICIratio");
   draw_map(lv2_err_map_gen, run_num, "ici_test", "ICIall");
+  draw_map(lv2_err_map_ref, run_num, "ici_test", "ICIref");
 
 } // close function

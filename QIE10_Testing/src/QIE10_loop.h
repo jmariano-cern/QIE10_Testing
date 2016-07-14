@@ -130,6 +130,13 @@ loop_vars pre_event_loop(std::string parameter, float val, int suite_code, int _
 
   }
 
+// --- Suite 9: "BXscanner" ---
+
+  if (suite_code == 9) {
+
+
+  }
+
   return global;
 
 }
@@ -661,6 +668,53 @@ loop_vars pre_loop(std::string parameter, float val, int suite_code, loop_vars g
 
   }
 
+// --- Suite 9: "BXscanner" ---
+
+  if (suite_code == 9) {
+
+    global.corrupt = 0;
+    for (int iTS=0 ; iTS<10 ; iTS++) {
+      if (digis[iTS].le_tdc() == 0) {
+        global.corrupt = 1;
+      }
+    }
+    global.qsum = 0;
+    global.qmax = 0;
+    global.ts_max = 0;
+    global.ts_TDC1 = -1;
+    global.ts_TDC2 = -1;
+    global.cid_TDC1 = -1;
+    global.cid_TDC2 = -1;
+    bool TDC1_flag = 0;
+    bool TDC2_flag = 0;
+    for ( int iTS=0 ; iTS<digis.samples() ; iTS++) {
+      global.qsum += adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
+      if ((adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45) > global.qmax) {
+        global.qmax = adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
+        global.ts_max = iTS;
+      }
+      if ((TDC1_flag == 0) && (digis[iTS].le_tdc() < 50)) {
+        TDC1_flag = 1;
+        global.ts_TDC1 = iTS;
+        global.cid_TDC1 = digis[iTS].capid();
+      }
+      if ((TDC1_flag == 1) && (TDC2_flag == 0) && (digis[iTS].le_tdc() < 50)) {
+        TDC2_flag = 1;
+        global.ts_TDC2 = iTS;
+        global.cid_TDC2 = digis[iTS].capid();
+      }
+    }
+    global.qmax2p = -1;
+    global.qmax2m = -1;
+    global.qmax3 = -1;
+    if ((global.ts_max > 0) && (global.ts_max < 9)) {
+      global.qmax2p = adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (2*14.45);
+      global.qmax2m = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + (2*14.45);
+      global.qmax3 = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (3*14.45);
+    }
+
+  }
+
   return global;
 
 }
@@ -834,79 +888,94 @@ loop_vars loop(std::string parameter, float val, int suite_code, loop_vars globa
       }
     }
     if ( val == 0 ) {
-      TH2F_perCHs[14][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[16][nCH]->Fill ( nTS, adc );
     }
     if ( val == 1 ) {
-      TH2F_perCHs[15][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[17][nCH]->Fill ( nTS, adc );
     }
     if ( val == 2 ) {
-      TH2F_perCHs[16][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[18][nCH]->Fill ( nTS, adc );
     }
     if ( val == 3 ) {
-      TH2F_perCHs[17][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[19][nCH]->Fill ( nTS, adc );
     }
     if ( val == 4 ) {
-      TH2F_perCHs[18][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[20][nCH]->Fill ( nTS, adc );
     }
     if ( val == 5 ) {
-      TH2F_perCHs[19][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[21][nCH]->Fill ( nTS, adc );
     }
     if ( val == 6 ) {
-      TH2F_perCHs[20][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[22][nCH]->Fill ( nTS, adc );
     }
     if ( val == 7 ) {
-      TH2F_perCHs[21][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[23][nCH]->Fill ( nTS, adc );
     }
     if ( val == 2.5 ) {
-      TH2F_perCHs[24][nCH]->Fill (nTS,charge);
+      TH2F_perCHs[26][nCH]->Fill (nTS,charge);
     }
-    if ( val == 0 ) {
-      TH2F_perCHs[26][nCH]->Fill (nTS,adc);
-    }
-    if ( val == 1 ) {
+    if ( val == 2.5 ) {
       TH2F_perCHs[27][nCH]->Fill (nTS,adc);
     }
-    if ( val == 2 ) {
-      TH2F_perCHs[28][nCH]->Fill (nTS,adc);
+    if ( val == 2.5 ) {
+      TH2F_perCHs[28][nCH]->Fill (nTS,le_tdc);
     }
-    if ( val == 3 ) {
-      TH2F_perCHs[29][nCH]->Fill (nTS,adc);
+    if ( val == 2.0 ) {
+      TH2F_perCHs[29][nCH]->Fill (nTS,charge);
     }
-    if ( val == 4 ) {
+    if ( val == 2.0 ) {
       TH2F_perCHs[30][nCH]->Fill (nTS,adc);
     }
-    if ( val == 5 ) {
-      TH2F_perCHs[31][nCH]->Fill (nTS,adc);
+    if ( val == 2.0 ) {
+      TH2F_perCHs[31][nCH]->Fill (nTS,le_tdc);
     }
-    if ( val == 6 ) {
-      TH2F_perCHs[32][nCH]->Fill (nTS,adc);
-    }
-    if ( val == 7 ) {
+    if ( val == 0 ) {
       TH2F_perCHs[33][nCH]->Fill (nTS,adc);
     }
-    if ( val == 8 ) {
+    if ( val == 1 ) {
       TH2F_perCHs[34][nCH]->Fill (nTS,adc);
     }
-    if ( val == 9 ) {
+    if ( val == 2 ) {
       TH2F_perCHs[35][nCH]->Fill (nTS,adc);
     }
-    if ( val == 10 ) {
+    if ( val == 3 ) {
       TH2F_perCHs[36][nCH]->Fill (nTS,adc);
     }
-    if ( val == 11 ) {
+    if ( val == 4 ) {
       TH2F_perCHs[37][nCH]->Fill (nTS,adc);
     }
-    if ( val == 12 ) {
+    if ( val == 5 ) {
       TH2F_perCHs[38][nCH]->Fill (nTS,adc);
     }
-    if ( val == 13 ) {
+    if ( val == 6 ) {
       TH2F_perCHs[39][nCH]->Fill (nTS,adc);
     }
-    if ( val == 14 ) {
+    if ( val == 7 ) {
       TH2F_perCHs[40][nCH]->Fill (nTS,adc);
     }
-    if ( val == 15 ) {
+    if ( val == 8 ) {
       TH2F_perCHs[41][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 9 ) {
+      TH2F_perCHs[42][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 10 ) {
+      TH2F_perCHs[43][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 11 ) {
+      TH2F_perCHs[44][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 12 ) {
+      TH2F_perCHs[45][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 13 ) {
+      TH2F_perCHs[46][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 14 ) {
+      TH2F_perCHs[47][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 15 ) {
+      TH2F_perCHs[48][nCH]->Fill (nTS,adc);
     }
 
   }
@@ -1198,29 +1267,34 @@ loop_vars loop(std::string parameter, float val, int suite_code, loop_vars globa
         }
       }
     }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[0][nCH]->Fill ( nTS, le_tdc );
+      }
+    }
     if ( val == 0 ) {
-      TH2F_perCHs[2][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[5][nCH]->Fill ( nTS, adc );
     }
     if ( val == 1 ) {
-      TH2F_perCHs[3][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[6][nCH]->Fill ( nTS, adc );
     }
     if ( val == 2 ) {
-      TH2F_perCHs[4][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[7][nCH]->Fill ( nTS, adc );
     }
     if ( val == 3 ) {
-      TH2F_perCHs[5][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[8][nCH]->Fill ( nTS, adc );
     }
     if ( val == 4 ) {
-      TH2F_perCHs[6][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[9][nCH]->Fill ( nTS, adc );
     }
     if ( val == 5 ) {
-      TH2F_perCHs[7][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[10][nCH]->Fill ( nTS, adc );
     }
     if ( val == 6 ) {
-      TH2F_perCHs[8][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[11][nCH]->Fill ( nTS, adc );
     }
     if ( val == 7 ) {
-      TH2F_perCHs[9][nCH]->Fill ( nTS, charge );
+      TH2F_perCHs[12][nCH]->Fill ( nTS, adc );
     }
 
   }
@@ -1259,6 +1333,21 @@ loop_vars loop(std::string parameter, float val, int suite_code, loop_vars globa
     }
     if ( val == 2.5 ) {
       TH2F_perCHs[3][nCH]->Fill (nTS,charge);
+    }
+    if ( val == 2.5 ) {
+      TH2F_perCHs[4][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 2.5 ) {
+      TH2F_perCHs[5][nCH]->Fill (nTS,le_tdc);
+    }
+    if ( val == 2.0 ) {
+      TH2F_perCHs[6][nCH]->Fill (nTS,charge);
+    }
+    if ( val == 2.0 ) {
+      TH2F_perCHs[7][nCH]->Fill (nTS,adc);
+    }
+    if ( val == 2.0 ) {
+      TH2F_perCHs[8][nCH]->Fill (nTS,le_tdc);
     }
 
   }
@@ -1333,6 +1422,31 @@ loop_vars loop(std::string parameter, float val, int suite_code, loop_vars globa
     if ( val == 15 ) {
       TH2F_perCHs[16][nCH]->Fill (nTS,adc);
     }
+
+  }
+
+// --- Suite 9: "BXscanner" ---
+
+  if (suite_code == 9) {
+
+    global.adcped = global.adcped;
+    global.qped = global.qped;
+    int tTS = digis.samples();
+    tTS = tTS;
+    int adc = digis[nTS].adc();
+    adc = adc;
+    int le_tdc = digis[nTS].le_tdc();
+    le_tdc = le_tdc;
+    int te_tdc = digis[nTS].te_tdc();
+    te_tdc = te_tdc;
+    int capid = digis[nTS].capid();
+    capid = capid;
+    int soi = digis[nTS].soi();
+    soi = soi;
+    float charge = adc2fC_QIE10_refl[ adc ] + 14.45;
+    charge = charge;
+    float acharge = charge - global.qped;
+    acharge = acharge;
 
   }
 
@@ -1539,23 +1653,38 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
         TH2F_perCHs[13][nCH]->Fill ( val , global.qmax / global.qsum );
       }
     }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[14][nCH]->Fill ( val , (adc2fC_QIE10_refl[ digis[7].adc() ] + 14.45) / global.qsum );
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[15][nCH]->Fill ( global.ici2q[(int)val] , (adc2fC_QIE10_refl[ digis[7].adc() ] + 14.45) / global.qsum );
+      }
+    }
     if ( global.corrupt == 0 ) {
       if (_event_num > 2) {
-        TH2F_perCHs[22][nCH]->Fill ( val , global.qsum );
+        TH2F_perCHs[24][nCH]->Fill ( val , global.qsum );
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perCHs[23][nCH]->Fill ( val , global.qmax3 / global.qsum );
+          TH2F_perCHs[25][nCH]->Fill ( val , global.qmax3 / global.qsum );
         }
       }
     }
     if (global.qmax3 > -1) {
       if ( global.corrupt == 0 ) {
         if (_event_num > 2) {
-          TH2F_perCHs[25][nCH]->Fill ( val , (global.qmax3) / global.qsum );
+          TH2F_perCHs[32][nCH]->Fill ( val , (global.qmax3) / global.qsum );
         }
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[49][nCH]->Fill ( val , adc2fC_QIE10_refl[ digis[5].adc() ] / global.qsum );
       }
     }
     if ( global.corrupt == 0 ) {
@@ -1601,6 +1730,14 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
         TH1F_perEVs[2]->Fill ( global.qsum / float(digis.samples()) );
       }
     }
+    if (global.ts_TDC1 > -1) {
+      float t_abs_ev = ((global.ts_TDC1)*25.0) + (digis[global.ts_TDC1].le_tdc()*0.5);
+      if (global.corrupt == 0) {
+        if (_event_num > 2) {
+          TH1F_perEVs[3]->Fill (t_abs_ev);
+        }
+      }
+    }
     if (global.corrupt == 0) {
       if (_event_num > 2) {
         TH1F_perCHs[1][nCH]->Fill ( global.qsum );
@@ -1609,6 +1746,14 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
     if (global.corrupt == 0) {
       if (_event_num > 2) {
         TH1F_perCHs[2][nCH]->Fill ( global.qsum / float(digis.samples()) );
+      }
+    }
+    if (global.ts_TDC1 > -1) {
+      float t_abs_ch = ((global.ts_TDC1)*25.0) + (digis[global.ts_TDC1].le_tdc()*0.5);
+      if (global.corrupt == 0) {
+        if (_event_num > 2) {
+          TH1F_perCHs[3][nCH]->Fill (t_abs_ch);
+        }
       }
     }
 
@@ -1812,13 +1957,23 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
     if (val < 8 ) {
       if (global.corrupt == 0) {
         if (_event_num > 2) {
-          TH2F_perCHs[0][nCH]->Fill ( global.ici2q[(int)val] , global.qsum );
+          TH2F_perCHs[1][nCH]->Fill ( global.ici2q[(int)val] , global.qsum );
         }
       }
     }
     if (global.corrupt == 0) {
       if (_event_num > 2) {
-        TH2F_perCHs[1][nCH]->Fill ( val , global.qmax / global.qsum );
+        TH2F_perCHs[2][nCH]->Fill ( val , global.qmax / global.qsum );
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[3][nCH]->Fill ( val , (adc2fC_QIE10_refl[ digis[7].adc() ] + 14.45) / global.qsum );
+      }
+    }
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[4][nCH]->Fill ( global.ici2q[(int)val] , (adc2fC_QIE10_refl[ digis[7].adc() ] + 14.45) / global.qsum );
       }
     }
 
@@ -1895,6 +2050,18 @@ loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars 
 
   }
 
+// --- Suite 9: "BXscanner" ---
+
+  if (suite_code == 9) {
+
+    if (global.corrupt == 0) {
+      if (_event_num > 2) {
+        TH2F_perCHs[0][nCH]->Fill ( val , adc2fC_QIE10_refl[ digis[5].adc() ] / global.qsum );
+      }
+    }
+
+  }
+
   return global;
 
 }
@@ -1964,6 +2131,13 @@ void post_event_loop(std::string parameter, float val, int suite_code, loop_vars
 // --- Suite 8: "RinSel_Scan" ---
 
   if (suite_code == 8) {
+
+
+  }
+
+// --- Suite 9: "BXscanner" ---
+
+  if (suite_code == 9) {
 
 
   }

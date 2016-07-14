@@ -102,9 +102,10 @@ void vbs_test(Int_t run_num) {
 	      vbs_a = vb_scan->GetParameter(1);
 	      vbs_b = vb_scan->GetParameter(2);
 	      //cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " -- TurnOnPoint: " << vbs_top << ", a(x-top)^2: " << vbs_a << ", +b: " << vbs_b << endl;
-	      cout << vbs_top << endl;
-	      cout << vbs_a << endl;
-	      cout << vbs_b << endl;
+	      cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " --  a(x-top)^2: " << vbs_a ;
+	      //cout << vbs_top << endl;
+	      //cout << vbs_a << endl;
+	      //cout << vbs_b << endl;
 	      sprintf(figure0_name,"../../img/%i/vbs_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 	      //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
 	      h0_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
@@ -139,13 +140,13 @@ void vbs_test(Int_t run_num) {
 	      c1->Clear();
 
 	      ref_flag = 0;
-	      for (int binx=10 ; binx<26 ; binx ++) {
+	      for (int binx=11 ; binx<26 ; binx ++) {
 		if (h1_temp->GetBinContent(binx) - h1_temp->GetBinContent(binx-1) < -0.01 ) {
 		  ref_flag = 1;
 		}
 	      }
 	      if (ref_flag == 1) {
-		cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " -- REFLECTION???" << endl;
+		cout << " <<< REFLECTION???" << endl;
 		sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","QvsTS_2.5V","QvsTS_2.5V",h+1,s+1,q+1);
 		sprintf(figure2_name,"../../img/%i/vbs_test/QvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 		h2_temp = (TH1F*)_file0->Get(hist2_name);
@@ -155,7 +156,9 @@ void vbs_test(Int_t run_num) {
 		lv2_err_map_refl[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      } 
-
+	      else {
+		cout << endl;
+	      }
 	      /*
 	      if ((ped_slope > ped_slope_high) || (ped_slope < ped_slope_low) || (h1_temp->GetEntries() < 10)) {
 		lv2_err_map_slope[h][s][q] = 0;
