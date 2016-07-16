@@ -34,8 +34,8 @@ void ped_test(Int_t run_num) {
   float ped_mean_high = 6.5;
   float ped_rms_low = 0.1;
   float ped_rms_high = 2.0;
-  float ped_top_low = 27.5;
-  float ped_top_high = 37.5;
+  float ped_top_low = -3.0;
+  float ped_top_high = 3.0;
   float ped_slope_low = 1.8;
   float ped_slope_high = 2.6;
 

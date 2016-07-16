@@ -45,6 +45,9 @@
 #                  "phase_scan_CID_EV"                  #
 #                     "ici_scan_EV"                     #
 #                      "qratio_EV"                      #
+#                     "OutflowA2_EV"                    #
+#                     "OutflowA3_EV"                    #
+#                     "OutflowA4_EV"                    #
 #                    "Qsum_vs_Vb_EV"                    #
 #                    "qratio3_vb_EV"                    #
 #                    "qr3_vs_rin_EV"                    #
@@ -63,6 +66,10 @@
 #                       "T_abs_CH"                      #
 #                    "DefaultPed_CH"                    #
 #                    "qratio_ICI7_CH"                   #
+#                   "BADratio_ICI7_CH"                  #
+#                     "Outflow1_CH"                     #
+#                     "Outflow2_CH"                     #
+#                     "OutflowA_CH"                     #
 #########################################################
 
 
@@ -86,6 +93,8 @@
 #                      "qratio_CH"                      #
 #                     "BADratio_CH"                     #
 #                     "BADratio2_CH"                    #
+#                     "BADratio3_CH"                    #
+#                     "OutflowA2_CH"                    #
 #                    "pulse_ICI0_CH"                    #
 #                    "pulse_ICI1_CH"                    #
 #                    "pulse_ICI2_CH"                    #
@@ -120,6 +129,10 @@
 #                    "ADCvsTS_Rin14"                    #
 #                    "ADCvsTS_Rin15"                    #
 #                   "BADratioVsBX_CH"                   #
+#                     "Pulse_BX0_CH"                    #
+#                     "Pulse_BX1_CH"                    #
+#                     "Pulse_BX2_CH"                    #
+#                     "Pulse_BX3_CH"                    #
 #########################################################
 
 
@@ -203,9 +216,12 @@
 # 10:              "phase_scan_CID_EV"                  #
 # 11:                 "ici_scan_EV"                     #
 # 12:                  "qratio_EV"                      #
-# 13:                "Qsum_vs_Vb_EV"                    #
-# 14:                "qratio3_vb_EV"                    #
-# 15:                "qr3_vs_rin_EV"                    #
+# 13:                 "OutflowA2_EV"                    #
+# 14:                 "OutflowA3_EV"                    #
+# 15:                 "OutflowA4_EV"                    #
+# 16:                "Qsum_vs_Vb_EV"                    #
+# 17:                "qratio3_vb_EV"                    #
+# 18:                "qr3_vs_rin_EV"                    #
 #########################################################
 #######################TH1F_perCHs#######################
 #########################################################
@@ -217,6 +233,10 @@
 # 5 :                   "T_abs_CH"                      #
 # 6 :                "DefaultPed_CH"                    #
 # 7 :                "qratio_ICI7_CH"                   #
+# 8 :               "BADratio_ICI7_CH"                  #
+# 9 :                 "Outflow1_CH"                     #
+# 10:                 "Outflow2_CH"                     #
+# 11:                 "OutflowA_CH"                     #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
@@ -236,40 +256,46 @@
 # 13:                  "qratio_CH"                      #
 # 14:                 "BADratio_CH"                     #
 # 15:                 "BADratio2_CH"                    #
-# 16:                "pulse_ICI0_CH"                    #
-# 17:                "pulse_ICI1_CH"                    #
-# 18:                "pulse_ICI2_CH"                    #
-# 19:                "pulse_ICI3_CH"                    #
-# 20:                "pulse_ICI4_CH"                    #
-# 21:                "pulse_ICI5_CH"                    #
-# 22:                "pulse_ICI6_CH"                    #
-# 23:                "pulse_ICI7_CH"                    #
-# 24:                "Qsum_vs_Vb_CH"                    #
-# 25:                "qratio3_vb_CH"                    #
-# 26:                  "QvsTS_2.5V"                     #
-# 27:                 "ADCvsTS_2.5V"                    #
-# 28:                 "TDCvsTS_2.5V"                    #
-# 29:                  "QvsTS_2.0V"                     #
-# 30:                 "ADCvsTS_2.0V"                    #
-# 31:                 "TDCvsTS_2.0V"                    #
-# 32:                "qr3_vs_rin_CH"                    #
-# 33:                 "ADCvsTS_Rin0"                    #
-# 34:                 "ADCvsTS_Rin1"                    #
-# 35:                 "ADCvsTS_Rin2"                    #
-# 36:                 "ADCvsTS_Rin3"                    #
-# 37:                 "ADCvsTS_Rin4"                    #
-# 38:                 "ADCvsTS_Rin5"                    #
-# 39:                 "ADCvsTS_Rin6"                    #
-# 40:                 "ADCvsTS_Rin7"                    #
-# 41:                 "ADCvsTS_Rin8"                    #
-# 42:                 "ADCvsTS_Rin9"                    #
-# 43:                "ADCvsTS_Rin10"                    #
-# 44:                "ADCvsTS_Rin11"                    #
-# 45:                "ADCvsTS_Rin12"                    #
-# 46:                "ADCvsTS_Rin13"                    #
-# 47:                "ADCvsTS_Rin14"                    #
-# 48:                "ADCvsTS_Rin15"                    #
-# 49:               "BADratioVsBX_CH"                   #
+# 16:                 "BADratio3_CH"                    #
+# 17:                 "OutflowA2_CH"                    #
+# 18:                "pulse_ICI0_CH"                    #
+# 19:                "pulse_ICI1_CH"                    #
+# 20:                "pulse_ICI2_CH"                    #
+# 21:                "pulse_ICI3_CH"                    #
+# 22:                "pulse_ICI4_CH"                    #
+# 23:                "pulse_ICI5_CH"                    #
+# 24:                "pulse_ICI6_CH"                    #
+# 25:                "pulse_ICI7_CH"                    #
+# 26:                "Qsum_vs_Vb_CH"                    #
+# 27:                "qratio3_vb_CH"                    #
+# 28:                  "QvsTS_2.5V"                     #
+# 29:                 "ADCvsTS_2.5V"                    #
+# 30:                 "TDCvsTS_2.5V"                    #
+# 31:                  "QvsTS_2.0V"                     #
+# 32:                 "ADCvsTS_2.0V"                    #
+# 33:                 "TDCvsTS_2.0V"                    #
+# 34:                "qr3_vs_rin_CH"                    #
+# 35:                 "ADCvsTS_Rin0"                    #
+# 36:                 "ADCvsTS_Rin1"                    #
+# 37:                 "ADCvsTS_Rin2"                    #
+# 38:                 "ADCvsTS_Rin3"                    #
+# 39:                 "ADCvsTS_Rin4"                    #
+# 40:                 "ADCvsTS_Rin5"                    #
+# 41:                 "ADCvsTS_Rin6"                    #
+# 42:                 "ADCvsTS_Rin7"                    #
+# 43:                 "ADCvsTS_Rin8"                    #
+# 44:                 "ADCvsTS_Rin9"                    #
+# 45:                "ADCvsTS_Rin10"                    #
+# 46:                "ADCvsTS_Rin11"                    #
+# 47:                "ADCvsTS_Rin12"                    #
+# 48:                "ADCvsTS_Rin13"                    #
+# 49:                "ADCvsTS_Rin14"                    #
+# 50:                "ADCvsTS_Rin15"                    #
+# 51:               "BADratioVsBX_CH"                   #
+# 52:                 "Pulse_BX0_CH"                    #
+# 53:                 "Pulse_BX1_CH"                    #
+# 54:                 "Pulse_BX2_CH"                    #
+# 55:                 "Pulse_BX3_CH"                    #
 #########################################################
 ########################TProfiles########################
 #########################################################
@@ -451,11 +477,18 @@
 #########################################################
 # 0 :                 "ici_scan_EV"                     #
 # 1 :                  "qratio_EV"                      #
+# 2 :                 "OutflowA2_EV"                    #
+# 3 :                 "OutflowA3_EV"                    #
+# 4 :                 "OutflowA4_EV"                    #
 #########################################################
 #######################TH1F_perCHs#######################
 #########################################################
 # 0 :                   "T_abs_CH"                      #
 # 1 :                "qratio_ICI7_CH"                   #
+# 2 :               "BADratio_ICI7_CH"                  #
+# 3 :                 "Outflow1_CH"                     #
+# 4 :                 "Outflow2_CH"                     #
+# 5 :                 "OutflowA_CH"                     #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
@@ -464,14 +497,16 @@
 # 2 :                  "qratio_CH"                      #
 # 3 :                 "BADratio_CH"                     #
 # 4 :                 "BADratio2_CH"                    #
-# 5 :                "pulse_ICI0_CH"                    #
-# 6 :                "pulse_ICI1_CH"                    #
-# 7 :                "pulse_ICI2_CH"                    #
-# 8 :                "pulse_ICI3_CH"                    #
-# 9 :                "pulse_ICI4_CH"                    #
-# 10:                "pulse_ICI5_CH"                    #
-# 11:                "pulse_ICI6_CH"                    #
-# 12:                "pulse_ICI7_CH"                    #
+# 5 :                 "BADratio3_CH"                    #
+# 6 :                 "OutflowA2_CH"                    #
+# 7 :                "pulse_ICI0_CH"                    #
+# 8 :                "pulse_ICI1_CH"                    #
+# 9 :                "pulse_ICI2_CH"                    #
+# 10:                "pulse_ICI3_CH"                    #
+# 11:                "pulse_ICI4_CH"                    #
+# 12:                "pulse_ICI5_CH"                    #
+# 13:                "pulse_ICI6_CH"                    #
+# 14:                "pulse_ICI7_CH"                    #
 #########################################################
 
 
@@ -554,6 +589,10 @@
 #######################TH2F_perCHs#######################
 #########################################################
 # 0 :               "BADratioVsBX_CH"                   #
+# 1 :                 "Pulse_BX0_CH"                    #
+# 2 :                 "Pulse_BX1_CH"                    #
+# 3 :                 "Pulse_BX2_CH"                    #
+# 4 :                 "Pulse_BX3_CH"                    #
 #########################################################
 
 
