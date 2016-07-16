@@ -12,7 +12,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 #   Command Line Input(Copied from DQM for now)
 #
 import sys
-if ((len(sys.argv) < 3) or (len(sys.argv) > 4)):
+if ((len(sys.argv) < 3) or (len(sys.argv) > 5)):
     print "### ERROR: Bad Call!"
     print "### Use: cmsRun h2testbeamanalyzer_cfg.py <run number> <suite_code -- (optional)>"
     sys.exit(1)
@@ -64,11 +64,16 @@ suite_code = 0
 if len(sys.argv) == 4:
     suite_code = int(sys.argv[3])
 
+sequencer_flag = 0
+if len(sys.argv) == 5:
+    sequencer_flag = int(sys.argv[4])
+
+
 process.hcalAnalyzer = cms.EDAnalyzer('QIE10_testing',
         OutFileName = cms.untracked.string('../dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),
         Verbosity = cms.untracked.int32(0),
         Suite_Code = cms.untracked.int32(suite_code),
-        Sequencer_Flag = cms.untracked.int32(0)
+        Sequencer_Flag = cms.untracked.int32(sequencer_flag)
 )
 
 #

@@ -320,10 +320,12 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
   iEvent.getByToken(raw_token,raw_collection);
 
   name_data slow_data;
-  slow_data.parameter = "NULL";
-  slow_data.val = -999.0;
-  if (_sequencer_flag == 1) { 
-    slow_data = unpack_name(raw_collection,sdp,_event_num);
+  if (_sequencer_flag > 0) { 
+    slow_data = unpack_name(raw_collection,sdp,_event_num,_sequencer_flag);
+  }
+  else {
+    slow_data.parameter.push_back("NULL");
+    slow_data.val.push_back(-999.0);    
   }
 
   const QIE10DigiCollection& qie10dc=*(qie10DigiCollection);

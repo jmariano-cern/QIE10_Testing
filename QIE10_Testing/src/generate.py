@@ -205,7 +205,7 @@ def print_loop():
     loopfile.write('// # PRE_EVENT_LOOPS #\n')
     loopfile.write('// ###################\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars pre_event_loop(std::string parameter, float val, int suite_code, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars pre_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     loopfile.write('  loop_vars global;\n')
     loopfile.write('\n')
@@ -243,7 +243,7 @@ def print_loop():
     loopfile.write('// # PRE_LOOPS #\n')
     loopfile.write('// #############\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars pre_loop(std::string parameter, float val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -279,7 +279,7 @@ def print_loop():
     loopfile.write('// # LOOPS #\n')
     loopfile.write('// #########\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars loop(std::string parameter, float val, int suite_code, loop_vars global, QIE10DataFrame digis, int nTS, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nTS, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -315,7 +315,7 @@ def print_loop():
     loopfile.write('// # POST_LOOPS #\n')
     loopfile.write('// ##############\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars post_loop(std::string parameter, float val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars post_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -351,7 +351,7 @@ def print_loop():
     loopfile.write('// # POST_EVENT_LOOPS #\n')
     loopfile.write('// ####################\n')
     loopfile.write('\n')
-    loopfile.write('void post_event_loop(std::string parameter, float val, int suite_code, loop_vars global, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('void post_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
