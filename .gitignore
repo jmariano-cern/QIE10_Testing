@@ -3,6 +3,9 @@
 *.d
 *.pcm
 
+# PYTHON
+*.pyc
+
 # EMACS
 *~
 \#*\#

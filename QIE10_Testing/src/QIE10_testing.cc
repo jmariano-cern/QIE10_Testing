@@ -102,7 +102,7 @@ private:
   string _outFileName;
   int _verbosity;
   int _suite_code;
-  bool _sequencer_flag;
+  int _sequencer_flag;
   
   char histoName[100];
   char dirName[100];

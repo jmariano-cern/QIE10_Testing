@@ -6,7 +6,7 @@ process = cms.Process("ReflectionAnalysis")
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100000) )
 
 #
 #   Command Line Input(Copied from DQM for now)
@@ -61,13 +61,12 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
 
 
 suite_code = 0
-if len(sys.argv) == 4:
+if len(sys.argv) > 3:
     suite_code = int(sys.argv[3])
 
 sequencer_flag = 0
 if len(sys.argv) == 5:
     sequencer_flag = int(sys.argv[4])
-
 
 process.hcalAnalyzer = cms.EDAnalyzer('QIE10_testing',
         OutFileName = cms.untracked.string('../dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),

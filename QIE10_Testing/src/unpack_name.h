@@ -31,15 +31,15 @@ name_data unpack_name(edm::Handle<FEDRawDataCollection> raw_collection, hcaltb::
       if (splitpoint != -1) {
 	splitpoint2 = -1;
 	splitpoint3 = -1;
-	splitpoint2_prev = 0;
-	splitpoint3_prev = 0;
+	splitpoint2_prev = -1;
+	splitpoint3_prev = -1;
 	for (int d=0 ; d<dim ; d++) {
 	  splitpoint2 = j->second.substr(0,splitpoint).find("-",splitpoint2+1);
 	  splitpoint3 = j->second.substr(splitpoint+1).find("-",splitpoint3+1);
 	  //slow_data.parameter = j->second.substr(0,splitpoint);
 	  //slow_data.val = std::stof(j->second.substr(splitpoint+1));
-	  slow_data.parameter.push_back(j->second.substr(0,splitpoint).substr(splitpoint2_prev,splitpoint2));
-	  slow_data.val.push_back(std::stof(j->second.substr(splitpoint+1).substr(splitpoint3_prev,splitpoint3)));
+	  slow_data.parameter.push_back(j->second.substr(0,splitpoint).substr(splitpoint2_prev+1,splitpoint2));
+	  slow_data.val.push_back(std::stof(j->second.substr(splitpoint+1).substr(splitpoint3_prev+1,splitpoint3)));
 	  splitpoint2_prev = splitpoint2;
 	  splitpoint3_prev = splitpoint3;
 	}
@@ -51,12 +51,15 @@ name_data unpack_name(edm::Handle<FEDRawDataCollection> raw_collection, hcaltb::
     cout << "****************************************************" << endl;
   }
   if (_event_num%100 == 0) {  
+    cout << "****************************************************" << endl;
     for (int d=0 ; d<dim ; d++) {
-      cout << "* " << slow_data.parameter.at(d) << " " << slow_data.val.at(d) << endl;
-      cout << "****************************************************" << endl;
+      cout << "* Scan Parameter " << d << " -- " << slow_data.parameter.at(d) << " : " << slow_data.val.at(d) << endl;
     }
+    cout << "****************************************************" << endl;
   }
-
+  if (_event_num == 0) {  
+    cout << "****************************************************" << endl;
+  }
   return slow_data;
 
 }

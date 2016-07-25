@@ -24,7 +24,6 @@
 #                        "Qav_EV"                       #
 #                       "T_abs_EV"                      #
 #                    "DefaultPed_EV"                    #
-#                    "qratio_ICI7_EV"                   #
 #########################################################
 
 
@@ -45,12 +44,12 @@
 #                  "phase_scan_CID_EV"                  #
 #                     "ici_scan_EV"                     #
 #                      "qratio_EV"                      #
-#                     "OutflowA2_EV"                    #
-#                     "OutflowA3_EV"                    #
-#                     "OutflowA4_EV"                    #
+#                     "OutflowA_EV"                     #
+#                     "OutflowR_EV"                     #
 #                    "Qsum_vs_Vb_EV"                    #
-#                    "qratio3_vb_EV"                    #
-#                    "qr3_vs_rin_EV"                    #
+#                   "refrat_vs_rin_EV"                  #
+#                   "refabs_vs_rin_EV"                  #
+#                 "refrat_vs_Q_Rin15_EV"                #
 #########################################################
 
 
@@ -66,10 +65,6 @@
 #                       "T_abs_CH"                      #
 #                    "DefaultPed_CH"                    #
 #                    "qratio_ICI7_CH"                   #
-#                   "BADratio_ICI7_CH"                  #
-#                     "Outflow1_CH"                     #
-#                     "Outflow2_CH"                     #
-#                     "OutflowA_CH"                     #
 #########################################################
 
 
@@ -88,13 +83,11 @@
 #                    "phase_scan_CH"                    #
 #                  "rawTDC_vs_phase_CH"                 #
 #                  "phase_scan_CID_CH"                  #
-#                     "Weird_Stuff"                     #
 #                     "ici_scan_CH"                     #
 #                      "qratio_CH"                      #
 #                     "BADratio_CH"                     #
-#                     "BADratio2_CH"                    #
-#                     "BADratio3_CH"                    #
-#                     "OutflowA2_CH"                    #
+#                     "OutflowA_CH"                     #
+#                     "OutflowR_CH"                     #
 #                    "pulse_ICI0_CH"                    #
 #                    "pulse_ICI1_CH"                    #
 #                    "pulse_ICI2_CH"                    #
@@ -104,14 +97,14 @@
 #                    "pulse_ICI6_CH"                    #
 #                    "pulse_ICI7_CH"                    #
 #                    "Qsum_vs_Vb_CH"                    #
-#                    "qratio3_vb_CH"                    #
 #                      "QvsTS_2.5V"                     #
 #                     "ADCvsTS_2.5V"                    #
 #                     "TDCvsTS_2.5V"                    #
 #                      "QvsTS_2.0V"                     #
 #                     "ADCvsTS_2.0V"                    #
 #                     "TDCvsTS_2.0V"                    #
-#                    "qr3_vs_rin_CH"                    #
+#                   "refrat_vs_rin_CH"                  #
+#                   "refabs_vs_rin_CH"                  #
 #                     "ADCvsTS_Rin0"                    #
 #                     "ADCvsTS_Rin1"                    #
 #                     "ADCvsTS_Rin2"                    #
@@ -133,6 +126,9 @@
 #                     "Pulse_BX1_CH"                    #
 #                     "Pulse_BX2_CH"                    #
 #                     "Pulse_BX3_CH"                    #
+#                  "refrat_vs_Q_Rin15"                  #
+#                     "Pulse_Rin15"                     #
+#                      "Pulse_Rin0"                     #
 #########################################################
 
 
@@ -154,9 +150,8 @@
 #                       TProfiles                       #
 #########################################################
 #                                                       #
+#                      "qratio_PR"                      #
 #                    "Qsum_vs_Vb_PR"                    #
-#                    "qratio3_vb_PR"                    #
-#                    "qr3_vs_rin_PR"                    #
 #########################################################
 
 
@@ -171,8 +166,9 @@
 #                        loggers                        #
 #########################################################
 #                                                       #
-#                       "BadData"                       #
 #                       "ZeroData"                      #
+#                      "BadDataCID"                     #
+#                      "BadDataPED"                     #
 #########################################################
 
 
@@ -199,7 +195,6 @@
 # 4 :                    "Qav_EV"                       #
 # 5 :                   "T_abs_EV"                      #
 # 6 :                "DefaultPed_EV"                    #
-# 7 :                "qratio_ICI7_EV"                   #
 #########################################################
 #######################TH2F_perEVs#######################
 #########################################################
@@ -216,12 +211,12 @@
 # 10:              "phase_scan_CID_EV"                  #
 # 11:                 "ici_scan_EV"                     #
 # 12:                  "qratio_EV"                      #
-# 13:                 "OutflowA2_EV"                    #
-# 14:                 "OutflowA3_EV"                    #
-# 15:                 "OutflowA4_EV"                    #
-# 16:                "Qsum_vs_Vb_EV"                    #
-# 17:                "qratio3_vb_EV"                    #
-# 18:                "qr3_vs_rin_EV"                    #
+# 13:                 "OutflowA_EV"                     #
+# 14:                 "OutflowR_EV"                     #
+# 15:                "Qsum_vs_Vb_EV"                    #
+# 16:               "refrat_vs_rin_EV"                  #
+# 17:               "refabs_vs_rin_EV"                  #
+# 18:             "refrat_vs_Q_Rin15_EV"                #
 #########################################################
 #######################TH1F_perCHs#######################
 #########################################################
@@ -233,10 +228,6 @@
 # 5 :                   "T_abs_CH"                      #
 # 6 :                "DefaultPed_CH"                    #
 # 7 :                "qratio_ICI7_CH"                   #
-# 8 :               "BADratio_ICI7_CH"                  #
-# 9 :                 "Outflow1_CH"                     #
-# 10:                 "Outflow2_CH"                     #
-# 11:                 "OutflowA_CH"                     #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
@@ -251,62 +242,63 @@
 # 8 :                "phase_scan_CH"                    #
 # 9 :              "rawTDC_vs_phase_CH"                 #
 # 10:              "phase_scan_CID_CH"                  #
-# 11:                 "Weird_Stuff"                     #
-# 12:                 "ici_scan_CH"                     #
-# 13:                  "qratio_CH"                      #
-# 14:                 "BADratio_CH"                     #
-# 15:                 "BADratio2_CH"                    #
-# 16:                 "BADratio3_CH"                    #
-# 17:                 "OutflowA2_CH"                    #
-# 18:                "pulse_ICI0_CH"                    #
-# 19:                "pulse_ICI1_CH"                    #
-# 20:                "pulse_ICI2_CH"                    #
-# 21:                "pulse_ICI3_CH"                    #
-# 22:                "pulse_ICI4_CH"                    #
-# 23:                "pulse_ICI5_CH"                    #
-# 24:                "pulse_ICI6_CH"                    #
-# 25:                "pulse_ICI7_CH"                    #
-# 26:                "Qsum_vs_Vb_CH"                    #
-# 27:                "qratio3_vb_CH"                    #
-# 28:                  "QvsTS_2.5V"                     #
-# 29:                 "ADCvsTS_2.5V"                    #
-# 30:                 "TDCvsTS_2.5V"                    #
-# 31:                  "QvsTS_2.0V"                     #
-# 32:                 "ADCvsTS_2.0V"                    #
-# 33:                 "TDCvsTS_2.0V"                    #
-# 34:                "qr3_vs_rin_CH"                    #
-# 35:                 "ADCvsTS_Rin0"                    #
-# 36:                 "ADCvsTS_Rin1"                    #
-# 37:                 "ADCvsTS_Rin2"                    #
-# 38:                 "ADCvsTS_Rin3"                    #
-# 39:                 "ADCvsTS_Rin4"                    #
-# 40:                 "ADCvsTS_Rin5"                    #
-# 41:                 "ADCvsTS_Rin6"                    #
-# 42:                 "ADCvsTS_Rin7"                    #
-# 43:                 "ADCvsTS_Rin8"                    #
-# 44:                 "ADCvsTS_Rin9"                    #
-# 45:                "ADCvsTS_Rin10"                    #
-# 46:                "ADCvsTS_Rin11"                    #
-# 47:                "ADCvsTS_Rin12"                    #
-# 48:                "ADCvsTS_Rin13"                    #
-# 49:                "ADCvsTS_Rin14"                    #
-# 50:                "ADCvsTS_Rin15"                    #
-# 51:               "BADratioVsBX_CH"                   #
-# 52:                 "Pulse_BX0_CH"                    #
-# 53:                 "Pulse_BX1_CH"                    #
-# 54:                 "Pulse_BX2_CH"                    #
-# 55:                 "Pulse_BX3_CH"                    #
+# 11:                 "ici_scan_CH"                     #
+# 12:                  "qratio_CH"                      #
+# 13:                 "BADratio_CH"                     #
+# 14:                 "OutflowA_CH"                     #
+# 15:                 "OutflowR_CH"                     #
+# 16:                "pulse_ICI0_CH"                    #
+# 17:                "pulse_ICI1_CH"                    #
+# 18:                "pulse_ICI2_CH"                    #
+# 19:                "pulse_ICI3_CH"                    #
+# 20:                "pulse_ICI4_CH"                    #
+# 21:                "pulse_ICI5_CH"                    #
+# 22:                "pulse_ICI6_CH"                    #
+# 23:                "pulse_ICI7_CH"                    #
+# 24:                "Qsum_vs_Vb_CH"                    #
+# 25:                  "QvsTS_2.5V"                     #
+# 26:                 "ADCvsTS_2.5V"                    #
+# 27:                 "TDCvsTS_2.5V"                    #
+# 28:                  "QvsTS_2.0V"                     #
+# 29:                 "ADCvsTS_2.0V"                    #
+# 30:                 "TDCvsTS_2.0V"                    #
+# 31:               "refrat_vs_rin_CH"                  #
+# 32:               "refabs_vs_rin_CH"                  #
+# 33:                 "ADCvsTS_Rin0"                    #
+# 34:                 "ADCvsTS_Rin1"                    #
+# 35:                 "ADCvsTS_Rin2"                    #
+# 36:                 "ADCvsTS_Rin3"                    #
+# 37:                 "ADCvsTS_Rin4"                    #
+# 38:                 "ADCvsTS_Rin5"                    #
+# 39:                 "ADCvsTS_Rin6"                    #
+# 40:                 "ADCvsTS_Rin7"                    #
+# 41:                 "ADCvsTS_Rin8"                    #
+# 42:                 "ADCvsTS_Rin9"                    #
+# 43:                "ADCvsTS_Rin10"                    #
+# 44:                "ADCvsTS_Rin11"                    #
+# 45:                "ADCvsTS_Rin12"                    #
+# 46:                "ADCvsTS_Rin13"                    #
+# 47:                "ADCvsTS_Rin14"                    #
+# 48:                "ADCvsTS_Rin15"                    #
+# 49:               "BADratioVsBX_CH"                   #
+# 50:                 "Pulse_BX0_CH"                    #
+# 51:                 "Pulse_BX1_CH"                    #
+# 52:                 "Pulse_BX2_CH"                    #
+# 53:                 "Pulse_BX3_CH"                    #
+# 54:              "refrat_vs_Q_Rin15"                  #
+# 55:                 "Pulse_Rin15"                     #
+# 56:                  "Pulse_Rin0"                     #
 #########################################################
 ########################TProfiles########################
 #########################################################
-# 0 :                "Qsum_vs_Vb_PR"                    #
-# 1 :                "qratio3_vb_PR"                    #
-# 2 :                "qr3_vs_rin_PR"                    #
+# 0 :                  "qratio_PR"                      #
+# 1 :                "Qsum_vs_Vb_PR"                    #
 #########################################################
 #########################loggers#########################
 #########################################################
-# 0 :                   "BadData"                       #
-# 1 :                   "ZeroData"                      #
+# 0 :                   "ZeroData"                      #
+# 1 :                  "BadDataCID"                     #
+# 2 :                  "BadDataPED"                     #
 #########################################################
 
 
@@ -337,8 +329,7 @@
 #########################################################
 #########################loggers#########################
 #########################################################
-# 0 :                   "BadData"                       #
-# 1 :                   "ZeroData"                      #
+# 0 :                  "BadDataCID"                     #
 #########################################################
 
 
@@ -372,6 +363,10 @@
 #########################################################
 # 0 :                  "ADCvsTS_CH"                     #
 # 1 :                 "ADCvsCID_CH"                     #
+#########################################################
+#########################loggers#########################
+#########################################################
+# 0 :                  "BadDataPED"                     #
 #########################################################
 
 
@@ -457,7 +452,6 @@
 # 0 :                "phase_scan_CH"                    #
 # 1 :              "rawTDC_vs_phase_CH"                 #
 # 2 :              "phase_scan_CID_CH"                  #
-# 3 :                 "Weird_Stuff"                     #
 #########################################################
 
 
@@ -471,24 +465,18 @@
 #######################TH1F_perEVs#######################
 #########################################################
 # 0 :                   "T_abs_EV"                      #
-# 1 :                "qratio_ICI7_EV"                   #
 #########################################################
 #######################TH2F_perEVs#######################
 #########################################################
 # 0 :                 "ici_scan_EV"                     #
 # 1 :                  "qratio_EV"                      #
-# 2 :                 "OutflowA2_EV"                    #
-# 3 :                 "OutflowA3_EV"                    #
-# 4 :                 "OutflowA4_EV"                    #
+# 2 :                 "OutflowA_EV"                     #
+# 3 :                 "OutflowR_EV"                     #
 #########################################################
 #######################TH1F_perCHs#######################
 #########################################################
 # 0 :                   "T_abs_CH"                      #
 # 1 :                "qratio_ICI7_CH"                   #
-# 2 :               "BADratio_ICI7_CH"                  #
-# 3 :                 "Outflow1_CH"                     #
-# 4 :                 "Outflow2_CH"                     #
-# 5 :                 "OutflowA_CH"                     #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
@@ -496,17 +484,20 @@
 # 1 :                 "ici_scan_CH"                     #
 # 2 :                  "qratio_CH"                      #
 # 3 :                 "BADratio_CH"                     #
-# 4 :                 "BADratio2_CH"                    #
-# 5 :                 "BADratio3_CH"                    #
-# 6 :                 "OutflowA2_CH"                    #
-# 7 :                "pulse_ICI0_CH"                    #
-# 8 :                "pulse_ICI1_CH"                    #
-# 9 :                "pulse_ICI2_CH"                    #
-# 10:                "pulse_ICI3_CH"                    #
-# 11:                "pulse_ICI4_CH"                    #
-# 12:                "pulse_ICI5_CH"                    #
-# 13:                "pulse_ICI6_CH"                    #
-# 14:                "pulse_ICI7_CH"                    #
+# 4 :                 "OutflowA_CH"                     #
+# 5 :                 "OutflowR_CH"                     #
+# 6 :                "pulse_ICI0_CH"                    #
+# 7 :                "pulse_ICI1_CH"                    #
+# 8 :                "pulse_ICI2_CH"                    #
+# 9 :                "pulse_ICI3_CH"                    #
+# 10:                "pulse_ICI4_CH"                    #
+# 11:                "pulse_ICI5_CH"                    #
+# 12:                "pulse_ICI6_CH"                    #
+# 13:                "pulse_ICI7_CH"                    #
+#########################################################
+########################TProfiles########################
+#########################################################
+# 0 :                  "qratio_PR"                      #
 #########################################################
 
 
@@ -520,14 +511,14 @@
 #######################TH2F_perEVs#######################
 #########################################################
 # 0 :                  "TDCvsTS_EV"                     #
-# 1 :                "Qsum_vs_Vb_EV"                    #
-# 2 :                "qratio3_vb_EV"                    #
+# 1 :                  "qratio_EV"                      #
+# 2 :                "Qsum_vs_Vb_EV"                    #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
 # 0 :                  "TDCvsTS_CH"                     #
-# 1 :                "Qsum_vs_Vb_CH"                    #
-# 2 :                "qratio3_vb_CH"                    #
+# 1 :                  "qratio_CH"                      #
+# 2 :                "Qsum_vs_Vb_CH"                    #
 # 3 :                  "QvsTS_2.5V"                     #
 # 4 :                 "ADCvsTS_2.5V"                    #
 # 5 :                 "TDCvsTS_2.5V"                    #
@@ -537,8 +528,8 @@
 #########################################################
 ########################TProfiles########################
 #########################################################
-# 0 :                "Qsum_vs_Vb_PR"                    #
-# 1 :                "qratio3_vb_PR"                    #
+# 0 :                  "qratio_PR"                      #
+# 1 :                "Qsum_vs_Vb_PR"                    #
 #########################################################
 
 
@@ -551,31 +542,35 @@
 #########################################################
 #######################TH2F_perEVs#######################
 #########################################################
-# 0 :                "qr3_vs_rin_EV"                    #
+# 0 :                  "qratio_EV"                      #
+# 1 :               "refrat_vs_rin_EV"                  #
+# 2 :               "refabs_vs_rin_EV"                  #
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
-# 0 :                "qr3_vs_rin_CH"                    #
-# 1 :                 "ADCvsTS_Rin0"                    #
-# 2 :                 "ADCvsTS_Rin1"                    #
-# 3 :                 "ADCvsTS_Rin2"                    #
-# 4 :                 "ADCvsTS_Rin3"                    #
-# 5 :                 "ADCvsTS_Rin4"                    #
-# 6 :                 "ADCvsTS_Rin5"                    #
-# 7 :                 "ADCvsTS_Rin6"                    #
-# 8 :                 "ADCvsTS_Rin7"                    #
-# 9 :                 "ADCvsTS_Rin8"                    #
-# 10:                 "ADCvsTS_Rin9"                    #
-# 11:                "ADCvsTS_Rin10"                    #
-# 12:                "ADCvsTS_Rin11"                    #
-# 13:                "ADCvsTS_Rin12"                    #
-# 14:                "ADCvsTS_Rin13"                    #
-# 15:                "ADCvsTS_Rin14"                    #
-# 16:                "ADCvsTS_Rin15"                    #
+# 0 :                  "qratio_CH"                      #
+# 1 :               "refrat_vs_rin_CH"                  #
+# 2 :               "refabs_vs_rin_CH"                  #
+# 3 :                 "ADCvsTS_Rin0"                    #
+# 4 :                 "ADCvsTS_Rin1"                    #
+# 5 :                 "ADCvsTS_Rin2"                    #
+# 6 :                 "ADCvsTS_Rin3"                    #
+# 7 :                 "ADCvsTS_Rin4"                    #
+# 8 :                 "ADCvsTS_Rin5"                    #
+# 9 :                 "ADCvsTS_Rin6"                    #
+# 10:                 "ADCvsTS_Rin7"                    #
+# 11:                 "ADCvsTS_Rin8"                    #
+# 12:                 "ADCvsTS_Rin9"                    #
+# 13:                "ADCvsTS_Rin10"                    #
+# 14:                "ADCvsTS_Rin11"                    #
+# 15:                "ADCvsTS_Rin12"                    #
+# 16:                "ADCvsTS_Rin13"                    #
+# 17:                "ADCvsTS_Rin14"                    #
+# 18:                "ADCvsTS_Rin15"                    #
 #########################################################
 ########################TProfiles########################
 #########################################################
-# 0 :                "qr3_vs_rin_PR"                    #
+# 0 :                  "qratio_PR"                      #
 #########################################################
 
 
@@ -593,6 +588,25 @@
 # 2 :                 "Pulse_BX1_CH"                    #
 # 3 :                 "Pulse_BX2_CH"                    #
 # 4 :                 "Pulse_BX3_CH"                    #
+#########################################################
+
+
+#########################################################
+#              SUITE 10: "Reflection_Study"             #
+#########################################################
+##########################nulls##########################
+#########################################################
+# 0 :                   "General"                       #
+#########################################################
+#######################TH2F_perEVs#######################
+#########################################################
+# 0 :             "refrat_vs_Q_Rin15_EV"                #
+#########################################################
+#######################TH2F_perCHs#######################
+#########################################################
+# 0 :              "refrat_vs_Q_Rin15"                  #
+# 1 :                 "Pulse_Rin15"                     #
+# 2 :                  "Pulse_Rin0"                     #
 #########################################################
 
 
