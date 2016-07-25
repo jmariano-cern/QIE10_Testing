@@ -14,7 +14,7 @@ $ cmsenv
 #############################################
 # 2 - Get and compile this software package #
 #############################################
-$ git clone git@github.com:jmariano-cern/QIE10_Testing.git
+$ git clone git@github.com:jmariano-cern/ngHCAL.git
 $ cd ngHCAL
 $ git checkout example
 $ scram b
