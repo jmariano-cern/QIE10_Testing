@@ -94,6 +94,7 @@ void vbs_test(Int_t run_num) {
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","Qsum_vs_Vb_PR","Qsum_vs_Vb_PR",h+1,s+1,q+1);
+	      cout << hist0_name << endl;
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
 	      vb_scan = new TF1("vb_scan",voltage_scan_fit,-0.5,2.55,3);
 	      vb_scan->SetParNames("turn-on-point","a(x-top)^2","+b");
@@ -127,8 +128,7 @@ void vbs_test(Int_t run_num) {
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
 
-
-	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio3_vb_PR","qratio3_vb_PR",h+1,s+1,q+1);
+	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_PR","qratio_PR",h+1,s+1,q+1);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);
 	      sprintf(figure1_name,"../../img/%i/vbs_test/ratio2_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 	      //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
@@ -155,10 +155,12 @@ void vbs_test(Int_t run_num) {
 		c1->Clear();
 		lv2_err_map_refl[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		h2_temp->Delete();
 	      } 
 	      else {
 		cout << endl;
 	      }
+
 	      /*
 	      if ((ped_slope > ped_slope_high) || (ped_slope < ped_slope_low) || (h1_temp->GetEntries() < 10)) {
 		lv2_err_map_slope[h][s][q] = 0;

@@ -94,8 +94,18 @@ def print_emap():
                         emapfile.write(str(channel_counter) + " ")
                         emapfile.write(str(sd) + " ")
                         emapfile.write(str(k+1).rjust(2) + " ")
-                        emapfile.write(str(j+1).rjust(2) + " ")
-                        emapfile.write(str(i+1) + "\n")
+                        if (i > 12):
+                            emapfile.write(str(j+1+28).rjust(2) + " ")
+                        elif (i > 6):
+                            emapfile.write(str(j+1+14).rjust(2) + " ")
+                        else:
+                            emapfile.write(str(j+1).rjust(2) + " ")
+                        if (i > 12):
+                            emapfile.write(str(i+1-12) + "\n")
+                        elif (i > 6):
+                            emapfile.write(str(i+1-6) + "\n")
+                        else:
+                            emapfile.write(str(i+1) + "\n")
                         channel_counter = channel_counter + 1
                         if channel_counter > channels-1:
                             fiber_counter = fiber_counter + 1
