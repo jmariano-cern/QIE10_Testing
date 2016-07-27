@@ -57,9 +57,6 @@ name_data unpack_name(edm::Handle<FEDRawDataCollection> raw_collection, hcaltb::
     }
     cout << "****************************************************" << endl;
   }
-  if (_event_num == 0) {  
-    cout << "****************************************************" << endl;
-  }
   return slow_data;
 
 }
