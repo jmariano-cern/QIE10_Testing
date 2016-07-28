@@ -20,5 +20,5 @@ runs = [
     ]
 
 for run in runs:
-    cmd = ['cmsRun' , 'QIE10_testing_with_sequencer.py' , str(run[0]) , str(run[1])]
+    cmd = ['cmsRun' , 'QIE11_testing.py' , str(run[0]) , str(run[1])]
     subprocess.call(cmd)

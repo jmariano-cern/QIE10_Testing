@@ -11,12 +11,12 @@
 \#*\#
 
 # DATA DIRECTORIES
-QIE10_Testing/dat/*
-!QIE10_Testing/dat/.placeholder
-!QIE10_Testing/dat/output/.placeholder
-QIE10_Testing/img/*
-!QIE10_Testing/img/.placeholder
-QIE10_Testing/log/*
-!QIE10_Testing/log/.placeholder
-QIE10_Testing/python/*
-!QIE10_Testing/python/.placeholder
+QIE11_Testing/dat/*
+!QIE11_Testing/dat/.placeholder
+!QIE11_Testing/dat/output/.placeholder
+QIE11_Testing/img/*
+!QIE11_Testing/img/.placeholder
+QIE11_Testing/log/*
+!QIE11_Testing/log/.placeholder
+QIE11_Testing/python/*
+!QIE11_Testing/python/.placeholder

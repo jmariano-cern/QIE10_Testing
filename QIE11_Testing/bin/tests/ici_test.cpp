@@ -66,7 +66,7 @@ void ici_test(Int_t run_num) {
   TH1F *h6_temp = new TH1F();
   TFile *_file0 =  new TFile();
 
-  sprintf(file0_name,"../../dat/QIE10testing_%i_6.root",run_num);
+  sprintf(file0_name,"../../dat/QIE11testing_%i_6.root",run_num);
   _file0 = TFile::Open(file0_name);
   
   TCanvas *c1 = new TCanvas("c1","c1",100,100,1024,768);

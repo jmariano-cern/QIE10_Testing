@@ -39,7 +39,7 @@ using namespace std;
 struct loop_vars {
 
   int adcped = 4;
-  float qped = adc2fC_QIE10_refl[ adcped ];
+  float qped = adc2fC_QIE11_refl[ adcped ];
   float qsum = 0;
   float qmax = 0;
   int ts_max = 0;
@@ -103,9 +103,9 @@ loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_c
     bool TDC1_flag = 0;
     bool TDC2_flag = 0;
     for ( int iTS=0 ; iTS<digis.samples() ; iTS++) {
-      global.qsum += adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
-      if ((adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45) > global.qmax) {
-        global.qmax = adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
+      global.qsum += adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45;
+      if ((adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45) > global.qmax) {
+        global.qmax = adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45;
         global.ts_max = iTS;
       }
       if ((TDC1_flag == 0) && (digis[iTS].tdc() < 50)) {
@@ -125,13 +125,13 @@ loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_c
     global.qmax2m = -1;
     global.qmax3 = -1;
     if (global.ts_max > 0) {
-      global.qmax2m = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + (2*14.45);
+      global.qmax2m = adc2fC_QIE11_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + (2*14.45);
     }
     if (global.ts_max < 9) {
-      global.qmax2p = adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (2*14.45);
+      global.qmax2p = adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max+1].adc() ] + (2*14.45);
     }
     if ((global.ts_max > 0) && (global.ts_max < 9)) {
-      global.qmax3 = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (3*14.45);
+      global.qmax3 = adc2fC_QIE11_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max+1].adc() ] + (3*14.45);
     }
     int ref_offset = 999;
     if (global.ts_TDC1 > -1) {
@@ -158,9 +158,9 @@ loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_c
     bool TDC1_flag = 0;
     bool TDC2_flag = 0;
     for ( int iTS=0 ; iTS<digis.samples() ; iTS++) {
-      global.qsum += adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
-      if ((adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45) > global.qmax) {
-        global.qmax = adc2fC_QIE10_refl[ digis[iTS].adc() ] + 14.45;
+      global.qsum += adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45;
+      if ((adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45) > global.qmax) {
+        global.qmax = adc2fC_QIE11_refl[ digis[iTS].adc() ] + 14.45;
         global.ts_max = iTS;
       }
       if ((TDC1_flag == 0) && (digis[iTS].tdc() < 50)) {
@@ -180,13 +180,13 @@ loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_c
     global.qmax2m = -1;
     global.qmax3 = -1;
     if (global.ts_max > 0) {
-      global.qmax2m = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + (2*14.45);
+      global.qmax2m = adc2fC_QIE11_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + (2*14.45);
     }
     if (global.ts_max < 9) {
-      global.qmax2p = adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (2*14.45);
+      global.qmax2p = adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max+1].adc() ] + (2*14.45);
     }
     if ((global.ts_max > 0) && (global.ts_max < 9)) {
-      global.qmax3 = adc2fC_QIE10_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE10_refl[ digis[global.ts_max+1].adc() ] + (3*14.45);
+      global.qmax3 = adc2fC_QIE11_refl[ digis[global.ts_max-1].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max].adc() ] + adc2fC_QIE11_refl[ digis[global.ts_max+1].adc() ] + (3*14.45);
     }
     int ref_offset = 999;
     if (global.ts_TDC1 > -1) {
@@ -223,7 +223,7 @@ loop_vars loop(vector<std::string> parameter, vector<float> val, int suite_code,
     capid = capid;
     int soi = digis[nTS].soi();
     soi = soi;
-    float charge = adc2fC_QIE10_refl[ adc ] + 14.45;
+    float charge = adc2fC_QIE11_refl[ adc ] + 14.45;
     charge = charge;
     TH1F_perEVs[0]->Fill ( adc );
     TH2F_perEVs[0]->Fill ( nTS, adc );
@@ -250,7 +250,7 @@ loop_vars loop(vector<std::string> parameter, vector<float> val, int suite_code,
     capid = capid;
     int soi = digis[nTS].soi();
     soi = soi;
-    float charge = adc2fC_QIE10_refl[ adc ] + 14.45;
+    float charge = adc2fC_QIE11_refl[ adc ] + 14.45;
     charge = charge;
     TH1F_perEVs[0]->Fill ( adc );
     TH2F_perEVs[0]->Fill ( nTS, adc );

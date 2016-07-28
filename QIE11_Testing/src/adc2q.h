@@ -1,6 +1,6 @@
 #define NUMADCS 256
 
-double adc2fC_QIE10_refl[NUMADCS]={
+double adc2fC_QIE11_refl[NUMADCS]={
 
   // =========== RANGE 0 ===========
 

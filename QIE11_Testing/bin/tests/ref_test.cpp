@@ -98,7 +98,7 @@ void ref_test(Int_t run0_num,Int_t run1_num,Int_t run2_num) {
 
 		  cur_rin = Rins[rin];
 				  
-		  sprintf(file0_name,"../../dat/QIE10testing_%i_8.root",runs[r]);
+		  sprintf(file0_name,"../../dat/QIE11testing_%i_8.root",runs[r]);
 		  _file0 = TFile::Open(file0_name);
 
 		  sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","refabs_vs_rin_CH","refabs_vs_rin_CH",h+1,s+1,q+1);

@@ -35,7 +35,7 @@ void cid_test(Int_t run_num) {
   TH1F *h2_temp = new TH1F();
   TFile *_file0 =  new TFile();
 
-  sprintf(root_file_name,"../../dat/QIE10testing_%i_1.root",run_num);
+  sprintf(root_file_name,"../../dat/QIE11testing_%i_1.root",run_num);
   _file0 = TFile::Open(root_file_name);
 
   TCanvas *c1 = new TCanvas("c1","c1",100,100,1024,768);

@@ -50,7 +50,7 @@ void avc_scan() {
 
   for (Int_t r=0 ; r < num_runs ; r++) {
 
-    sprintf(file0_name,"../../dat/QIE10testing_%i_6.root",runs[r]);
+    sprintf(file0_name,"../../dat/QIE11testing_%i_6.root",runs[r]);
     _file0 = TFile::Open(file0_name); 
 
     num_good[r] = 24;

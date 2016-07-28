@@ -97,13 +97,12 @@ process.es_ascii = cms.ESSource('HcalTextCalibrations',
         input = cms.VPSet(
                cms.PSet(
                 object = cms.string('ElectronicsMap'),
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP_hardware_C53_HF23.txt')
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP_hardware_C53.txt')
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-C50_fiber.txt')
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-1CH.txt')
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-1CH2.txt')
-                #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP_QIE10_2016.txt')
-                file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/emap.txt')
+                #file = cms.FileInPath('HFcommissioning/QIE11_Testing/cfg/EMAP_hardware_C53_HF23.txt')
+                #file = cms.FileInPath('HFcommissioning/QIE11_Testing/cfg/EMAP_hardware_C53.txt')
+                #file = cms.FileInPath('HFcommissioning/QIE11_Testing/cfg/EMAP-C50_fiber.txt')
+                #file = cms.FileInPath('HFcommissioning/QIE11_Testing/cfg/EMAP-1CH.txt')
+                #file = cms.FileInPath('HFcommissioning/QIE11_Testing/cfg/EMAP-1CH2.txt')
+                file = cms.FileInPath('ngHCAL/QIE11_Testing/cfg/emap.txt')
                 )
         )
 )

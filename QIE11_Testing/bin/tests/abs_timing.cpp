@@ -88,7 +88,7 @@ void abs_timing() {
 
     f_runs[r] = (float)r;
 
-    sprintf(root_file_name,"../dat/QIE10testing_%i_5.root",runs[r]);  
+    sprintf(root_file_name,"../dat/QIE11testing_%i_5.root",runs[r]);  
 
     _file0 = TFile::Open(root_file_name);
     

@@ -59,7 +59,7 @@ void ped_test(Int_t run_num) {
   TH1F *h2_temp = new TH1F();
   TFile *_file0 =  new TFile();
   
-  sprintf(file0_name,"../../dat/QIE10testing_%i_4.root",run_num);
+  sprintf(file0_name,"../../dat/QIE11testing_%i_4.root",run_num);
   _file0 = TFile::Open(file0_name);
 
   gStyle->SetOptStat(0);
