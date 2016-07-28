@@ -28,7 +28,7 @@
 
 #include "DataFormats/HcalDetId/interface/HcalOtherDetId.h"
 #include "DataFormats/HcalDigi/interface/HcalQIESample.h"
-#include "DataFormats/HcalDigi/interface/QIE10DataFrame.h"
+#include "DataFormats/HcalDigi/interface/QIE11DataFrame.h"
 #include "DataFormats/HcalDetId/interface/HcalSubdetector.h"
 #include "DataFormats/HcalDetId/interface/HcalCalibDetId.h"
 
@@ -74,18 +74,18 @@
 #include <map>
 
 #include "adc2q.h"
-#include "QIE10_init.h"
-#include "QIE10_loop.h"
+#include "QIE11_init.h"
+#include "QIE11_loop.h"
 #include "unpack_name.h"
 
 using namespace std;
 
 
-class QIE10_testing : public edm::EDAnalyzer {
+class QIE11_testing : public edm::EDAnalyzer {
 
 public:
-  explicit QIE10_testing(const edm::ParameterSet&);
-  ~QIE10_testing();
+  explicit QIE11_testing(const edm::ParameterSet&);
+  ~QIE11_testing();
 
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
@@ -107,7 +107,7 @@ private:
   char histoName[100];
   char dirName[100];
 
-  TQIE10Info _qie10Info;
+  TQIE11Info _qie11Info;
 
   // THESE CAN BE AUTO GENERATED
 
@@ -198,10 +198,10 @@ private:
   virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
   virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 
-  edm::EDGetTokenT<HcalDataFrameContainer<QIE10DataFrame> > tok_QIE10DigiCollection_;
+  edm::EDGetTokenT<HcalDataFrameContainer<QIE11DataFrame> > tok_QIE11DigiCollection_;
   edm::EDGetTokenT<HFDigiCollection> hf_token;
   edm::EDGetTokenT<FEDRawDataCollection> raw_token;  
-  edm::Handle<QIE10DigiCollection> qie10DigiCollection;
+  edm::Handle<QIE11DigiCollection> qie11DigiCollection;
   edm::Handle<FEDRawDataCollection> raw_collection;  
 
   hcaltb::HcalTBSlowDataUnpacker sdp;
@@ -211,7 +211,7 @@ private:
 };
 
 
-QIE10_testing::QIE10_testing(const edm::ParameterSet& iConfig) :
+QIE11_testing::QIE11_testing(const edm::ParameterSet& iConfig) :
   _outFileName(iConfig.getUntrackedParameter<string>("OutFileName")),
   _verbosity(iConfig.getUntrackedParameter<int>("Verbosity")),
   _suite_code(iConfig.getUntrackedParameter<int>("Suite_Code")),
@@ -219,7 +219,7 @@ QIE10_testing::QIE10_testing(const edm::ParameterSet& iConfig) :
 
 {
 
-  tok_QIE10DigiCollection_ = consumes<HcalDataFrameContainer<QIE10DataFrame> >(edm::InputTag("hcalDigis"));
+  tok_QIE11DigiCollection_ = consumes<HcalDataFrameContainer<QIE11DataFrame> >(edm::InputTag("hcalDigis"));
   hf_token = consumes<HFDigiCollection>(edm::InputTag("hcalDigis"));
   raw_token = consumes<FEDRawDataCollection>(edm::InputTag("source"));
 
@@ -229,7 +229,7 @@ QIE10_testing::QIE10_testing(const edm::ParameterSet& iConfig) :
 
 }
 
-QIE10_testing::~QIE10_testing()
+QIE11_testing::~QIE11_testing()
 {
 
   // COLLAPSE INTO 'WRITE' FUNCTION
@@ -310,12 +310,12 @@ QIE10_testing::~QIE10_testing()
 
 }
 	
-void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSetup)
+void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSetup)
 {
   using namespace edm;
 
   //  Extracting All the Collections containing useful Info
-  iEvent.getByToken(tok_QIE10DigiCollection_,qie10DigiCollection);
+  iEvent.getByToken(tok_QIE11DigiCollection_,qie11DigiCollection);
 
   iEvent.getByToken(raw_token,raw_collection);
 
@@ -328,21 +328,21 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     slow_data.val.push_back(-999.0);    
   }
 
-  const QIE10DigiCollection& qie10dc=*(qie10DigiCollection);
+  const QIE11DigiCollection& qie11dc=*(qie11DigiCollection);
 
   if (_verbosity>0){
       cout << "### Before Loop: " << endl;
-      cout << "### QIE10 Digis=" << qie10dc.size() << endl;
+      cout << "### QIE11 Digis=" << qie11dc.size() << endl;
   }
 
-  QIE10DataFrame qie10df_0 = static_cast<QIE10DataFrame>(qie10dc[0]);
-  int tTS_0 = qie10df_0.samples();
-  unsigned int nCH = qie10dc.size();
+  QIE11DataFrame qie11df_0 = static_cast<QIE11DataFrame>(qie11dc[0]);
+  int tTS_0 = qie11df_0.samples();
+  unsigned int nCH = qie11dc.size();
 
   if (_event_num == 0){
     init(_suite_code,tTS_0,nCH,
 	 loggers,_num_loggers, logger_name, logger_log_file, 
-	 _file,_trees,_qie10Info,TTree_name,_num_TTrees,
+	 _file,_trees,_qie11Info,TTree_name,_num_TTrees,
 	 TH1F_perEVs,_num_TH1F_perEVs,TH1F_perEV_name,TH1F_perEV_nbinsx,TH1F_perEV_lowx,TH1F_perEV_highx,TH1F_perEV_titlex,
 	 TH1F_perCHs,_num_TH1F_perCHs,TH1F_perCH_name,TH1F_perCH_nbinsx,TH1F_perCH_lowx,TH1F_perCH_highx,TH1F_perCH_titlex,
 	 TH1F_PerTSs,_num_TH1F_PerTSs,TH1F_PerTS_name,TH1F_PerTS_nbinsx,TH1F_PerTS_lowx,TH1F_PerTS_highx,TH1F_PerTS_titlex,
@@ -375,14 +375,14 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
   loop_vars global;
   
-  pre_event_loop(slow_data.parameter,slow_data.val,_suite_code,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
+  pre_event_loop(slow_data.parameter,slow_data.val,_suite_code,_event_num,_qie11Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
   for (unsigned int j=0; j < nCH ; j++){
 
-    QIE10DataFrame qie10df = static_cast<QIE10DataFrame>(qie10dc[j]);
+    QIE11DataFrame qie11df = static_cast<QIE11DataFrame>(qie11dc[j]);
 
     // Extract info on detector location
-    DetId detid = qie10df.detid();
+    DetId detid = qie11df.detid();
     HcalDetId hcaldetid = HcalDetId(detid);
     bool flag0 = 0;
     bool flag1 = 0;
@@ -409,7 +409,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     else {
       depth = hcaldetid.depth();    
     }
-    int nTS = qie10df.samples();
+    int nTS = qie11df.samples();
 
     // WHY  AM I DOING THIS HERE (AND NOT IN INIT)?
     if(_event_num == 0) { // SAME AS LOOP OVER nCH
@@ -463,10 +463,10 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
     if (_verbosity>0){
       std::cout << "Printing raw dataframe" << std::endl;
-      std::cout << qie10df << std::endl;
+      std::cout << qie11df << std::endl;
             
       std::cout << "Printing content of samples() method" << std::endl;
-      std::cout << qie10df.samples() << std::endl;
+      std::cout << qie11df.samples() << std::endl;
     }
         
     if (_verbosity>0){
@@ -478,20 +478,20 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
         
     //******** PRELOOP ***********
 
-    global = pre_loop(slow_data.parameter,slow_data.val,_suite_code,global,qie10df,j,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
+    global = pre_loop(slow_data.parameter,slow_data.val,_suite_code,global,qie11df,j,_event_num,_qie11Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
     //********** LOOP ************
 	
     for(int i=0; i<nTS; ++i)
       {
 
-	global = loop(slow_data.parameter,slow_data.val,_suite_code,global,qie10df,i,j,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
+	global = loop(slow_data.parameter,slow_data.val,_suite_code,global,qie11df,i,j,_event_num,_qie11Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
       }
 
     //******** POSTLOOP ********
 
-    post_loop(slow_data.parameter,slow_data.val,_suite_code,global,qie10df,j,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
+    post_loop(slow_data.parameter,slow_data.val,_suite_code,global,qie11df,j,_event_num,_qie11Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
     if (_verbosity>0)
       std::cout << "The pedestal for this channel is " << global.adcped << "ADC counts and " << global.qped << " fC" << std::endl;
@@ -500,14 +500,14 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
   //maybe one channel not filled?
   //  for (int k = 0; k < 10 ; k++){
-  //    cout << _qie10Info.pulse_adc[0][k] << " ";
+  //    cout << _qie11Info.pulse_adc[0][k] << " ";
   //  }
   //  cout << endl;
   //_trees[0]->Fill();
 
   // ********* POST_EVENT_LOOP *************
 
-  post_event_loop(slow_data.parameter,slow_data.val,_suite_code,global,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
+  post_event_loop(slow_data.parameter,slow_data.val,_suite_code,global,_event_num,_qie11Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
   _event_num++;
 
@@ -517,7 +517,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
 // ------------ method called for each event  ------------
 void 
-QIE10_testing::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
+QIE11_testing::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   using namespace edm;
 
@@ -537,13 +537,13 @@ QIE10_testing::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 // ------------ method called once each job just before starting event loop  ------------
 void 
-QIE10_testing::beginJob()
+QIE11_testing::beginJob()
 {
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
-QIE10_testing::endJob() 
+QIE11_testing::endJob() 
 {
   //      _file->Write();
   //      _file->Close();
@@ -551,13 +551,13 @@ QIE10_testing::endJob()
 
 // ------------ method called when starting to processes a run  ------------
 void 
-QIE10_testing::beginRun(edm::Run const&, edm::EventSetup const&)
+QIE11_testing::beginRun(edm::Run const&, edm::EventSetup const&)
 {
 }
 
 // ------------ method called when ending the processing of a run  ------------
 void 
-QIE10_testing::endRun(edm::Run const&, edm::EventSetup const&)
+QIE11_testing::endRun(edm::Run const&, edm::EventSetup const&)
 {
   //      _file->Write();
   //      _file->Close();
@@ -565,19 +565,19 @@ QIE10_testing::endRun(edm::Run const&, edm::EventSetup const&)
 
 // ------------ method called when starting to processes a luminosity block  ------------
 void 
-QIE10_testing::beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
+QIE11_testing::beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
 {
 }
 
 // ------------ method called when ending the processing of a luminosity block  ------------
 void 
-QIE10_testing::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
+QIE11_testing::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
 {
 }
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
 void
-QIE10_testing::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
+QIE11_testing::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
   //The following says we do not know what parameters are allowed so do no validation
   // Please change this to state exactly what you do use, even if it is no parameters
   edm::ParameterSetDescription desc;
@@ -586,4 +586,4 @@ QIE10_testing::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
 }
 
 //define this as a plug-in
-DEFINE_FWK_MODULE(QIE10_testing);
+DEFINE_FWK_MODULE(QIE11_testing);

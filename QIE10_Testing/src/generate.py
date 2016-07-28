@@ -3,10 +3,10 @@ import re
 
 ##### IO FILES ######
 
-cfgfile_name = '../cfg/QIE10_testing.cfg'
-initfile_name = './QIE10_init.h'
-loopfile_name = './QIE10_loop.h'
-infofile_name = '../bin/QIE10_testing.info'
+cfgfile_name = '../cfg/QIE11_testing.cfg'
+initfile_name = './QIE11_init.h'
+loopfile_name = './QIE11_loop.h'
+infofile_name = '../bin/QIE11_testing.info'
 
 ##### DEFINITIONS #####
 
@@ -101,7 +101,7 @@ def print_header(infile,infile_name):
     infile.write('// ###' + 'Do not edit by hand!'.center(55) + '###\n')
     infile.write('// ###' + ''.center(55) + '###\n')
     infile.write('// ###' + 'Instead, modify the configuration file:'.center(55) + '###\n')
-    infile.write('// ###' + ' QIE10_testing.cfg'.center(55) + '###\n')
+    infile.write('// ###' + ' QIE11_testing.cfg'.center(55) + '###\n')
     infile.write('// ###' + 'and then rebuild with:'.center(55) + '###\n')
     infile.write('// ###' + './rebuild'.center(55) + '###\n')
     infile.write('// ###' + ''.center(55) + '###\n')
@@ -205,7 +205,7 @@ def print_loop():
     loopfile.write('// # PRE_EVENT_LOOPS #\n')
     loopfile.write('// ###################\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars pre_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars pre_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, int _event_num, TQIE11Info &_qie11Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     loopfile.write('  loop_vars global;\n')
     loopfile.write('\n')
@@ -224,9 +224,9 @@ def print_loop():
                                 if ((definitions[i][0] == 'TTree') and (line.strip() == '<fill>')):
                                     loopfile.write('  ' + line.split('<fill>')[0] + '_trees[' + str(test_num_in_suite) + ']->Fill();\n')
                                 elif line.find('<set_branch>') != -1:
-                                    loopfile.write('    _qie10Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
+                                    loopfile.write('    _qie11Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
                                 elif re.search('<branch=".*">',line) is not None:
-                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie10Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
+                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie11Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
                                 elif line.find('<log>') != -1:
                                     loopfile.write('  ' + line.replace('<log>','loggers[' + str(test_num_in_suite) + '] <<') + '\n')
                                 else:
@@ -243,7 +243,7 @@ def print_loop():
     loopfile.write('// # PRE_LOOPS #\n')
     loopfile.write('// #############\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars pre_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE11DataFrame digis, int nCH, int _event_num, TQIE11Info &_qie11Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -260,9 +260,9 @@ def print_loop():
                                 if ((definitions[i][0] == 'TTree') and (line.strip() == '<fill>')):
                                     loopfile.write('  ' + line.split('<fill>')[0] + '_trees[' + str(test_num_in_suite) + ']->Fill();\n')
                                 elif line.find('<set_branch>') != -1:
-                                    loopfile.write('    _qie10Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
+                                    loopfile.write('    _qie11Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
                                 elif re.search('<branch=".*">',line) is not None:
-                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie10Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
+                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie11Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
                                 elif line.find('<log>') != -1:
                                     loopfile.write('  ' + line.replace('<log>','loggers[' + str(test_num_in_suite) + '] <<') + '\n')
                                 else:
@@ -279,7 +279,7 @@ def print_loop():
     loopfile.write('// # LOOPS #\n')
     loopfile.write('// #########\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nTS, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE11DataFrame digis, int nTS, int nCH, int _event_num, TQIE11Info &_qie11Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -296,9 +296,9 @@ def print_loop():
                                 if ((definitions[i][0] == 'TTree') and (line.strip() == '<fill>')):
                                     loopfile.write('  ' + line.split('<fill>')[0] + '_trees[' + str(test_num_in_suite) + ']->Fill();\n')
                                 elif line.find('<set_branch>') != -1:
-                                    loopfile.write('    _qie10Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nTS][nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
+                                    loopfile.write('    _qie11Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nTS][nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
                                 elif re.search('<branch=".*">',line) is not None:
-                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie10Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
+                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie11Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
                                 elif line.find('<log>') != -1:
                                     loopfile.write('  ' + line.replace('<log>','loggers[' + str(test_num_in_suite) + '] <<') + '\n')
                                 else:
@@ -315,7 +315,7 @@ def print_loop():
     loopfile.write('// # POST_LOOPS #\n')
     loopfile.write('// ##############\n')
     loopfile.write('\n')
-    loopfile.write('loop_vars post_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE10DataFrame digis, int nCH, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('loop_vars post_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, QIE11DataFrame digis, int nCH, int _event_num, TQIE11Info &_qie11Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -332,9 +332,9 @@ def print_loop():
                                 if ((definitions[i][0] == 'TTree') and (line.strip() == '<fill>')):
                                     loopfile.write('  ' + line.split('<fill>')[0] + '_trees[' + str(test_num_in_suite) + ']->Fill();\n')
                                 elif line.find('<set_branch>') != -1:
-                                    loopfile.write('    _qie10Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
+                                    loopfile.write('    _qie11Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
                                 elif re.search('<branch=".*">',line) is not None:
-                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie10Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
+                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie11Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
                                 elif line.find('<log>') != -1:
                                     loopfile.write('  ' + line.replace('<log>','loggers[' + str(test_num_in_suite) + '] <<') + '\n')
                                 else:
@@ -351,7 +351,7 @@ def print_loop():
     loopfile.write('// # POST_EVENT_LOOPS #\n')
     loopfile.write('// ####################\n')
     loopfile.write('\n')
-    loopfile.write('void post_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, int _event_num, TQIE10Info &_qie10Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
+    loopfile.write('void post_event_loop(vector<std::string> parameter, vector<float> val, int suite_code, loop_vars global, int _event_num, TQIE11Info &_qie11Info, TTree** _trees, vector<TH1F*> &TH1F_perEVs, vector<vector<TH1F*> > &TH1F_perCHs, vector<vector<vector<TH1F*> > > &TH1F_PerTSs, vector<TH2F*> &TH2F_perEVs, vector<vector<TH2F*> > &TH2F_perCHs, vector<vector<vector<TH2F*> > > &TH2F_PerTSs, vector<vector<TH2F*> > &TProfiles, ofstream *loggers) {\n')
     loopfile.write('\n')
     for s in range(len(suites)):
         loopfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
@@ -368,9 +368,9 @@ def print_loop():
                                 if ((definitions[i][0] == 'TTree') and (line.strip() == '<fill>')):
                                     loopfile.write('  ' + line.split('<fill>')[0] + '_trees[' + str(test_num_in_suite) + ']->Fill();\n')
                                 elif line.find('<set_branch>') != -1:
-                                    loopfile.write('    _qie10Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
+                                    loopfile.write('    _qie11Info.' + line.replace('<set_branch>','').split('=')[0].strip()[1:-1] + '_' + data[i][j][0][0][1:-1] + '[nCH] = ' + line.replace('<set_branch>','').split('=')[1].strip() + ';\n')
                                 elif re.search('<branch=".*">',line) is not None:
-                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie10Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
+                                    loopfile.write('  ' + re.sub('<branch=".*">','_qie11Info.' + re.search('<branch=".*">',line).group().split('"')[1] + '_' + data[i][j][0][0][1:-1],line) + '\n')
                                 elif line.find('<log>') != -1:
                                     loopfile.write('  ' + line.replace('<log>','loggers[' + str(test_num_in_suite) + '] <<') + '\n')
                                 else:
@@ -438,7 +438,7 @@ def print_init():
     s = 0
     initfile.write('// --- Suite ' + suites[s][0] + ': ' + suites[s][1] + ' ---\n')
     initfile.write('\n')
-    initfile.write('struct TQIE10Info\n')
+    initfile.write('struct TQIE11Info\n')
     initfile.write('{\n')
     initfile.write('\n')
     initfile.write('  int numChs;\n')
@@ -471,7 +471,7 @@ def print_init():
     initfile.write('\n')
     initfile.write('void init(int suite_code, int tTS, int nCH,\n')
     initfile.write('           ofstream*& loggers, int &num_loggers, vector<string> &logger_name, vector<string> &logger_log_file,\n')
-    initfile.write('          TFile* _file, TTree**& _trees, TQIE10Info &_qie10Info, vector<string> &TTree_name, int &num_TTrees,\n')
+    initfile.write('          TFile* _file, TTree**& _trees, TQIE11Info &_qie11Info, vector<string> &TTree_name, int &num_TTrees,\n')
     initfile.write('          vector<TH1F*> &TH1F_perEVs, int &num_TH1F_perEVs, vector<string> &TH1F_perEV_name, vector<int> &TH1F_perEV_nbinsx, vector<float> &TH1F_perEV_lowx, vector<float> &TH1F_perEV_highx, vector<string> &TH1F_perEV_titlex,\n')
     initfile.write('          vector<vector<TH1F*> > &TH1F_perCHs, int &num_TH1F_perCHs, vector<string> &TH1F_perCH_name, vector<int> &TH1F_perCH_nbinsx, vector<float> &TH1F_perCH_lowx, vector<float> &TH1F_perCH_highx, vector<string> &TH1F_perCH_titlex,\n')
     initfile.write('          vector<vector<vector<TH1F*> > > &TH1F_PerTSs, int &num_TH1F_PerTSs, vector<string> &TH1F_PerTS_name, vector<int> &TH1F_PerTS_nbinsx, vector<float> &TH1F_PerTS_lowx, vector<float> &TH1F_PerTS_highx, vector<string> &TH1F_PerTS_titlex,\n')
@@ -482,7 +482,7 @@ def print_init():
     header = ''
     header = header + 'void init(int suite_code, int tTS, int nCH,\n'
     header = header + '          ofstream*& loggers, int &num_loggers, vector<string> &logger_name, vector<string> &logger_log_file,\n'
-    header = header + '          TFile* _file, TTree**& _trees, TQIE10Info &_qie10Info, vector<string> &TTree_name, int &num_TTrees,\n'
+    header = header + '          TFile* _file, TTree**& _trees, TQIE11Info &_qie11Info, vector<string> &TTree_name, int &num_TTrees,\n'
     header = header + '          vector<TH1F*> &TH1F_perEVs, int &num_TH1F_perEVs, vector<string> &TH1F_perEV_name, vector<int> &TH1F_perEV_nbinsx, vector<float> &TH1F_perEV_lowx, vector<float> &TH1F_perEV_highx, vector<string> &TH1F_perEV_titlex,\n'
     header = header + '          vector<vector<TH1F*> > &TH1F_perCHs, int &num_TH1F_perCHs, vector<string> &TH1F_perCH_name, vector<int> &TH1F_perCH_nbinsx, vector<float> &TH1F_perCH_lowx, vector<float> &TH1F_perCH_highx, vector<string> &TH1F_perCH_titlex,\n' 
     header = header + '          vector<vector<vector<TH1F*> > > &TH1F_PerTSs, int &num_TH1F_PerTSs, vector<string> &TH1F_PerTS_name, vector<int> &TH1F_PerTS_nbinsx, vector<float> &TH1F_PerTS_lowx, vector<float> &TH1F_PerTS_highx, vector<string> &TH1F_PerTS_titlex,\n'
@@ -507,8 +507,8 @@ def print_init():
                     initfile.write('    char branchDescription[100];\n')
  #                   initfile.write('    branchDescription = branchDescription;\n')
                     initfile.write('\n')
-                    initfile.write('    _qie10Info.numChs = nCH;\n')
-                    initfile.write('    _qie10Info.numTS = tTS;\n')
+                    initfile.write('    _qie11Info.numChs = nCH;\n')
+                    initfile.write('    _qie11Info.numTS = tTS;\n')
                     initfile.write('\n')
         for i in range(len(definitions)):
             if definitions[i][0] == 'TTree':
@@ -520,23 +520,23 @@ def print_init():
                                     if data[i][j][3][k][l] == 'perChannel':
                                         for m in range(len(branch_parameters)):
                                             if branch_parameters[m] == 'name':
-                                                initfile.write('    _qie10Info.')
+                                                initfile.write('    _qie11Info.')
                                                 initfile.write(data[i][j][3][k][m][1:-1] + '_' + data[i][j][0][0][1:-1] + ' = new ')
                                                 for n in range(len(branch_parameters)):
                                                     if branch_parameters[n] == 'type':
-                                                        initfile.write(data[i][j][3][k][n] + '[_qie10Info.numChs];\n')
+                                                        initfile.write(data[i][j][3][k][n] + '[_qie11Info.numChs];\n')
                                     if data[i][j][3][k][l] == 'perTS':
                                         for m in range(len(branch_parameters)):
                                             if branch_parameters[m] == 'name':
-                                                initfile.write('    _qie10Info.')
+                                                initfile.write('    _qie11Info.')
                                                 branch_name = data[i][j][3][k][m][1:-1];
                                                 initfile.write(branch_name + '_' + data[i][j][0][0][1:-1] + '= new ')
                                                 for n in range(len(branch_parameters)):
                                                     if branch_parameters[n] == 'type':
                                                         branch_type = data[i][j][3][k][n]
-                                                        initfile.write(branch_type + '*[_qie10Info.numTS];\n')
-                                                        initfile.write('    for (int i = 0; i < _qie10Info.numTS ; i++) {\n')
-                                                        initfile.write('      _qie10Info.' + branch_name + '_' + data[i][j][0][0][1:-1] + '[i] = new ' + branch_type + '[_qie10Info.numChs];\n')
+                                                        initfile.write(branch_type + '*[_qie11Info.numTS];\n')
+                                                        initfile.write('    for (int i = 0; i < _qie11Info.numTS ; i++) {\n')
+                                                        initfile.write('      _qie11Info.' + branch_name + '_' + data[i][j][0][0][1:-1] + '[i] = new ' + branch_type + '[_qie11Info.numChs];\n')
                                                         initfile.write('    }\n')
 
                                                         #initfile.write('    sprintf(branchName,"' + branch_name + '_TS%i",i);\n')
@@ -594,8 +594,8 @@ def print_init():
                     tree_num_in_suite = 0
                     for j in range(len(data[i])):
                         if suites[s][0] in data[i][j][2]:
-                            initfile.write('    _trees[' + str(tree_num_in_suite) + ']->Branch("numChs", &_qie10Info.numChs, "numChs/I");\n')
-                            initfile.write('    _trees[' + str(tree_num_in_suite) + ']->Branch("numTS", &_qie10Info.numTS, "numTS/I");\n')
+                            initfile.write('    _trees[' + str(tree_num_in_suite) + ']->Branch("numChs", &_qie11Info.numChs, "numChs/I");\n')
+                            initfile.write('    _trees[' + str(tree_num_in_suite) + ']->Branch("numTS", &_qie11Info.numTS, "numTS/I");\n')
                             for k in range(len(data[i][j][3])):
                                 for l in range(len(branch_parameters)):
                                     if branch_parameters[l] == 'scope':
@@ -603,7 +603,7 @@ def print_init():
                                             for m in range(len(branch_parameters)):
                                                 if branch_parameters[m] == 'name':
                                                     initfile.write('    _trees[' + str(tree_num_in_suite) + ']->Branch("')
-                                                    initfile.write(data[i][j][3][k][m][1:-1] + '", _qie10Info.' + data[i][j][3][k][m][1:-1] + '_' + data[i][j][0][0][1:-1] + ', "' + data[i][j][3][k][m][1:-1] + '/')
+                                                    initfile.write(data[i][j][3][k][m][1:-1] + '", _qie11Info.' + data[i][j][3][k][m][1:-1] + '_' + data[i][j][0][0][1:-1] + ', "' + data[i][j][3][k][m][1:-1] + '/')
                                                     for n in range(len(branch_parameters)):
                                                         if branch_parameters[n] == 'type':
                                                             initfile.write(ttree_types[data[i][j][3][k][n]] + '");\n')
@@ -611,14 +611,14 @@ def print_init():
                                             for m in range(len(branch_parameters)):
                                                 if branch_parameters[m] == 'name':
                                                     branch_name = data[i][j][3][k][m][1:-1];
-                                                    initfile.write('    for (int i = 0; i < _qie10Info.numTS ; i++) {\n')
+                                                    initfile.write('    for (int i = 0; i < _qie11Info.numTS ; i++) {\n')
                                                     initfile.write('      sprintf(branchName,"' + branch_name + '_TS%i",i);\n')
                                                     initfile.write('      sprintf(branchDescription,"' + branch_name + '_TS%i[numChs]/')
                                                     for n in range(len(branch_parameters)):
                                                         if branch_parameters[n] == 'type':
                                                             branch_type = data[i][j][3][k][n]
                                                             initfile.write(ttree_types[branch_type] + '",i);\n')
-                                                            initfile.write('      _trees[' + str(tree_num_in_suite) +']->Branch(branchName, _qie10Info.' + data[i][j][3][k][m][1:-1] + '_' + data[i][j][0][0][1:-1] + '[i],branchDescription);\n')
+                                                            initfile.write('      _trees[' + str(tree_num_in_suite) +']->Branch(branchName, _qie11Info.' + data[i][j][3][k][m][1:-1] + '_' + data[i][j][0][0][1:-1] + '[i],branchDescription);\n')
                                                     initfile.write('    }\n')
                             tree_num_in_suite = tree_num_in_suite + 1
         initfile.write('  }\n')

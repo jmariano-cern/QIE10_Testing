@@ -27,7 +27,7 @@ runNumber = sys.argv[2]
 
 process.source = cms.Source("HcalTBSource",
     fileNames = cms.untracked.vstring(
-        'file:/afs/cern.ch/work/j/jmariano/public/904_runs/B904_Integration_'+runNumber+'.root'
+        'file:/afs/cern.ch/work/j/jmariano/public/904_runs_HE/B904_Integration_'+runNumber+'.root'
     )
 )
 
@@ -54,7 +54,7 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
                                    HcalFirstFED = cms.untracked.int32(928),
                                    ComplainEmptyData = cms.untracked.bool(False),
                                    #       UnpackCalib = cms.untracked.bool(True),
-                                   FEDs = cms.untracked.vint32(928,930,932),
+                                   FEDs = cms.untracked.vint32(928,930,932,934),
                                    firstSample = cms.int32(0),
                                    lastSample = cms.int32(10)
                                    )
@@ -68,8 +68,8 @@ sequencer_flag = 0
 if len(sys.argv) == 5:
     sequencer_flag = int(sys.argv[4])
 
-process.hcalAnalyzer = cms.EDAnalyzer('QIE10_testing',
-        OutFileName = cms.untracked.string('../dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),
+process.hcalAnalyzer = cms.EDAnalyzer('QIE11_testing',
+        OutFileName = cms.untracked.string('../dat/QIE11testing_'+runNumber+'_'+str(suite_code)+'.root'),
         Verbosity = cms.untracked.int32(0),
         Suite_Code = cms.untracked.int32(suite_code),
         Sequencer_Flag = cms.untracked.int32(sequencer_flag)

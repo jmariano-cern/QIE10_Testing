@@ -75,7 +75,7 @@ def print_emap():
 
     ID = '42075C'
     fibers = 24
-    channels = 4
+    channels = 6
 
     channel_counter = 0
     fiber_counter = 0

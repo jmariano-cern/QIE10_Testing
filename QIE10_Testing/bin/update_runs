@@ -6,7 +6,7 @@
 # NOTE --- This script also assumes that you have a folder called '904_runs' in the public folder
 #          of your lxplus work area. If you don't have one, you should create it.
 
-rsync -avv -e "ssh -A $(whoami)@cms904usr ssh" hcal904daq02:/tmp/*.root /afs/cern.ch/work/$(echo `whoami` | awk '{print substr($0,0,1)}')/$(whoami)/public/904_runs | grep -v uptodate
+rsync -avv -e "ssh -A $(whoami)@cms904usr ssh" hcal904daq03:/tmp/*.root /afs/cern.ch/work/$(echo `whoami` | awk '{print substr($0,0,1)}')/$(whoami)/public/904_runs_HE | grep -v uptodate
 
 #CMS904USR_NAME="jmariano"
 #rsync -avv -e "ssh -A $CMS904USR_NAME@cms904usr ssh" hcal904daq02:/tmp/*.root /afs/cern.ch/work/$(echo `whoami` | awk '{print substr($0,0,1)}')/$(whoami)/public/904_runs | grep -v uptodate
