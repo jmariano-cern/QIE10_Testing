@@ -10,6 +10,9 @@
 *~
 \#*\#
 
+# HE ANALYZER BRANCH
+QIE11_Testing/*
+
 # DATA DIRECTORIES
 QIE10_Testing/dat/*
 !QIE10_Testing/dat/.placeholder
@@ -20,3 +23,6 @@ QIE10_Testing/log/*
 !QIE10_Testing/log/.placeholder
 QIE10_Testing/python/*
 !QIE10_Testing/python/.placeholder
+
+# BACKUPS
+*.BAK

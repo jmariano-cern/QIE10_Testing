@@ -14,7 +14,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100000) )
 import sys
 if ((len(sys.argv) < 3) or (len(sys.argv) > 5)):
     print "### ERROR: Bad Call!"
-    print "### Use: cmsRun h2testbeamanalyzer_cfg.py <run number> <suite_code -- (optional)>"
+    print "### Use: cmsRun QIE10_testing.py <run number> <suite_code (see QIE10_testing.info)> <dimensionality_of_scan>"
     sys.exit(1)
 
 #
@@ -90,7 +90,7 @@ from Configuration.AlCa.autoCond import autoCond
 #from CondCore.DBCommon.CondDBSetup_cfi import *
 from CondCore.CondDB.CondDB_cfi import *
 
-process.GlobalTag.globaltag = autoCond['startup'] 
+process.GlobalTag.globaltag = autoCond['startup']
 
 #   EMAP Needed for H2 DATA
 process.es_ascii = cms.ESSource('HcalTextCalibrations',

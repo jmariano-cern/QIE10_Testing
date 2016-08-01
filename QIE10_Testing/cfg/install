@@ -1,0 +1,58 @@
+#!/usr/bin/python
+
+from os import system as call
+from os import chdir as cd
+from getpass import getuser
+from sys import exit
+
+yn = 0
+
+print('Before installation, you MUST have enabled your lxplus work area.')
+yn = raw_input('Is your work area enabled? -- ')
+
+if ((yn != 'Yes') and (yn != 'yes')and (yn != 'Y') and (yn != 'y') and (yn != 'OK')and (yn != 'Ok') and (yn != 'ok') and (yn != '1')):
+    print 'Installation failed. Please enable your work area (see: https://resources.web.cern.ch/resources/Help/?kbid=067040) and try again.'
+    exit()
+
+userpath =  getuser()[0] + '/' + getuser()
+
+print 'Creating folder to store raw run data: /afs/cern.ch/work/' + userpath + '/public/904_runs...'
+call('mkdir /afs/cern.ch/work/' + userpath + '/public/904_runs')
+
+print 'Linking QIE10_Testing/bin/QIE10_testing.py to your work area...'
+file_name = '../bin/QIE10_testing.py'
+
+infile = open(file_name,'r')
+lines_in = infile.readlines()
+infile.close()
+
+call('rm ' + file_name)
+call('touch ' + file_name)
+
+outfile = open(file_name,'w') 
+
+for line in lines_in:
+    if (line.find('$USERPATH') != -1):
+        outfile.write(line.rstrip().replace('$USERPATH',userpath) + '\n')
+    else:
+        outfile.write(line.rstrip() + '\n')
+
+outfile.close()
+
+print 'Building map files...'
+cd('../src')
+call('./remap')
+print 'Building the analyzer core...'
+call('python generate.py')
+cd('../..')
+print 'Compiling the analyzer...'
+call('scram b -j 8')
+print 'Analyzer compiled.'
+print '#######################################################################'
+print '#######################################################################'
+print 'Acquiring the raw data. Please enter your password for the 904 cluster.'
+print "(If you don't want to update the runs, you can cancel with CTRL+C)"
+cd('./QIE10_Testing/bin')
+call('./update_runs')
+print 'Installion complete.'
+
