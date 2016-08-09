@@ -140,8 +140,8 @@ void vbs_test(Int_t run_num) {
 	      c1->Clear();
 
 	      ref_flag = 0;
-	      for (int binx=11 ; binx<26 ; binx ++) {
-		if (h1_temp->GetBinContent(binx) - h1_temp->GetBinContent(binx-1) < -0.01 ) {
+	      for (int binx=11 ; binx<27 ; binx ++) {
+		if (h1_temp->GetBinContent(binx) - h1_temp->GetBinContent(binx-1) < -0.005 ) {
 		  ref_flag = 1;
 		}
 	      }
