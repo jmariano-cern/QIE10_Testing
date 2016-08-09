@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Call this script with:
+#    analyze <run number> <test_suite>
+# For information about the test suites, check the QIE10_testing.info file
+
+cmsRun QIE10_testing.py $1 $2
+

@@ -64,7 +64,7 @@ suite_code = 0
 if len(sys.argv) > 3:
     suite_code = int(sys.argv[3])
 
-sequencer_flag = 0
+sequencer_flag = 1
 if len(sys.argv) == 5:
     sequencer_flag = int(sys.argv[4])
 
