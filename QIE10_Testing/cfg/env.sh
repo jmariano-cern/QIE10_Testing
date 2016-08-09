@@ -1,0 +1,2 @@
+PATH=$PATH:$QIE10ROOT/bin
+PATH=$PATH:$QIE10ROOT/bin/tests

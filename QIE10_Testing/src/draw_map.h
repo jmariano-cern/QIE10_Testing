@@ -116,7 +116,7 @@ void draw_map(bool*** lv2_err_map, int run_num, char const* folder_name, char co
       
       hf++;
 
-      sprintf(figure_name,"../../img/%i/%s/%s_HF%i.png",run_num,folder_name,title,hf);
+      sprintf(figure_name,"$QIE10ROOT/img/%i/%s/%s_HF%i.png",run_num,folder_name,title,hf);
       c1->SaveAs(figure_name);
       c1->Close();
 

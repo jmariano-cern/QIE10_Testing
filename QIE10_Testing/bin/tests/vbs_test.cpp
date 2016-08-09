@@ -53,9 +53,9 @@ void vbs_test(Int_t run_num) {
   char figure1_name[512];
   char figure2_name[512];
 
-  sprintf(dir_name,"mkdir ../../img/%i",run_num);
+  sprintf(dir_name,"mkdir $QIE10ROOT/img/%i",run_num);
   system(dir_name);
-  sprintf(dir_name,"mkdir ../../img/%i/vbs_test",run_num);
+  sprintf(dir_name,"mkdir $QIE10ROOT/img/%i/vbs_test",run_num);
   system(dir_name);
 
   TH1F *h0_temp = new TH1F();
@@ -63,7 +63,7 @@ void vbs_test(Int_t run_num) {
   TH1F *h2_temp = new TH1F();
   TFile *_file0 =  new TFile();
   
-  sprintf(file0_name,"../../dat/QIE10testing_%i_7.root",run_num);
+  sprintf(file0_name,"$QIE10ROOT/dat/QIE10testing_%i_7.root",run_num);
   _file0 = TFile::Open(file0_name);
 
   gStyle->SetOptStat(0);
@@ -71,7 +71,7 @@ void vbs_test(Int_t run_num) {
 
   TCanvas *c1 = new TCanvas("c1","c1",100,100,1024,768);
   //sprintf(hist2_name,"%s/%s","PedScan_qav_EV","PedScan_qav_EV");
-  //sprintf(figure0_name,"../../img/%i/ped_test/Scan.png",run_num);
+  //sprintf(figure0_name,"$QIE10ROOT/img/%i/ped_test/Scan.png",run_num);
   //h2_temp = (TH1F*)_file0->Get(hist2_name);
   //h2_temp->Draw("box");
   //c1->SaveAs(figure0_name);
@@ -107,7 +107,7 @@ void vbs_test(Int_t run_num) {
 	      //cout << vbs_top << endl;
 	      //cout << vbs_a << endl;
 	      //cout << vbs_b << endl;
-	      sprintf(figure0_name,"../../img/%i/vbs_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+	      sprintf(figure0_name,"$QIE10ROOT/img/%i/vbs_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 	      //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
 	      h0_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
 	      h0_temp->GetYaxis()->SetTitle("Integrated Charge (fC)");
@@ -130,7 +130,7 @@ void vbs_test(Int_t run_num) {
 
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_PR","qratio_PR",h+1,s+1,q+1);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);
-	      sprintf(figure1_name,"../../img/%i/vbs_test/ratio2_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+	      sprintf(figure1_name,"$QIE10ROOT/img/%i/vbs_test/ratio2_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 	      //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
 	      h1_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
 	      h1_temp->GetYaxis()->SetTitle("(Qmax+Qnext)/Qsum");
@@ -148,7 +148,7 @@ void vbs_test(Int_t run_num) {
 	      if (ref_flag == 1) {
 		cout << " <<< REFLECTION???" << endl;
 		sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","QvsTS_2.5V","QvsTS_2.5V",h+1,s+1,q+1);
-		sprintf(figure2_name,"../../img/%i/vbs_test/QvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+		sprintf(figure2_name,"$QIE10ROOT/img/%i/vbs_test/QvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
 		h2_temp = (TH1F*)_file0->Get(hist2_name);
 		h2_temp->Draw("box");
 		c1->SaveAs(figure2_name);

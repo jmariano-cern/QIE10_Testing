@@ -2,7 +2,8 @@
 
 from os import system as call
 from os import chdir as cd
-from getpass import getuser
+from os import environ as env
+from getpass import getuser as user
 from sys import exit
 
 yn = 0
@@ -14,45 +15,32 @@ if ((yn != 'Yes') and (yn != 'yes')and (yn != 'Y') and (yn != 'y') and (yn != 'O
     print 'Installation failed. Please enable your work area (see: https://resources.web.cern.ch/resources/Help/?kbid=067040) and try again.'
     exit()
 
-userpath =  getuser()[0] + '/' + getuser()
+print 'Creating folder to store raw run data: /afs/cern.ch/work/' + user()[0] + '/' + user() + '/public/904_runs...'
+call('mkdir /afs/cern.ch/work/' + user()[0] + '/' + user() + '/public/904_runs')
 
-print 'Creating folder to store raw run data: /afs/cern.ch/work/' + userpath + '/public/904_runs...'
-call('mkdir /afs/cern.ch/work/' + userpath + '/public/904_runs')
-
-print 'Linking QIE10_Testing/bin/QIE10_testing.py to your work area...'
-file_name = '../bin/QIE10_testing.py'
-
-infile = open(file_name,'r')
-lines_in = infile.readlines()
-infile.close()
-
-call('rm ' + file_name)
-call('touch ' + file_name)
-
-outfile = open(file_name,'w') 
-
-for line in lines_in:
-    if (line.find('$USERPATH') != -1):
-        outfile.write(line.rstrip().replace('$USERPATH',userpath) + '\n')
-    else:
-        outfile.write(line.rstrip() + '\n')
-
-outfile.close()
+print 'Setting environment variables...'
+call('echo -e "export QIE10ROOT=$(cd .. && pwd)\n$(cat env.sh)" > env.sh')
+call('source ./env.sh')
 
 print 'Building map files...'
-cd('../src')
+
+cd(env['QIE10ROOT'] + '/src')
 call('./remap')
+
 print 'Building the analyzer core...'
 call('python generate.py')
-cd('../..')
+cd(env['QIE10ROOT'])
+
 print 'Compiling the analyzer...'
 call('scram b -j 8')
 print 'Analyzer compiled.'
+
 print '#######################################################################'
 print '#######################################################################'
 print 'Acquiring the raw data. Please enter your password for the 904 cluster.'
 print "(If you don't want to update the runs, you can cancel with CTRL+C)"
-cd('./QIE10_Testing/bin')
+
+cd(env['QIE10ROOT'] + '/bin')
 call('./update_runs')
 print 'Installion complete.'
 

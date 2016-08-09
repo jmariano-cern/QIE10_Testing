@@ -1,5 +1,6 @@
 import os
 import FWCore.ParameterSet.Config as cms
+from getpass import getuser as user
 
 process = cms.Process("ReflectionAnalysis")
 
@@ -27,7 +28,7 @@ runNumber = sys.argv[2]
 
 process.source = cms.Source("HcalTBSource",
     fileNames = cms.untracked.vstring(
-        'file:/afs/cern.ch/work/$USERPATH/public/904_runs/B904_Integration_'+runNumber+'.root'
+        'file:/afs/cern.ch/work/' + user()[0] + '/' + user() + '/public/904_runs/B904_Integration_'+runNumber+'.root'
     )
 )
 
@@ -69,7 +70,7 @@ if len(sys.argv) == 5:
     sequencer_flag = int(sys.argv[4])
 
 process.hcalAnalyzer = cms.EDAnalyzer('QIE10_testing',
-        OutFileName = cms.untracked.string('../dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),
+        OutFileName = cms.untracked.string('$QIE10ROOT/dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),
         Verbosity = cms.untracked.int32(0),
         Suite_Code = cms.untracked.int32(suite_code),
         Sequencer_Flag = cms.untracked.int32(sequencer_flag)
