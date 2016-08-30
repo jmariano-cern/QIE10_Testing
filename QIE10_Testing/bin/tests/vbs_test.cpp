@@ -48,6 +48,7 @@ void vbs_test(Int_t run_num) {
   char hist1_name[512];
   char hist2_name[512];
   char file0_name[512];
+  char outputfile0_name[512];
   char dir_name[512];
   char figure0_name[512];
   char figure1_name[512];
@@ -57,11 +58,14 @@ void vbs_test(Int_t run_num) {
   system(dir_name);
   sprintf(dir_name,"mkdir $QIE10ROOT/img/%i/vbs_test",run_num);
   system(dir_name);
+  sprintf(dir_name,"mkdir $QIE10ROOT/img/%i/vbs_test/rootFiles",run_num);
+  system(dir_name);
 
   TH1F *h0_temp = new TH1F();
   TH1F *h1_temp = new TH1F();
   TH1F *h2_temp = new TH1F();
   TFile *_file0 =  new TFile();
+  TFile *output_file = new TFile();
   
   sprintf(file0_name,"$QIE10ROOT/dat/QIE10testing_%i_7.root",run_num);
   _file0 = TFile::Open(file0_name);
@@ -91,8 +95,12 @@ void vbs_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
+	  sprintf(outputfile0_name,"../../img/%i/vbs_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  output_file = new TFile(outputfile0_name,"RECREATE");
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->mkdir(dir_name);
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","Qsum_vs_Vb_PR","Qsum_vs_Vb_PR",h+1,s+1,q+1);
 	      cout << hist0_name << endl;
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
@@ -167,11 +175,19 @@ void vbs_test(Int_t run_num) {
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
 	      */
+	      output_file->cd();
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->cd(dir_name);
+	      h0_temp->Write();
+	      h1_temp->Write();
+	      vb_scan->Write();
 	      h0_temp->Delete();
 	      h1_temp->Delete();
 	      vb_scan->Delete();
 	    }
 	  }
+	  output_file->Write();
+	  output_file->Close();
 	}
       }
     }
