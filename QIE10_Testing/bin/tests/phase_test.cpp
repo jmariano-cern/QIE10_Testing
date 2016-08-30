@@ -69,7 +69,7 @@ void phase_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
-	  sprintf(outputfile0_name,"../../img/%i/vbs_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  sprintf(outputfile0_name,"../../img/%i/phase_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
 	  output_file = new TFile(outputfile0_name,"RECREATE");
 	  double slopes[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	  for (Int_t q = 0; q < QI_num; q++) {
