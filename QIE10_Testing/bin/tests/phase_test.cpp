@@ -64,6 +64,8 @@ void phase_test(Int_t run_num) {
   bool*** lv2_err_map_slope = create_error_map();
   bool*** lv2_err_map_residual = create_error_map();
   bool*** lv2_err_map_gen = create_error_map();
+  double slopes[24];
+  
 
   for (Int_t h = 0; h < HF_num; h++) {
     if (lv0_mask[h] == 1) {
@@ -71,7 +73,7 @@ void phase_test(Int_t run_num) {
 	if (lv1_mask[h][s] == 1) {
 	  sprintf(outputfile0_name,"../../img/%i/phase_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
 	  output_file = new TFile(outputfile0_name,"RECREATE");
-	  double slopes[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	  memset(slopes,0.0,sizeof(slopes));//[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
 	      sprintf(dir_name,"QIE%i",q+1);
@@ -156,6 +158,7 @@ void phase_test(Int_t run_num) {
 	  slopeDist.DrawCopy("same");
 	  sprintf(figure0_name,"../../img/%i/phase_test/PhaseDelaySlope_HF%i_SL%i.png",run_num,h+1,s+1);
 	  c1->SaveAs(figure0_name);	  
+	  slopeDist.Delete();
 	  output_file->Write();
 	  output_file->Close();
 	}
