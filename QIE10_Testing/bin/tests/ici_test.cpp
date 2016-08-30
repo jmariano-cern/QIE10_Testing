@@ -46,6 +46,7 @@ void ici_test(Int_t run_num) {
   char hist5_name[512];
   char hist6_name[512];
   char file0_name[512];
+  char outputfile0_name[512];
   char dir_name[512];
   char figure0_name[512];
   char figure1_name[512];
@@ -56,6 +57,8 @@ void ici_test(Int_t run_num) {
   system(dir_name);
   sprintf(dir_name,"mkdir ../../img/%i/ici_test",run_num);
   system(dir_name);
+  sprintf(dir_name,"mkdir ../../img/%i/ici_test/rootFiles",run_num);
+  system(dir_name);
 
   TH1F *h0_temp = new TH1F();
   TH1F *h1_temp = new TH1F();
@@ -65,6 +68,7 @@ void ici_test(Int_t run_num) {
   TH1F *h5_temp = new TH1F();
   TH1F *h6_temp = new TH1F();
   TFile *_file0 =  new TFile();
+  TFile *output_file =  new TFile();
 
   sprintf(file0_name,"../../dat/QIE10testing_%i_6.root",run_num);
   _file0 = TFile::Open(file0_name);
@@ -109,8 +113,16 @@ void ici_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
+	  sprintf(outputfile0_name,"../../img/%i/ici_test/rootFiles/ICITest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  output_file = new TFile(outputfile0_name,"RECREATE");
+	  
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->mkdir(dir_name);
+	      sprintf(dir_name,"QIE%i/pulses",q+1);
+	      output_file->mkdir(dir_name);
+
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","ici_scan_CH","ici_scan_CH",h+1,s+1,q+1);
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","T_abs_CH","T_abs_CH",h+1,s+1,q+1);
 	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_ICI7_CH","qratio_ICI7_CH",h+1,s+1,q+1);
@@ -164,14 +176,30 @@ void ici_test(Int_t run_num) {
 		lv2_err_map_gen[h][s][q] = 0;
 	      }
 	      cout << endl;
+	      output_file->cd();
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->cd(dir_name);
+	      h0_temp->Write();
+	      h1_temp->Write();
+	      h2_temp->Write();
 	      h0_temp->Delete();
 	      h1_temp->Delete();
 	      h2_temp->Delete();
 	      h3_temp->Delete();
 	      fit_ici->Delete();
 	      c1->Clear();
+	      sprintf(dir_name,"QIE%i/pulses",q+1);
+	      output_file->cd(dir_name);
+	      for (int i_pulse = 0; i_pulse < 8; i_pulse++){
+		sprintf(hist3_name,"pulse_ICI%i_CH/pulse_ICI%i_CH_HF%i_Slot%i_QIE%i",i_pulse,i_pulse,h+1,s+1,q+1);
+		h3_temp = (TH1F*)_file0->Get(hist3_name);
+		h3_temp->Write();
+		h3_temp->Delete();
+	      }
 	    }
 	  }
+	  output_file->Write();
+	  output_file->Close();
 	}
       }
     }

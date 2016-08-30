@@ -24,16 +24,20 @@ void cid_test(Int_t run_num) {
   char root_file_name[512];
   char dir_name[512];
   char figure0_name[512];
+  char outputfile0_name[512];
 
   sprintf(dir_name,"mkdir ../../img/%i",run_num);  
   system(dir_name);
   sprintf(dir_name,"mkdir ../../img/%i/capid_test",run_num);  
+  system(dir_name);
+  sprintf(dir_name,"mkdir ../../img/%i/capid_test/rootFiles",run_num);
   system(dir_name);
 
   TH1F *h0_temp = new TH1F();
   TH1F *h1_temp = new TH1F();
   TH1F *h2_temp = new TH1F();
   TFile *_file0 =  new TFile();
+  TFile *output_file =  new TFile();
 
   sprintf(root_file_name,"../../dat/QIE10testing_%i_1.root",run_num);
   _file0 = TFile::Open(root_file_name);
@@ -54,13 +58,20 @@ void cid_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
+	  sprintf(outputfile0_name,"../../img/%i/capid_test/rootFiles/CapIDTest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  output_file = new TFile(outputfile0_name,"RECREATE");
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->mkdir(dir_name);
+
 	      //sprintf(hist_name,"%s/%s_HF%i_Slot%i_QIE%i","ADC_ped_CH","ADC_ped_CH",lv0_map[h],lv1_map[h][s],lv2_map[h][s][q]);
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","CapIDrot_CH","CapIDrot_CH",h+1,s+1,q+1);
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","CapAllign_CH","CapAllign_CH",h+1,s+1,q+1);
+	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","CIDvsTS_CH","CIDvsTS_CH",h+1,s+1,q+1);
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);
+	      h2_temp = (TH1F*)_file0->Get(hist2_name);
 	      if ( ( h0_temp->GetMean() != 0 ) || ( h0_temp->GetRMS() != 0 ) || (h0_temp->GetEntries() < 10) ) {
 		lv2_err_map_rot[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
@@ -69,10 +80,19 @@ void cid_test(Int_t run_num) {
 		lv2_err_map_all[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
+	      output_file->cd();	      
+	      sprintf(dir_name,"QIE%i",q+1);
+	      output_file->cd(dir_name);
+	      h0_temp->Write();
+	      h1_temp->Write();
+	      h2_temp->Write();
 	      h0_temp->Delete();
 	      h1_temp->Delete();
+	      h2_temp->Delete();
 	    }
 	  }
+	  output_file->Write();
+	  output_file->Close();
 	}
       }
     }
