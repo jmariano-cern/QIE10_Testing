@@ -32,6 +32,8 @@ void phase_test(Int_t run_num) {
   system(dir_name);
   sprintf(dir_name,"mkdir ../../img/%i/phase_test",run_num);
   system(dir_name);
+  sprintf(dir_name,"mkdir ../../img/%i/phase_test/rootFiles",run_num);
+  system(dir_name);
 
   TH2F *h0_temp = new TH2F();
   TProfile *p0_temp = new TProfile();
