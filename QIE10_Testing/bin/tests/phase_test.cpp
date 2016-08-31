@@ -36,6 +36,7 @@ void phase_test(Int_t run_num) {
   system(dir_name);
 
   TH2F *h0_temp = new TH2F();
+  TH2F *h1_temp = new TH2F();
   TProfile *p0_temp = new TProfile();
   TF1 *fitFunction = new TF1();
   TFile *_file0 =  new TFile();
@@ -66,6 +67,7 @@ void phase_test(Int_t run_num) {
   bool*** lv2_err_map_gen = create_error_map();
   double slopes[24];
   
+  double tempVal = 0;
 
   for (Int_t h = 0; h < HF_num; h++) {
     if (lv0_mask[h] == 1) {
@@ -73,7 +75,7 @@ void phase_test(Int_t run_num) {
 	if (lv1_mask[h][s] == 1) {
 	  sprintf(outputfile0_name,"../../img/%i/phase_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
 	  output_file = new TFile(outputfile0_name,"RECREATE");
-	  memset(slopes,0.0,sizeof(slopes));//[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	  //	  memset(slopes,0.0,sizeof(slopes));//[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
 	      sprintf(dir_name,"QIE%i",q+1);
@@ -81,7 +83,20 @@ void phase_test(Int_t run_num) {
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","phase_scan_CID_CH","phase_scan_CID_CH",h+1,s+1,q+1);
 	      cout << hist0_name << endl;
 	      h0_temp = (TH2F*)_file0->Get(hist0_name);
-	      p0_temp = (TProfile*) h0_temp->ProfileX();
+	      h1_temp = (TH2F*)h0_temp->Clone();
+	      h1_temp->GetXaxis()->SetRange(1,1);
+	      if (h1_temp->GetMean(2) < 50){
+		for (int i_x = 1; i_x < 101; i_x++){
+		  for (int i_y = 1; i_y < 50; i_y++){
+		    h1_temp->SetBinContent(i_x, i_y+100, h1_temp->GetBinContent(i_x, i_y));
+		    h1_temp->SetBinContent(i_x, i_y, 0);
+		  }
+		}
+	      }
+
+	      h1_temp->GetXaxis()->SetRange(-1,-1);
+
+	      p0_temp = (TProfile*) h1_temp->ProfileX();
 	      p0_temp->Fit("pol1","Q");
 	      fitFunction = p0_temp->GetFunction("pol1");
 	      phaseSlope = fitFunction->GetParameter(1);
@@ -109,62 +124,46 @@ void phase_test(Int_t run_num) {
 		}
 	      }
 
-	      
-	      // sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio2_vb_PR","qratio2_vb_PR",h+1,s+1,q+1);
-	      // h1_temp = (TH1F*)_file0->Get(hist1_name);
-	      // sprintf(figure1_name,"../../img/%i/vbs_test/ratio2_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
-	      // //h0_temp->SetTitle("Bias Voltage Scan with Sequencer");
-	      // h1_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
-	      // h1_temp->GetYaxis()->SetTitle("(Qmax+Qnext)/Qsum");
-	      // h1_temp->GetYaxis()->SetTitleOffset(1.5);
-	      // h1_temp->Draw();
-	      // c1->SaveAs(figure1_name);
-	      // c1->Clear();
-
-	      /*
-	      if ((ped_slope > ped_slope_high) || (ped_slope < ped_slope_low) || (h1_temp->GetEntries() < 10)) {
-		lv2_err_map_slope[h][s][q] = 0;
-		lv2_err_map_gen[h][s][q] = 0;
-	      }	
-	      */
 	      output_file->cd();
 	      sprintf(dir_name,"QIE%i",q+1);
 	      output_file->cd(dir_name);
 	      h0_temp->Write();
 	      p0_temp->Write();
 	      h0_temp->Delete();
+	      h1_temp->Delete();
 	      p0_temp->Delete();
 	    }
 	  }
-	  char outputHistName[100];
-	  sprintf(outputHistName,"PhaseSlopes_HF%i_Slot%i",h+1,s+1);
-	  TH1F slopeDist = TH1F(outputHistName, outputHistName, 20,-1.01,-0.99);
-	  for (int n=0; n<24;n++){
-	    if (slopes[n]>-0.99){
-	      slopeDist.Fill(-0.991);
-	    } else if (slopes[n]>-1.01){
-	      slopeDist.Fill(slopes[n]);
-	    } else{
-	      slopeDist.Fill(-1.009);
-	    }
-	  }
-	  slopeDist.SetFillColor(kRed);
-	  slopeDist.GetXaxis()->SetTitle("Phase Delay Slope");
-	  slopeDist.GetYaxis()->SetTitle("Channels");
-	  slopeDist.GetYaxis()->SetTitleOffset(1.5);
-	  slopeDist.DrawCopy();
-	  slopeDist.GetXaxis()->SetRange(6,14);
-	  slopeDist.SetFillColor(kGreen);
-	  slopeDist.DrawCopy("same");
-	  sprintf(figure0_name,"../../img/%i/phase_test/PhaseDelaySlope_HF%i_SL%i.png",run_num,h+1,s+1);
-	  c1->SaveAs(figure0_name);	  
-	  slopeDist.Delete();
+	  // char outputHistName[100];
+	  // sprintf(outputHistName,"PhaseSlopes_HF%i_Slot%i",h+1,s+1);
+	  // TH1F slopeDist = TH1F(outputHistName, outputHistName, 20,-1.01,-0.99);
+	  // for (int n=0; n<24;n++){
+	  //   if (slopes[n]>-0.99){
+	  //     slopeDist.Fill(-0.991);
+	  //   } else if (slopes[n]>-1.01){
+	  //     slopeDist.Fill(slopes[n]);
+	  //   } else{
+	  //     slopeDist.Fill(-1.009);
+	  //   }
+	  // }
+	  // slopeDist.SetFillColor(kRed);
+	  // slopeDist.GetXaxis()->SetTitle("Phase Delay Slope");
+	  // slopeDist.GetYaxis()->SetTitle("Channels");
+	  // slopeDist.GetYaxis()->SetTitleOffset(1.5);
+	  // slopeDist.DrawCopy();
+	  // slopeDist.GetXaxis()->SetRange(6,14);
+	  // slopeDist.SetFillColor(kGreen);
+	  // slopeDist.DrawCopy("same");
+	  // sprintf(figure0_name,"../../img/%i/phase_test/PhaseDelaySlope_HF%i_SL%i.png",run_num,h+1,s+1);
+	  // c1->SaveAs(figure0_name);	  
+	  // slopeDist.Delete();
 	  output_file->Write();
 	  output_file->Close();
 	}
       }
     }
   }
+  cout << "HERE" << endl;
   
   draw_map(lv2_err_map_slope, run_num, "phase_test", "PhaseScanSlope");
   draw_map(lv2_err_map_residual, run_num, "phase_test", "PhaseScanResiduals");
