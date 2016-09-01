@@ -23,6 +23,7 @@ QIE10_Testing/log/*
 !QIE10_Testing/log/.placeholder
 QIE10_Testing/python/*
 !QIE10_Testing/python/.placeholder
+QIE10_Testing/cfg/env.sh
 
 # BACKUPS
 *.BAK
