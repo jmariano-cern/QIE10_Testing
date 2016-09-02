@@ -96,6 +96,13 @@ void phase_test(Int_t run_num) {
 
 	      h1_temp->GetXaxis()->SetRange(-1,-1);
 
+	      if (h0_temp->GetEntries()==0){
+		lv2_err_map_slope[h][s][q] = 0;
+		lv2_err_map_residual[h][s][q] = 0;
+		lv2_err_map_gen[h][s][q] = 0;
+		continue;
+	      }
+
 	      p0_temp = (TProfile*) h1_temp->ProfileX();
 	      p0_temp->Fit("pol1","Q");
 	      fitFunction = p0_temp->GetFunction("pol1");

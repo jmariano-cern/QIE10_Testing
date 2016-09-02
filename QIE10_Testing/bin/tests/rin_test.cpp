@@ -88,20 +88,28 @@ void rin_test(Int_t run_num) {
 	      output_file->mkdir(dir_name);
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","refabs_vs_rin_CH","refabs_vs_rin_CH",h+1,s+1,q+1);
 	      h0_temp = (TH2F*)_file0->Get(hist0_name);
+	      if (h0_temp->GetEntries()==0){
+	      	lv2_err_map_gen[h][s][q] = 0;
+		continue;
+	      }
+
 	      p0_temp = (TProfile*) h0_temp->ProfileX();
-	      p0_temp->Fit("pol1","Q");
-	      fitFunction = p0_temp->GetFunction("pol1");
-	      double rinSlope = fitFunction->GetParameter(1);
-	      double rinOffset = fitFunction->GetParameter(0);
+	      // p0_temp->Fit("pol1","Q");
+	      // fitFunction = p0_temp->GetFunction("pol1");
+	      // double rinSlope = fitFunction->GetParameter(1);
+	      // double rinOffset = fitFunction->GetParameter(0);
 	      
-	      sprintf(figure0_name,"../../img/%i/rin_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
-	      h0_temp->GetXaxis()->SetTitle("RinSel Value");
-	      h0_temp->GetYaxis()->SetTitle("Charge in Reflection (fC)");
-	      h0_temp->GetYaxis()->SetTitleOffset(1.5);
+	      // sprintf(figure0_name,"../../img/%i/rin_test/scan_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+	      // h0_temp->GetXaxis()->SetTitle("RinSel Value");
+	      // h0_temp->GetYaxis()->SetTitle("Charge in Reflection (fC)");
+	      // h0_temp->GetYaxis()->SetTitleOffset(1.5);
 
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","refrat_vs_rin_CH","refrat_vs_rin_CH",h+1,s+1,q+1);
 	      h1_temp = (TH2F*)_file0->Get(hist1_name);
 	      p1_temp = (TProfile*) h1_temp->ProfileX();
+
+
+
 
 	      // if ((rinSlope < 0.01) || (rinOffset>0) || ((rinSlope*15+rinOffset)<0)){
 	      // 	c1->SaveAs(figure0_name);
