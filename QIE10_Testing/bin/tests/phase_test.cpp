@@ -23,10 +23,12 @@ void phase_test(Int_t run_num) {
 
 
   char hist0_name[512]; 
+  char hist2_name[512]; 
   char file0_name[512];
   char outputfile0_name[512];
   char dir_name[512];
   char figure0_name[512];
+  char figure2_name[512];
 
   sprintf(dir_name,"mkdir ../../img/%i",run_num);
   system(dir_name);
@@ -37,6 +39,7 @@ void phase_test(Int_t run_num) {
 
   TH2F *h0_temp = new TH2F();
   TH2F *h1_temp = new TH2F();
+  TH2F *h2_temp = new TH2F();
   TProfile *p0_temp = new TProfile();
   TF1 *fitFunction = new TF1();
   TFile *_file0 =  new TFile();
@@ -73,7 +76,7 @@ void phase_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
-	  sprintf(outputfile0_name,"../../img/%i/phase_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  sprintf(outputfile0_name,"../../img/%i/phase_test/rootFiles/PhaseTest_HF%i_Slot%i.root",run_num,h+1,s+1);
 	  output_file = new TFile(outputfile0_name,"RECREATE");
 	  //	  memset(slopes,0.0,sizeof(slopes));//[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	  for (Int_t q = 0; q < QI_num; q++) {
@@ -81,8 +84,9 @@ void phase_test(Int_t run_num) {
 	      sprintf(dir_name,"QIE%i",q+1);
 	      output_file->mkdir(dir_name);
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","phase_scan_CID_CH","phase_scan_CID_CH",h+1,s+1,q+1);
-	      cout << hist0_name << endl;
+	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","phase_scan_CH","phase_scan_CH",h+1,s+1,q+1);
 	      h0_temp = (TH2F*)_file0->Get(hist0_name);
+	      h2_temp = (TH2F*)_file0->Get(hist2_name);
 	      h1_temp = (TH2F*)h0_temp->Clone();
 	      h1_temp->GetXaxis()->SetRange(1,1);
 	      if (h1_temp->GetMean(2) < 50){
@@ -135,9 +139,11 @@ void phase_test(Int_t run_num) {
 	      sprintf(dir_name,"QIE%i",q+1);
 	      output_file->cd(dir_name);
 	      h0_temp->Write();
+	      h2_temp->Write();
 	      p0_temp->Write();
 	      h0_temp->Delete();
 	      h1_temp->Delete();
+	      h2_temp->Delete();
 	      p0_temp->Delete();
 	    }
 	  }

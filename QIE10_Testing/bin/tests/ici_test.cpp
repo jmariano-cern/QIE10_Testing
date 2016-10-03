@@ -28,8 +28,8 @@ void ici_test(Int_t run_num) {
 
   gErrorIgnoreLevel = kWarning;
 
-  float ici_slope_low = 1.0;
-  float ici_slope_high = 1.1;
+  float ici_slope_low = 0.95;
+  float ici_slope_high = 1.25;
   float ici_offset_low = -0.0;
   float ici_offset_high = 250.0;
   float ici_rms_high = 1.0;
@@ -146,6 +146,7 @@ void ici_test(Int_t run_num) {
 	      }	
 	      if ((ici_offset < ici_offset_low) || (ici_offset > ici_offset_high) || (h0_temp->GetEntries() < 10)) {
 		if (lv2_err_map_gen[h][s][q] == 1) {
+		  cout << ici_offset << endl;
 		  h0_temp->Draw("color");
 		  sprintf(figure0_name,"../../img/%i/ici_test/ici_scan_HF%i_Slot%i_QIE%i.png",run_num,h+1,s+1,q+1);
 		  c1->SaveAs(figure0_name);
@@ -156,6 +157,13 @@ void ici_test(Int_t run_num) {
 	      }	
 	      //cout << "Timing mean: " << h1_temp->GetMean() << ", rms: " << h1_temp->GetRMS() << ", nentries: " << h1_temp->GetEntries() << endl;
 	      if ((h1_temp->GetRMS() > ici_rms_high) || (h1_temp->GetEntries() < 10)) {
+		h1_temp->Draw();
+		sprintf(figure0_name,"../../img/%i/ici_test/T_abs_CH_HF%i_Slot%i_QIE%i.png",run_num,h+1,s+1,q+1);
+		c1->SetLogy(1);
+		c1->SaveAs(figure0_name);
+		c1->SetLogy(0);
+		c1->Clear();		
+		
 		lv2_err_map_rms[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	

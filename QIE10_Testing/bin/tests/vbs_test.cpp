@@ -33,7 +33,7 @@ void vbs_test(Int_t run_num) {
 
   gErrorIgnoreLevel = kWarning;
 
-  float vbs_top_high = 1.2;
+  float vbs_top_high = 1.4;
   float vbs_top_low = 0.4;
   float vbs_a_high = 25000.;
   float vbs_a_low = 100.;
@@ -47,12 +47,14 @@ void vbs_test(Int_t run_num) {
   char hist0_name[512]; 
   char hist1_name[512];
   char hist2_name[512];
+  char hist3_name[512];
   char file0_name[512];
   char outputfile0_name[512];
   char dir_name[512];
   char figure0_name[512];
   char figure1_name[512];
   char figure2_name[512];
+  char figure3_name[512];
 
   sprintf(dir_name,"mkdir $QIE10ROOT/img/%i",run_num);
   system(dir_name);
@@ -64,6 +66,7 @@ void vbs_test(Int_t run_num) {
   TH1F *h0_temp = new TH1F();
   TH1F *h1_temp = new TH1F();
   TH1F *h2_temp = new TH1F();
+  TH1F *h3_temp = new TH1F();
   TFile *_file0 =  new TFile();
   TFile *output_file = new TFile();
   
@@ -95,7 +98,7 @@ void vbs_test(Int_t run_num) {
     if (lv0_mask[h] == 1) {
       for (Int_t s = 0 ; s < SL_num; s++) {
 	if (lv1_mask[h][s] == 1) {
-	  sprintf(outputfile0_name,"../../img/%i/vbs_test/rootFiles/PedTest_HF%i_Slot%i.root",run_num,h+1,s+1);
+	  sprintf(outputfile0_name,"../../img/%i/vbs_test/rootFiles/VbsTest_HF%i_Slot%i.root",run_num,h+1,s+1);
 	  output_file = new TFile(outputfile0_name,"RECREATE");
 	  for (Int_t q = 0; q < QI_num; q++) {
 	    if (lv2_mask[h][s][q] == 1) {
@@ -120,12 +123,11 @@ void vbs_test(Int_t run_num) {
 	      h0_temp->GetXaxis()->SetTitle("LED Bias Voltage (V)");
 	      h0_temp->GetYaxis()->SetTitle("Integrated Charge (fC)");
 	      h0_temp->GetYaxis()->SetTitleOffset(1.5);
-	      c1->SaveAs(figure0_name);
-	      c1->Clear();
 
 	      if ((vbs_top > vbs_top_high) || (vbs_top < vbs_top_low) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_top[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		c1->SaveAs(figure0_name);
 	      }	
 	      if ((vbs_a > vbs_a_high) || (vbs_a < vbs_a_low) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_a[h][s][q] = 0;
@@ -135,6 +137,7 @@ void vbs_test(Int_t run_num) {
 		lv2_err_map_b[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
 	      }	
+	      c1->Clear();
 
 	      sprintf(hist1_name,"%s/%s_HF%i_Slot%i_QIE%i","qratio_PR","qratio_PR",h+1,s+1,q+1);
 	      h1_temp = (TH1F*)_file0->Get(hist1_name);
@@ -144,29 +147,37 @@ void vbs_test(Int_t run_num) {
 	      h1_temp->GetYaxis()->SetTitle("(Qmax+Qnext)/Qsum");
 	      h1_temp->GetYaxis()->SetTitleOffset(1.5);
 	      h1_temp->Draw();
-	      c1->SaveAs(figure1_name);
-	      c1->Clear();
 
 	      ref_flag = 0;
 	      for (int binx=11 ; binx<27 ; binx ++) {
 		if (h1_temp->GetBinContent(binx) - h1_temp->GetBinContent(binx-1) < -0.005 ) {
 		  ref_flag = 1;
+		  c1->SaveAs(figure1_name);
 		}
 	      }
+	      c1->Clear();
+	      sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","QvsTS_2.5V","QvsTS_2.5V",h+1,s+1,q+1);
+	      sprintf(figure2_name,"$QIE10ROOT/img/%i/vbs_test/QvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+	      h2_temp = (TH1F*)_file0->Get(hist2_name);
+	      h2_temp->Draw("box");
 	      if (ref_flag == 1) {
 		cout << " <<< REFLECTION???" << endl;
-		sprintf(hist2_name,"%s/%s_HF%i_Slot%i_QIE%i","QvsTS_2.5V","QvsTS_2.5V",h+1,s+1,q+1);
-		sprintf(figure2_name,"$QIE10ROOT/img/%i/vbs_test/QvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
-		h2_temp = (TH1F*)_file0->Get(hist2_name);
-		h2_temp->Draw("box");
 		c1->SaveAs(figure2_name);
 		c1->Clear();
 		lv2_err_map_refl[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
-		h2_temp->Delete();
 	      } 
 	      else {
 		cout << endl;
+	      }
+
+	      sprintf(hist3_name,"%s/%s_HF%i_Slot%i_QIE%i","ADCvsTS_2.5V","ADCvsTS_2.5V",h+1,s+1,q+1);
+	      sprintf(figure3_name,"$QIE10ROOT/img/%i/vbs_test/ADCvsTS_2.5V_HF%i_SL%i_QI%i.png",run_num,h+1,s+1,q+1);
+	      h3_temp = (TH1F*)_file0->Get(hist3_name);
+	      h3_temp->Draw("box");
+	      if (lv2_err_map_gen[h][s][q] == 0){
+		c1->SaveAs(figure3_name);
+		c1->Clear();
 	      }
 
 	      /*
@@ -180,10 +191,15 @@ void vbs_test(Int_t run_num) {
 	      output_file->cd(dir_name);
 	      h0_temp->Write();
 	      h1_temp->Write();
+	      h2_temp->Write();
+	      h3_temp->Write();
 	      vb_scan->Write();
 	      h0_temp->Delete();
 	      h1_temp->Delete();
+	      h2_temp->Delete();
+	      h3_temp->Delete();
 	      vb_scan->Delete();
+
 	    }
 	  }
 	  output_file->Write();
@@ -195,8 +211,8 @@ void vbs_test(Int_t run_num) {
   
   draw_map(lv2_err_map_refl, run_num, "vbs_test", "VoltageScanRefl");
   draw_map(lv2_err_map_top, run_num, "vbs_test", "VoltageScanTOP");
-  draw_map(lv2_err_map_a, run_num, "vbs_test", "VotlageScanA");
-  draw_map(lv2_err_map_b, run_num, "vbs_test", "VotlageScanB");
+  draw_map(lv2_err_map_a, run_num, "vbs_test", "VoltageScanA");
+  draw_map(lv2_err_map_b, run_num, "vbs_test", "VoltageScanB");
   draw_map(lv2_err_map_gen, run_num, "vbs_test", "VoltageScanAll");
   
 } // close function

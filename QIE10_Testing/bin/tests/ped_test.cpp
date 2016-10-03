@@ -107,6 +107,9 @@ void ped_test(Int_t run_num) {
 	      if ((h0_temp->GetMean() < ped_mean_low) || (h0_temp->GetMean() > ped_mean_high) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_mean[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		h1_temp->Draw();
+		sprintf(hist1_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"PedScanQav_CH",h+1,s+1,q+1);
+		c1->SaveAs(hist1_name);
 	      }	
 	      occupancy = 0;
 	      for (int binx=43 ; binx<64 ; binx++) {
@@ -121,6 +124,10 @@ void ped_test(Int_t run_num) {
 	      if ( (h0_temp->GetRMS() < ped_rms_low) || (h0_temp->GetRMS() > ped_rms_high)) {
 		lv2_err_map_rms[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		h1_temp->Draw();
+		sprintf(hist1_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"PedScanQav_CH",h+1,s+1,q+1);
+		c1->SaveAs(hist1_name);
+		
 	      }	
 	      fit_scan = new TF1("fit_scan",ped_scan_fit,-0.5,63.5,2);
 	      fit_scan->SetParNames("turn-on-point","slope");
@@ -131,10 +138,16 @@ void ped_test(Int_t run_num) {
 	      if ((ped_top > ped_top_high) || (ped_top < ped_top_low) || (h1_temp->GetEntries() < 10)) {
 		lv2_err_map_top[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		h1_temp->Draw();
+		sprintf(hist1_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"PedScanQav_CH",h+1,s+1,q+1);
+		c1->SaveAs(hist1_name);
 	      }	
 	      if ((ped_slope > ped_slope_high) || (ped_slope < ped_slope_low) || (h1_temp->GetEntries() < 10)) {
 		lv2_err_map_slope[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		h1_temp->Draw();
+		sprintf(hist1_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"PedScanQav_CH",h+1,s+1,q+1);
+		c1->SaveAs(hist1_name);
 	      }	
 	      output_file->cd();
 	      sprintf(dir_name,"QIE%i",q+1);
