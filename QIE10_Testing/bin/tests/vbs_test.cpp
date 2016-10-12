@@ -107,14 +107,14 @@ void vbs_test(Int_t run_num) {
 	      sprintf(hist0_name,"%s/%s_HF%i_Slot%i_QIE%i","Qsum_vs_Vb_PR","Qsum_vs_Vb_PR",h+1,s+1,q+1);
 	      cout << hist0_name << endl;
 	      h0_temp = (TH1F*)_file0->Get(hist0_name);
-	      vb_scan = new TF1("vb_scan",voltage_scan_fit,-0.5,2.55,3);
+	      vb_scan = new TF1("vb_scan",voltage_scan_fit,-0.5,222.55,80);
 	      vb_scan->SetParNames("turn-on-point","a(x-top)^2","+b");
 	      h0_temp->Fit("vb_scan","Q");
 	      vbs_top = vb_scan->GetParameter(0);
 	      vbs_a = vb_scan->GetParameter(1);
 	      vbs_b = vb_scan->GetParameter(2);
 	      //cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " -- TurnOnPoint: " << vbs_top << ", a(x-top)^2: " << vbs_a << ", +b: " << vbs_b << endl;
-	      cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " --  a(x-top)^2: " << vbs_a ;
+	      cout << "HF: " << h+1 << ", SL: " << s+1 << ", QI: " << q+1 << " --  a(x-top)^2: " << vbs_a << " " << vbs_b;
 	      //cout << vbs_top << endl;
 	      //cout << vbs_a << endl;
 	      //cout << vbs_b << endl;
@@ -132,10 +132,12 @@ void vbs_test(Int_t run_num) {
 	      if ((vbs_a > vbs_a_high) || (vbs_a < vbs_a_low) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_a[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		c1->SaveAs(figure0_name);
 	      }	
 	      if ((vbs_b > vbs_b_high) || (vbs_b < vbs_b_low) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_b[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
+		c1->SaveAs(figure0_name);
 	      }	
 	      c1->Clear();
 
