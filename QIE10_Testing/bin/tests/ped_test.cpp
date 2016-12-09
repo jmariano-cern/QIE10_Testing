@@ -107,9 +107,11 @@ void ped_test(Int_t run_num) {
 	      if ((h0_temp->GetMean() < ped_mean_low) || (h0_temp->GetMean() > ped_mean_high) || (h0_temp->GetEntries() < 10)) {
 		lv2_err_map_mean[h][s][q] = 0;
 		lv2_err_map_gen[h][s][q] = 0;
-		h1_temp->Draw();
-		sprintf(hist1_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"PedScanQav_CH",h+1,s+1,q+1);
+		h0_temp->Draw();
+		c1->SetLogy();
+		sprintf(hist0_name,"../../img/%i/ped_test/%s_HF%i_Slot%i_QIE%i.png",run_num,"DefaultPed_CH",h+1,s+1,q+1);
 		c1->SaveAs(hist1_name);
+		c1->SetLogy(false);
 	      }	
 	      occupancy = 0;
 	      for (int binx=43 ; binx<64 ; binx++) {

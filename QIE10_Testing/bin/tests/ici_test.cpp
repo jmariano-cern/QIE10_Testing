@@ -30,7 +30,7 @@ void ici_test(Int_t run_num) {
 
   float ici_slope_low = 0.95;
   float ici_slope_high = 1.25;
-  float ici_offset_low = -0.0;
+  float ici_offset_low = -30.0;
   float ici_offset_high = 250.0;
   float ici_rms_high = 1.0;
   float ici_ratio_low = 0.98;
