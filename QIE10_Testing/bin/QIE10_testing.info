@@ -103,6 +103,7 @@
 #                      "QvsTS_2.0V"                     #
 #                     "ADCvsTS_2.0V"                    #
 #                     "TDCvsTS_2.0V"                    #
+#                       "ADCvsTDC"                      #
 #                   "refrat_vs_rin_CH"                  #
 #                   "refabs_vs_rin_CH"                  #
 #                     "ADCvsTS_Rin0"                    #
@@ -129,6 +130,9 @@
 #                  "refrat_vs_Q_Rin15"                  #
 #                     "Pulse_Rin15"                     #
 #                      "Pulse_Rin0"                     #
+#                   "Qsum_vs_Vb_LEDA"                   #
+#                   "Qsum_vs_Vb_LEDB"                   #
+#                   "Qsum_vs_Vb_LEDAB"                  #
 #########################################################
 
 
@@ -262,32 +266,36 @@
 # 28:                  "QvsTS_2.0V"                     #
 # 29:                 "ADCvsTS_2.0V"                    #
 # 30:                 "TDCvsTS_2.0V"                    #
-# 31:               "refrat_vs_rin_CH"                  #
-# 32:               "refabs_vs_rin_CH"                  #
-# 33:                 "ADCvsTS_Rin0"                    #
-# 34:                 "ADCvsTS_Rin1"                    #
-# 35:                 "ADCvsTS_Rin2"                    #
-# 36:                 "ADCvsTS_Rin3"                    #
-# 37:                 "ADCvsTS_Rin4"                    #
-# 38:                 "ADCvsTS_Rin5"                    #
-# 39:                 "ADCvsTS_Rin6"                    #
-# 40:                 "ADCvsTS_Rin7"                    #
-# 41:                 "ADCvsTS_Rin8"                    #
-# 42:                 "ADCvsTS_Rin9"                    #
-# 43:                "ADCvsTS_Rin10"                    #
-# 44:                "ADCvsTS_Rin11"                    #
-# 45:                "ADCvsTS_Rin12"                    #
-# 46:                "ADCvsTS_Rin13"                    #
-# 47:                "ADCvsTS_Rin14"                    #
-# 48:                "ADCvsTS_Rin15"                    #
-# 49:               "BADratioVsBX_CH"                   #
-# 50:                 "Pulse_BX0_CH"                    #
-# 51:                 "Pulse_BX1_CH"                    #
-# 52:                 "Pulse_BX2_CH"                    #
-# 53:                 "Pulse_BX3_CH"                    #
-# 54:              "refrat_vs_Q_Rin15"                  #
-# 55:                 "Pulse_Rin15"                     #
-# 56:                  "Pulse_Rin0"                     #
+# 31:                   "ADCvsTDC"                      #
+# 32:               "refrat_vs_rin_CH"                  #
+# 33:               "refabs_vs_rin_CH"                  #
+# 34:                 "ADCvsTS_Rin0"                    #
+# 35:                 "ADCvsTS_Rin1"                    #
+# 36:                 "ADCvsTS_Rin2"                    #
+# 37:                 "ADCvsTS_Rin3"                    #
+# 38:                 "ADCvsTS_Rin4"                    #
+# 39:                 "ADCvsTS_Rin5"                    #
+# 40:                 "ADCvsTS_Rin6"                    #
+# 41:                 "ADCvsTS_Rin7"                    #
+# 42:                 "ADCvsTS_Rin8"                    #
+# 43:                 "ADCvsTS_Rin9"                    #
+# 44:                "ADCvsTS_Rin10"                    #
+# 45:                "ADCvsTS_Rin11"                    #
+# 46:                "ADCvsTS_Rin12"                    #
+# 47:                "ADCvsTS_Rin13"                    #
+# 48:                "ADCvsTS_Rin14"                    #
+# 49:                "ADCvsTS_Rin15"                    #
+# 50:               "BADratioVsBX_CH"                   #
+# 51:                 "Pulse_BX0_CH"                    #
+# 52:                 "Pulse_BX1_CH"                    #
+# 53:                 "Pulse_BX2_CH"                    #
+# 54:                 "Pulse_BX3_CH"                    #
+# 55:              "refrat_vs_Q_Rin15"                  #
+# 56:                 "Pulse_Rin15"                     #
+# 57:                  "Pulse_Rin0"                     #
+# 58:               "Qsum_vs_Vb_LEDA"                   #
+# 59:               "Qsum_vs_Vb_LEDB"                   #
+# 60:               "Qsum_vs_Vb_LEDAB"                  #
 #########################################################
 ########################TProfiles########################
 #########################################################
@@ -516,15 +524,17 @@
 #########################################################
 #######################TH2F_perCHs#######################
 #########################################################
-# 0 :                  "TDCvsTS_CH"                     #
-# 1 :                  "qratio_CH"                      #
-# 2 :                "Qsum_vs_Vb_CH"                    #
-# 3 :                  "QvsTS_2.5V"                     #
-# 4 :                 "ADCvsTS_2.5V"                    #
-# 5 :                 "TDCvsTS_2.5V"                    #
-# 6 :                  "QvsTS_2.0V"                     #
-# 7 :                 "ADCvsTS_2.0V"                    #
-# 8 :                 "TDCvsTS_2.0V"                    #
+# 0 :                  "ADCvsTS_CH"                     #
+# 1 :                  "TDCvsTS_CH"                     #
+# 2 :                  "qratio_CH"                      #
+# 3 :                "Qsum_vs_Vb_CH"                    #
+# 4 :                  "QvsTS_2.5V"                     #
+# 5 :                 "ADCvsTS_2.5V"                    #
+# 6 :                 "TDCvsTS_2.5V"                    #
+# 7 :                  "QvsTS_2.0V"                     #
+# 8 :                 "ADCvsTS_2.0V"                    #
+# 9 :                 "TDCvsTS_2.0V"                    #
+# 10:                   "ADCvsTDC"                      #
 #########################################################
 ########################TProfiles########################
 #########################################################
@@ -607,6 +617,21 @@
 # 0 :              "refrat_vs_Q_Rin15"                  #
 # 1 :                 "Pulse_Rin15"                     #
 # 2 :                  "Pulse_Rin0"                     #
+#########################################################
+
+
+#########################################################
+#                SUITE 11: "Pulser_Study"               #
+#########################################################
+##########################nulls##########################
+#########################################################
+# 0 :                   "General"                       #
+#########################################################
+#######################TH2F_perCHs#######################
+#########################################################
+# 0 :               "Qsum_vs_Vb_LEDA"                   #
+# 1 :               "Qsum_vs_Vb_LEDB"                   #
+# 2 :               "Qsum_vs_Vb_LEDAB"                  #
 #########################################################
 
 
