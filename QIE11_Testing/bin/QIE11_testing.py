@@ -27,7 +27,7 @@ runNumber = sys.argv[2]
 
 process.source = cms.Source("HcalTBSource",
     fileNames = cms.untracked.vstring(
-        'file:/afs/cern.ch/work/j/jmariano/public/904_runs_HE/B904_Integration_'+runNumber+'.root'
+        'file:/afs/cern.ch/work/d/dnoonan/public/904_runs/B904_Integration_'+runNumber+'.root'
     )
 )
 
@@ -54,7 +54,7 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
                                    HcalFirstFED = cms.untracked.int32(928),
                                    ComplainEmptyData = cms.untracked.bool(False),
                                    #       UnpackCalib = cms.untracked.bool(True),
-                                   FEDs = cms.untracked.vint32(928,930,932,934),
+                                   FEDs = cms.untracked.vint32(928,930,932,934,1194,1196),
                                    firstSample = cms.int32(0),
                                    lastSample = cms.int32(10)
                                    )

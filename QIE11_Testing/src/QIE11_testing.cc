@@ -389,6 +389,7 @@ void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     int iphi = 0;
     int depth = 0;
     int ieta = hcaldetid.ieta();
+
     if (hcaldetid.iphi() > 28) {
       iphi = hcaldetid.iphi()-28;
       flag1 = 1;
@@ -415,7 +416,7 @@ void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     if(_event_num == 0) { // SAME AS LOOP OVER nCH
 
       for (int i = 0 ; i < _num_TH1F_perCHs ; i++) {
-	sprintf(histoName,"%s_HF%i_Slot%i_QIE%i",TH1F_perCH_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HE%i_RM%i_QIE%i",TH1F_perCH_name.at(i).c_str(),depth,iphi,ieta);
 	TH1F_perCHs[i].push_back(new TH1F(histoName,histoName,TH1F_perCH_nbinsx[i],TH1F_perCH_lowx[i],TH1F_perCH_highx[i]));
 	TH1F_perCHs[i].back()->GetXaxis()->SetTitle(TH1F_perCH_titlex.at(i).c_str());
       }
@@ -426,14 +427,14 @@ void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 	    vector<TH1F*> temp_TH1F_vector;  
 	    TH1F_PerTSs[i].push_back(temp_TH1F_vector);
 	  }  
-	  sprintf(histoName,"%s_TS%i_HF%i_Slot%i_QIE%i",TH1F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
+	  sprintf(histoName,"%s_TS%i_HE%i_RM%i_QIE%i",TH1F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
 	  TH1F_PerTSs[i][k].push_back(new TH1F(histoName,histoName,TH1F_PerTS_nbinsx[i],TH1F_PerTS_lowx[i],TH1F_PerTS_highx[i]));
 	  TH1F_PerTSs[i][k].back()->GetXaxis()->SetTitle(TH1F_PerTS_titlex.at(i).c_str());
 	}
       }
 
       for (int i = 0 ; i < _num_TH2F_perCHs ; i++) {
-	sprintf(histoName,"%s_HF%i_Slot%i_QIE%i",TH2F_perCH_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HE%i_RM%i_QIE%i",TH2F_perCH_name.at(i).c_str(),depth,iphi,ieta);
 	TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));      
 	TH2F_perCHs[i].back()->GetXaxis()->SetTitle(TH2F_perCH_titlex.at(i).c_str());
 	TH2F_perCHs[i].back()->GetYaxis()->SetTitle(TH2F_perCH_titley.at(i).c_str());
@@ -445,7 +446,7 @@ void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 	    vector<TH2F*> temp_TH2F_vector;
 	    TH2F_PerTSs[i].push_back(temp_TH2F_vector);
 	  }
-	  sprintf(histoName,"%s_TS%i_HF%i_Slot%i_QIE%i",TH2F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
+	  sprintf(histoName,"%s_TS%i_HE%i_RM%i_QIE%i",TH2F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
 	  TH2F_PerTSs[i][k].push_back(new TH2F(histoName,histoName,TH2F_PerTS_nbinsx[i],TH2F_PerTS_lowx[i],TH2F_PerTS_highx[i],TH2F_PerTS_nbinsy[i],TH2F_PerTS_lowy[i],TH2F_PerTS_highy[i]));      
 	  TH2F_PerTSs[i][k].back()->GetXaxis()->SetTitle(TH2F_PerTS_titlex.at(i).c_str());
 	  TH2F_PerTSs[i][k].back()->GetYaxis()->SetTitle(TH2F_PerTS_titley.at(i).c_str());
@@ -453,7 +454,7 @@ void QIE11_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
       }
 
       for (int i = 0 ; i < _num_TProfiles ; i++) {
-	sprintf(histoName,"%s_HF%i_Slot%i_QIE%i",TProfile_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HE%i_RM%i_QIE%i",TProfile_name.at(i).c_str(),depth,iphi,ieta);
 	TProfiles[i].push_back(new TH2F(histoName,histoName,TProfile_nbinsx[i],TProfile_lowx[i],TProfile_highx[i],TProfile_nbinsy[i],TProfile_lowy[i],TProfile_highy[i]));      
 	TProfiles[i].back()->GetXaxis()->SetTitle(TProfile_titlex.at(i).c_str());
 	TProfiles[i].back()->GetYaxis()->SetTitle(TProfile_titley.at(i).c_str());
