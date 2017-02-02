@@ -127,7 +127,7 @@ process.es_ascii = cms.ESSource('HcalTextCalibrations',
                 #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-1CH.txt')
                 #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-1CH2.txt')
                 #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP_QIE10_2016.txt')
-                file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/emap.txt')
+                file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/HF_emap_full.txt')
                 )
         )
 )
