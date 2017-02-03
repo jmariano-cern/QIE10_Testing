@@ -384,35 +384,9 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     // Extract info on detector location
     DetId detid = qie10df.detid();
     HcalDetId hcaldetid = HcalDetId(detid);
-    // bool flag0 = 0;
-    // bool flag1 = 0;
     int iphi = hcaldetid.iphi();
     int depth = hcaldetid.depth();
     int ieta = hcaldetid.ieta();
-
-    /*
-    if (hcaldetid.iphi() > 28) {
-      iphi = hcaldetid.iphi()-28;
-      flag1 = 1;
-    }
-    else if (hcaldetid.iphi() > 14) {
-      iphi = hcaldetid.iphi() - 14;
-      flag0 = 1;
-    }
-    else {
-      iphi = hcaldetid.iphi();
-    }
-    if (flag1 == 1) {
-      depth = hcaldetid.depth() + 12;
-    }
-    else if (flag0 == 1) {
-      depth = hcaldetid.depth() + 6;
-    }
-    else {
-      depth = hcaldetid.depth();    
-    }
-    */
-
     int nTS = qie10df.samples();
 
     // WHY  AM I DOING THIS HERE (AND NOT IN INIT)?
