@@ -1,3 +1,6 @@
+# THIS IS THE ANALYZER FOR 904 DATA #
+# SHOULD BE RENAMED"
+
 import os
 import FWCore.ParameterSet.Config as cms
 from getpass import getuser as user
