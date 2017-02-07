@@ -7,7 +7,7 @@ process = cms.Process("ReflectionAnalysis")
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 #
 #   Command Line Input(Copied from DQM for now)
@@ -109,7 +109,7 @@ process.es_ascii = cms.ESSource('HcalTextCalibrations',
                 #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP-1CH2.txt')
                 #file = cms.FileInPath('HFcommissioning/QIE10_Testing/cfg/EMAP_QIE10_2016.txt')
                 #file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/emap.txt')
-                file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/ngHF2017EMap_20170125_pre04.txt')
+                file = cms.FileInPath('ngHCAL/QIE10_Testing/cfg/ngHF_emap.txt')
                 )
         )
 )

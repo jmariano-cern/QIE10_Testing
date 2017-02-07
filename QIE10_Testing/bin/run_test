@@ -1,0 +1,51 @@
+#!/bin/bash
+
+GO_FLAG=1;
+
+if [ "$#" -eq 3 ]
+  then
+  ANALYZE_FLAG=$3;
+else 
+  ANALYZE_FLAG=1; # ANALYZE BY DEFAULT  
+fi
+
+case "$1" in 
+
+cid ) 
+       FULL_TEST_NAME="CapID";
+       TEST_NAME="cid";
+       SUITE_CODE=1;
+       SCAN_DIMENSION=0;
+       ;;
+
+ped )
+       FULL_TEST_NAME="Pedestal";
+       TEST_NAME="ped";
+       SUITE_CODE=4;
+       SCAN_DIMENSION=0;
+       ;;
+
+*   )  echo "you made a mistake :-(";
+       echo "aborting tests";
+       GO_FLAG=0;
+       ;;
+
+esac
+
+if [ $ANALYZE_FLAG -eq 1 ]
+  then
+  if [ $GO_FLAG -eq 1 ]
+    then
+    echo "Analyzing run $2 with suite code $SUITE_CODE..."; 
+    analyze $2 $SUITE_CODE $SCAN_DIMENSION
+  fi
+fi
+
+
+if [ $GO_FLAG -eq 1 ]
+  then
+  echo "Running $FULL_TEST_NAME test on run $2..."
+  cd $QIE10ROOT/bin/tests && \
+  root -l -q -b -x "${TEST_NAME}_test.cpp+($2)" && \
+  cd - > /dev/null
+fi
