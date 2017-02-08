@@ -79,8 +79,8 @@ void cid_test(Int_t run_num) {
       cout << " FE_slot: " << FE_slot; 
       cout << " FE_channel: " << FE_channel;
       cout << "   <<<<<<<<<< MISSING HISTOGRAM";
+      cout << endl;
     }
-    cout << endl;
 
     if ( exists_flag == 1) {
       h0_temp = (TH1F*)_file0->Get(hist0_full_name);
