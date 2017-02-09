@@ -6,9 +6,9 @@ int FE_crate   = -999;
 int FE_slot    = -999;
 int FE_channel = -999;
 int side       = -999;
+int outCoords[6];
 
-
-void setCoords(int i) {
+int* setCoords(int i) {
   DET_ieta  = activeChannels[i][0];                                                                                                          
   DET_iphi  = activeChannels[i][1];                                                                                                          
   DET_depth = activeChannels[i][2];                                                                                                          
@@ -22,4 +22,14 @@ void setCoords(int i) {
   FE_crate   = DETcoords2FEcoords[side][DET_ieta-29][(DET_iphi-1)/2][DET_depth-1][0];                                                        
   FE_slot    = DETcoords2FEcoords[side][DET_ieta-29][(DET_iphi-1)/2][DET_depth-1][1];                                                        
   FE_channel = DETcoords2FEcoords[side][DET_ieta-29][(DET_iphi-1)/2][DET_depth-1][2];
+
+  outCoords[0] = DET_ieta_signed;
+  outCoords[1] = DET_iphi;
+  outCoords[2] = DET_depth;
+  outCoords[3] = FE_crate;
+  outCoords[4] = FE_slot;
+  outCoords[5] = FE_channel;
+
+  return outCoords;
+
 }
