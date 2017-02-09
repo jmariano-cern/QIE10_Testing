@@ -21,7 +21,7 @@ cid )
 ped )
        FULL_TEST_NAME="Pedestal";
        TEST_NAME="ped";
-       SUITE_CODE=4;
+       SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
 
