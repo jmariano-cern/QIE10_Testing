@@ -61,6 +61,7 @@ void cid_test(Int_t run_num) {
       lv2_err_map_gen[side][coords[3]-1][coords[4]-1][coords[5]-1] = 0;
     } else {
       lv2_err_map_rot[side][coords[3]-1][coords[4]-1][coords[5]-1] = 1;    
+      hist0.hist->Delete();
     }
 
   } // close ch plots
