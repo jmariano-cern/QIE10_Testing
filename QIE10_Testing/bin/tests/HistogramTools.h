@@ -30,7 +30,7 @@ histData processCH (char* hist_name_in, int run_num, int* coords, TFile *file) {
 
   sprintf(dir_name,"%s_CH",hist_name_in);
   dir = (TDirectory*)file->Get(dir_name);
-  sprintf(hist_name,"%s_depth%i_iphi%i_ieta%i",dir_name,coords[2],coords[1],coords[0]);
+  sprintf(hist_name,"%s_depth%i_iphi%i_ieta%i",dir_name,coords[3],coords[2],coords[1]);
   outData.exists = dir->GetListOfKeys()->Contains(hist_name);
   sprintf(hist_full_name,"%s/%s",dir_name,hist_name);
 

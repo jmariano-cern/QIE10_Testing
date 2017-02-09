@@ -41,7 +41,7 @@ void cid_test(Int_t run_num) {
   int**** lv2_err_map_gen = create_error_map();
   for (int i=0; i<numActiveChannels; i++) {
     coords = setCoords(i);
-    lv2_err_map_gen[side][coords[3]-1][coords[4]-1][coords[5]-1] = 1;
+    lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;
   }
 
   ////// PER TEST ERROR MAPS
@@ -57,10 +57,10 @@ void cid_test(Int_t run_num) {
     sprintf(hist0_name,"%s","CapIDrot");
     hist0 = processCH(hist0_name,run_num,coords,file0);
     if ((hist0.exists == 0) ||  ( hist0.hist->GetMean() != 0 ) || ( hist0.hist->GetRMS() != 0 ) || ( hist0.hist->GetEntries() < 10)) {
-      lv2_err_map_rot[side][coords[3]-1][coords[4]-1][coords[5]-1] = 0;
-      lv2_err_map_gen[side][coords[3]-1][coords[4]-1][coords[5]-1] = 0;
+      lv2_err_map_rot[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+      lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
     } else {
-      lv2_err_map_rot[side][coords[3]-1][coords[4]-1][coords[5]-1] = 1;    
+      lv2_err_map_rot[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
     }
 
