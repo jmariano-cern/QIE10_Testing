@@ -19,15 +19,15 @@
 
 using namespace std;
 
-void cid_test(Int_t run_num) {
+void cid_test(Int_t run_num, int suite_code, char* test_name) {
 
   //////// DECLARATIONS AND INITIALIZATIONS
   char root_file_name[512];
   TFile *file0 =  new TFile();
-  sprintf(root_file_name,"../../dat/QIE10testing_%i_1.root",run_num);
+  sprintf(root_file_name,"../../dat/QIE10testing_%i_%i.root",run_num,suite_code);
   file0 = TFile::Open(root_file_name);
   char dir_name[512];
-  sprintf(dir_name,"mkdir -p ../../img/%i/capid_test/rootFiles",run_num);
+  sprintf(dir_name,"mkdir -p ../../img/%i/%s/rootFiles",run_num,test_name);
   system(dir_name);
   char hist0_name[512];
   histData hist0;
@@ -67,8 +67,8 @@ void cid_test(Int_t run_num) {
   } // close ch plots
 
   ///// DRAW ERROR MAPS
-  draw_map(lv2_err_map_rot, run_num, "capid_test", "CapIDrotation");
-  draw_map(lv2_err_map_gen, run_num, "capid_test", "All");
+  draw_map(lv2_err_map_rot, run_num, test_name, "CapIDrotation");
+  draw_map(lv2_err_map_gen, run_num, test_name, "All");
 
 } // close function
 

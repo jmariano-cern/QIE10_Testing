@@ -46,6 +46,6 @@ if [ $GO_FLAG -eq 1 ]
   then
   echo "Running $FULL_TEST_NAME test on run $2..."
   cd $QIE10ROOT/bin/tests && \
-  root -l -q -b -x "${TEST_NAME}_test.cpp+($2)" && \
+  root -l -q -b -x ${TEST_NAME}'_test.cpp+('$2','$SUITE_CODE',(char*)"'$TEST_NAME'")' && \
   cd - > /dev/null
 fi
