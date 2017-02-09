@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Call this script with:
-#    test <run_number> <test_type>
-# The test type will be a 3 letter code (cid, ped, vbs...)
-
-root -l -q -x -b "$QIE10ROOT/bin/tests/$2_test.cpp+($1)"
