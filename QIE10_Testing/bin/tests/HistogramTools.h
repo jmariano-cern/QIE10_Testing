@@ -35,12 +35,12 @@ histData processCH (char* hist_name_in, int run_num, int* coords, TFile *file) {
   sprintf(hist_full_name,"%s/%s",dir_name,hist_name);
 
   if ( outData.exists == 0 ) {
-    cout << "iEta: " << coords[0];
-    cout << " iPhi: " << coords[1];
-    cout << " Depth: " << coords[2];
-    cout << " FE_crate: " << coords[3];
-    cout << " FE_slot: " << coords[4];
-    cout << " FE_channel: " << coords[5];
+    cout << "iEta: " << coords[1];
+    cout << " iPhi: " << coords[2];
+    cout << " Depth: " << coords[3];
+    cout << " FE_crate: " << coords[4];
+    cout << " FE_slot: " << coords[5];
+    cout << " FE_channel: " << coords[6];
     cout << "   <<<<<<<<<< MISSING HISTOGRAM";
     cout << endl;
   } else {
