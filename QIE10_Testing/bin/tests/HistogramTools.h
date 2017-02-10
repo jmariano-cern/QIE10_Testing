@@ -11,10 +11,10 @@ struct histData {
   TH1F *hist;
 };
 
-void printEV (char* hist_name_in, int run_num, TFile *file) {
+void printEV (char* hist_name_in, int run_num, TFile *file, const char *Folder_NAME) {
   sprintf(hist_name,"%s_EV",hist_name_in);
   sprintf(hist_full_name,"%s/%s",hist_name,hist_name);
-  sprintf(figure_name,"../../img/%i/capid_test/%s.png",run_num,hist_name);
+  sprintf(figure_name,"../../img/%i/%s/%s.png",run_num,Folder_NAME,hist_name);
   histEV = (TH1F*)file->Get(hist_full_name);
   canv->cd();
   histEV->Draw("box");
