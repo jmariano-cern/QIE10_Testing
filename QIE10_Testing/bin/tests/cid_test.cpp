@@ -63,6 +63,9 @@ void cid_test(Int_t run_num , Int_t SUITE_CODE, const char *Folder_NAME) {
     if ((hist0.exists == 0) ||  ( hist0.hist->GetMean() != 0 ) || ( hist0.hist->GetRMS() != 0 ) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_rot[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+      if (hist0.exists == 1) {
+        cout << "CID rotation error -- Side: " << coords[0] << " / FE crate: " << coords[4] << " / FE slot: " << coords[5] << " / FE channel: " << coords[6] << endl;
+      }
     } else {
       lv2_err_map_rot[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
@@ -73,6 +76,9 @@ void cid_test(Int_t run_num , Int_t SUITE_CODE, const char *Folder_NAME) {
     if ((hist0.exists == 0) ||  ( hist0.hist->GetMean() != 0 ) || ( hist0.hist->GetRMS() != 0 ) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_ali[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+      if (hist0.exists == 1) {
+        cout << "CID alignment error -- Side: " << coords[0] << " / FE crate: " << coords[4] << " / FE slot: " << coords[5] << " / FE channel: " << coords[6] << endl;
+      }
     } else {
       lv2_err_map_ali[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
