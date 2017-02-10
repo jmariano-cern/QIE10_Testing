@@ -75,11 +75,12 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
     if ((hist0.exists == 0) ||  ( hist0.hist->GetMean() < ped_mean_low ) || ( hist0.hist->GetMean() > ped_mean_high) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
-      if (hist0.exists == 1)
+      if (hist0.exists == 1) {
       cout << "MEAN ERROR !!!!!! "<< endl;
       cout << "SIDE:"<< coords[0]  << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << "  -------->" << " Mean Value: " << hist0.hist->GetMean() << endl;
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << "      -------->" << " Mean Value: " << hist0.hist->GetMean() << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+      }
     } else {
       lv2_err_map_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
@@ -90,11 +91,12 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
     if ((hist0.exists == 0) ||  ( hist0.hist->GetRMS() < ped_rms_low ) || ( hist0.hist->GetRMS() > ped_rms_high) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_rms[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
-      if (hist0.exists == 1)
+      if (hist0.exists == 1) {
       cout << "RMS ERROR !!!!!! "<< endl;
       cout << "SIDE:"<< coords[0] << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+	}
     } else {
       lv2_err_map_rms[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
