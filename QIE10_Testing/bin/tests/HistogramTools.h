@@ -2,6 +2,7 @@ char hist_name[512];
 char dir_name[512];
 char hist_full_name[512];
 char figure_name[512];
+string sideName;
 TH1F *histEV = new TH1F();
 TDirectory *dir = new TDirectory();
 TCanvas *canv = new TCanvas("canv","canv",100,100,1024,768);
@@ -30,7 +31,10 @@ histData processCH (char* hist_name_in, int run_num, int* coords, TFile *file) {
 
   sprintf(dir_name,"%s_CH",hist_name_in);
   dir = (TDirectory*)file->Get(dir_name);
+  sideName="M";
+  if (coords[0]>0){sideName="P";}
   sprintf(hist_name,"%s_depth%i_iphi%i_ieta%i",dir_name,coords[3],coords[2],coords[1]);
+  sprintf(hist_name,"%s_HF%s0%i_slot%i_channel%i",dir_name,sideName.c_str(),coords[4],coords[5],coords[6]);
   outData.exists = dir->GetListOfKeys()->Contains(hist_name);
   sprintf(hist_full_name,"%s/%s",dir_name,hist_name);
 

@@ -77,6 +77,7 @@
 #include "QIE10_init.h"
 #include "QIE10_loop.h"
 #include "unpack_name.h"
+#include "DETcoords2FEcoords.h"
 
 using namespace std;
 
@@ -389,11 +390,28 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     int ieta = hcaldetid.ieta();
     int nTS = qie10df.samples();
 
+    int side = 0;
+    int crate = 0;
+    int slot = 0;
+    int channel = 0;
+
+    string sideName = "M";
+    int unsignedEta = -1*ieta;
+    if (ieta > 0){ 
+      side = 1; 
+      sideName = "P";
+      unsignedEta = ieta;
+    }
+    crate = DETcoords2FEcoords[side][unsignedEta-29][int((iphi-1)/2)][depth-1][0];
+    slot = DETcoords2FEcoords[side][unsignedEta-29][int((iphi-1)/2)][depth-1][1];
+    channel = DETcoords2FEcoords[side][unsignedEta-29][int((iphi-1)/2)][depth-1][2];
+
     // WHY  AM I DOING THIS HERE (AND NOT IN INIT)?
     if(_event_num == 0) { // SAME AS LOOP OVER nCH
 
       for (int i = 0 ; i < _num_TH1F_perCHs ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TH1F_perCH_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
 	TH1F_perCHs[i].push_back(new TH1F(histoName,histoName,TH1F_perCH_nbinsx[i],TH1F_perCH_lowx[i],TH1F_perCH_highx[i]));
 	TH1F_perCHs[i].back()->GetXaxis()->SetTitle(TH1F_perCH_titlex.at(i).c_str());
       }
@@ -405,6 +423,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 	    TH1F_PerTSs[i].push_back(temp_TH1F_vector);
 	  }  
 	  sprintf(histoName,"%s_TS%i_depth%i_iphi%i_ieta%i",TH1F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
+	  sprintf(histoName,"%s_TS%i_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),k,sideName.c_str(),crate,slot,channel);
 	  TH1F_PerTSs[i][k].push_back(new TH1F(histoName,histoName,TH1F_PerTS_nbinsx[i],TH1F_PerTS_lowx[i],TH1F_PerTS_highx[i]));
 	  TH1F_PerTSs[i][k].back()->GetXaxis()->SetTitle(TH1F_PerTS_titlex.at(i).c_str());
 	}
@@ -412,6 +431,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
       for (int i = 0 ; i < _num_TH2F_perCHs ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TH2F_perCH_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
 	TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));      
 	TH2F_perCHs[i].back()->GetXaxis()->SetTitle(TH2F_perCH_titlex.at(i).c_str());
 	TH2F_perCHs[i].back()->GetYaxis()->SetTitle(TH2F_perCH_titley.at(i).c_str());
@@ -424,6 +444,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 	    TH2F_PerTSs[i].push_back(temp_TH2F_vector);
 	  }
 	  sprintf(histoName,"%s_TS%i_depth%i_iphi%i_ieta%i",TH2F_PerTS_name.at(i).c_str(),k,depth,iphi,ieta);
+	  sprintf(histoName,"%s_TS%i_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),k,sideName.c_str(),crate,slot,channel);
 	  TH2F_PerTSs[i][k].push_back(new TH2F(histoName,histoName,TH2F_PerTS_nbinsx[i],TH2F_PerTS_lowx[i],TH2F_PerTS_highx[i],TH2F_PerTS_nbinsy[i],TH2F_PerTS_lowy[i],TH2F_PerTS_highy[i]));      
 	  TH2F_PerTSs[i][k].back()->GetXaxis()->SetTitle(TH2F_PerTS_titlex.at(i).c_str());
 	  TH2F_PerTSs[i][k].back()->GetYaxis()->SetTitle(TH2F_PerTS_titley.at(i).c_str());
@@ -432,6 +453,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
       for (int i = 0 ; i < _num_TProfiles ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TProfile_name.at(i).c_str(),depth,iphi,ieta);
+	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
 	TProfiles[i].push_back(new TH2F(histoName,histoName,TProfile_nbinsx[i],TProfile_lowx[i],TProfile_highx[i],TProfile_nbinsy[i],TProfile_lowy[i],TProfile_highy[i]));      
 	TProfiles[i].back()->GetXaxis()->SetTitle(TProfile_titlex.at(i).c_str());
 	TProfiles[i].back()->GetYaxis()->SetTitle(TProfile_titley.at(i).c_str());
