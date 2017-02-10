@@ -1,3 +1,15 @@
 #!/bin/bash
 
-cd $QIE10ROOT/src && python $QIE10ROOT/src/makeEMAP.py -c $1 && rm $QIE10ROOT/cfg/ngHF_emap.txt && mv $QIE10ROOT/src/ngHF_emap.txt $QIE10ROOT/cfg/ngHF_emap.txt && python $QIE10ROOT/src/ActivateChannels.py && cd - >/dev/null
+if [ $# -eq 0 ]; then
+    cd $QIE10ROOT/src && python $QIE10ROOT/src/makeEMAP.py && rm $QIE10ROOT/cfg/ngHF_emap.txt && mv $QIE10ROOT/src/ngHF_emap.txt $QIE10ROOT/cfg/ngHF_emap.txt && python $QIE10ROOT/src/ActivateChannels.py && cd - >/dev/null
+elif [ $# -eq 2 ]; then
+    if [ $1 =  "-m" ]; then
+	cd $QIE10ROOT/src && python $QIE10ROOT/src/makeEMAP.py -m $2 && rm $QIE10ROOT/cfg/ngHF_emap.txt && mv $QIE10ROOT/src/ngHF_emap.txt $QIE10ROOT/cfg/ngHF_emap.txt && python $QIE10ROOT/src/ActivateChannels.py && cd - >/dev/null
+    fi      
+    if [ $1 =  "-c" ]; then
+	cd $QIE10ROOT/src && python $QIE10ROOT/src/makeEMAP.py -c $2 && rm $QIE10ROOT/cfg/ngHF_emap.txt && mv $QIE10ROOT/src/ngHF_emap.txt $QIE10ROOT/cfg/ngHF_emap.txt && python $QIE10ROOT/src/ActivateChannels.py && cd - >/dev/null
+    fi      
+else
+    cd $QIE10ROOT/src && python $QIE10ROOT/src/makeEMAP.py -c $1 && rm $QIE10ROOT/cfg/ngHF_emap.txt && mv $QIE10ROOT/src/ngHF_emap.txt $QIE10ROOT/cfg/ngHF_emap.txt && python $QIE10ROOT/src/ActivateChannels.py && cd - >/dev/null    
+fi
+

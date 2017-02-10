@@ -52,17 +52,31 @@ if __name__=="__main__":
                       default=-1,
                       help="specify crate, or list of crates (seperated by comma without spaces)"
                       )
+    parser.add_option("-m","--mask",dest="mask",
+                      default=-1,
+                      help="specify crate, or list of crates that will be masked and not included in the emap (seperated by comma without spaces)"
+                      )
 
     (options, args) = parser.parse_args()
 
-    if options.crate==-1:
+    if options.crate==-1 and options.mask==-1:
         printFullEmap()
-    else:
+    elif not options.crate==-1:
         if not(options.crate[0]=='[' and options.crate[-1]==']'):
-            options.crate = '["'+options.crate.replace(',','","')+'"]'
-        fecrates = eval(options.crate)
+            options.crate = '["'+options.crate+'"]'
+        fecrates = eval(options.crate.replace(',','","'))
         fecrates = list(set(fecrates))
         fecrates.sort()
-#        print fecrates
         printEmapPerCrate(fecrates)
+    else:
+        fullcrateList = ["HFP01","HFP02","HFP03","HFP04","HFP05","HFP06","HFP07","HFP08","HFM01","HFM02","HFM03","HFM04","HFM05","HFM06","HFM07","HFM08"]
+        if not(options.mask[0]=='[' and options.mask[-1]==']'):
+            options.mask = '["'+options.mask+'"]'
+        fecratemask = eval(options.mask.replace(',','","'))
+        fecratemask = list(set(fecratemask))
+        fecratemask.sort()
+
+        fecratelist = list(set(fullcrateList)-set(fecratemask))
+        fecratelist.sort()
+        printEmapPerCrate(fecratelist)
         
