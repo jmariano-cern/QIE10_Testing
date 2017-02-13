@@ -11,13 +11,14 @@
 #include "TPad.h"
 #include "TF1.h"
 
-#include "../../src/draw_map.h"
+#include "../../src/draw_map_full.h"
 #include "../../src/ActiveChannels.h"
 #include "../../src/DETcoords2FEcoords.h"
 #include "./ManageCoords.h"
 #include "./HistogramTools.h"
 
-using namespace std;
+// using namespace std;
+
 
 void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
 
@@ -31,6 +32,7 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   system(dir_name);
   char hist0_name[512];
   histData hist0;
+  string sideName;
   int* coords;
   
   float ped_mean_low = 2.0;
@@ -50,6 +52,9 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   
   sprintf(hist0_name,"%s","T_abs");
   printEV(hist0_name,run_num,file0,Folder_NAME);
+
+  TCanvas *canv = new TCanvas("canv","canv",100,100,1024,768);
+
 
   /////// INITIALIZE GENERAL ERROR MAP
   int**** lv2_err_map_gen = create_error_map();
@@ -80,6 +85,15 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "SIDE:"<< coords[0]  << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << "  -------->" << " Mean Value: " << hist0.hist->GetMean() << endl;
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << "      -------->" << " Mean Value: " << hist0.hist->GetMean() << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+
+      canv->cd();
+      hist0.hist->Draw();
+      canv->SetLogy();
+      sideName="M";
+      if (coords[0]>0){sideName="P";}
+      sprintf(hist0_name,"../../img/%i/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,"ped_test","ADC_spectrum",sideName.c_str(),coords[4],coords[5],coords[6]);
+      canv->SaveAs(hist0_name);
+
       }
     } else {
       lv2_err_map_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
@@ -96,7 +110,15 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "SIDE:"<< coords[0] << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
-	}
+      canv->cd();
+      hist0.hist->Draw();
+      canv->SetLogy();
+      sideName="M";
+      if (coords[0]>0){sideName="P";}
+      sprintf(hist0_name,"../../img/%i/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,"ped_test","ADC_spectrum",sideName.c_str(),coords[4],coords[5],coords[6]);
+      canv->SaveAs(hist0_name);
+
+      }
     } else {
       lv2_err_map_rms[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
       hist0.hist->Delete();
@@ -108,8 +130,9 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   
 
   ///// DRAW ERROR MAPS
-  draw_map(lv2_err_map_mean, run_num, Folder_NAME, "Mean_Check");
-  draw_map(lv2_err_map_rms, run_num, Folder_NAME, "RMS_Check");
+  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "Pedestal Test" );
+  draw_map(lv2_err_map_mean, run_num, Folder_NAME, "Pedestal Mean" );
+  draw_map(lv2_err_map_rms, run_num, Folder_NAME, "Pedestal RMS" );
 
 
 } // close function
