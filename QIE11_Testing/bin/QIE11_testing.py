@@ -1,5 +1,6 @@
 import os
 import FWCore.ParameterSet.Config as cms
+from getpass import getuser as user
 
 process = cms.Process("ReflectionAnalysis")
 
@@ -8,26 +9,14 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100000) )
 
-#
-#   Command Line Input(Copied from DQM for now)
-#
 import sys
-if ((len(sys.argv) < 3) or (len(sys.argv) > 5)):
-    print "### ERROR: Bad Call!"
-    print "### Use: cmsRun h2testbeamanalyzer_cfg.py <run number> <suite_code -- (optional)>"
-    sys.exit(1)
 
-#
-#   Change the filename to process
-#
 runNumber = sys.argv[2]
-
-#if runNumber not in os.listdir('../img'):
-#    os.makedirs('../img/' + runNumber)
 
 process.source = cms.Source("HcalTBSource",
     fileNames = cms.untracked.vstring(
-        'file:/afs/cern.ch/work/d/dnoonan/public/904_runs/B904_Integration_'+runNumber+'.root'
+        #'file:/afs/cern.ch/work/d/dnoonan/public/904_runs/B904_Integration_'+runNumber+'.root'
+        'root://eoscms.cern.ch//eos/cms/store/group/dpg_hcal/comm_hcal/USC/run' + runNumber + '/USC_'+ runNumber + '.root'
     )
 )
 
