@@ -431,7 +431,7 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
       for (int i = 0 ; i < _num_TH2F_perCHs ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TH2F_perCH_name.at(i).c_str(),depth,iphi,ieta);
-	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
+	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH2F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
 	TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));      
 	TH2F_perCHs[i].back()->GetXaxis()->SetTitle(TH2F_perCH_titlex.at(i).c_str());
 	TH2F_perCHs[i].back()->GetYaxis()->SetTitle(TH2F_perCH_titley.at(i).c_str());
