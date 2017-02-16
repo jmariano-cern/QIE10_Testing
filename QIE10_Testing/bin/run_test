@@ -27,13 +27,21 @@ ped )
        SCAN_DIMENSION=0;
        ;;
        
-# (ici)
-#       FULL_TEST_NAME="Internal Charge Injection";
-#       TEST_NAME="ici";
-#		Folder_NAME="ici_test";
-#       SUITE_CODE=6;
-#       SCAN_DIMENSION=0;
-#       ;;
+ici )
+       FULL_TEST_NAME="Internal Charge Injection";
+       TEST_NAME="ici";
+		Folder_NAME="ici_test";
+       SUITE_CODE=2;
+       SCAN_DIMENSION=0;
+       ;;
+
+iqi )
+       FULL_TEST_NAME="Internal Charge Injection";
+       TEST_NAME="ici";
+                Folder_NAME="ici_test";
+       SUITE_CODE=2;
+       SCAN_DIMENSION=0;
+       ;;
 
 *   )  echo "you made a mistake :-(";
        echo "aborting tests";
