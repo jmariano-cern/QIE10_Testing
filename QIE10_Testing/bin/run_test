@@ -43,6 +43,16 @@ iqi )
        SCAN_DIMENSION=0;
        ;;
 
+led )
+       FULL_TEST_NAME="LED";
+       TEST_NAME="led";
+                Folder_NAME="led_test";
+       SUITE_CODE=2;
+       SCAN_DIMENSION=0;
+       ;;
+
+
+
 *   )  echo "you made a mistake :-(";
        echo "aborting tests";
        GO_FLAG=0;
