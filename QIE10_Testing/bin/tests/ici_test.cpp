@@ -83,8 +83,9 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " MainPeak Value: " << hist0.hist->GetMean(2) << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
       canv->cd();
+      hist0.hist->GetXaxis()->SetRange();
       hist0.hist->Draw();
-      canv->SetLogy();
+      //      canv->SetLogy();
       sideName="M";
       if (coords[0]>0){sideName="P";}
       sprintf(hist0_name,"../../img/%i/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,"ADCvsTS",sideName.c_str(),coords[4],coords[5],coords[6]);
@@ -110,8 +111,9 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " Reflection Value: " << hist0.hist->GetMean(2) << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
       canv->cd();
+      hist0.hist->GetXaxis()->SetRange();
       hist0.hist->Draw();
-      canv->SetLogy();
+      //      canv->SetLogy();
       sideName="M";
       if (coords[0]>0){sideName="P";}
       sprintf(hist0_name,"../../img/%i/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,"ADCvsTS",sideName.c_str(),coords[4],coords[5],coords[6]);
