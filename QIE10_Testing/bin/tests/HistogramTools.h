@@ -7,9 +7,12 @@ TH1F *histEV = new TH1F();
 TDirectory *dir = new TDirectory();
 TCanvas *canv = new TCanvas("canv","canv",100,100,1024,768);
 
+
+
 struct histData {
   bool exists;
   TH1F *hist;
+  
 };
 
 void printEV (char* hist_name_in, int run_num, TFile *file, const char *Folder_NAME) {
