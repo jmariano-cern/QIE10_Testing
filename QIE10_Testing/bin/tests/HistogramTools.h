@@ -37,7 +37,7 @@ histData processCH (char* hist_name_in, int run_num, int* coords, TFile *file) {
   sprintf(hist_name,"%s_HF%s0%i_slot%i_channel%i",dir_name,sideName.c_str(),coords[4],coords[5],coords[6]);
   outData.exists = dir->GetListOfKeys()->Contains(hist_name);
   sprintf(hist_full_name,"%s/%s",dir_name,hist_name);
-
+  //  cout << hist_full_name << endl;
   if ( outData.exists == 0 ) {
     cout << "iEta: " << coords[1];
     cout << " iPhi: " << coords[2];

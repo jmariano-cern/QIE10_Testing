@@ -353,7 +353,8 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 	 TProfiles,_num_TProfiles,TProfile_name,TProfile_nbinsx,TProfile_lowx,TProfile_highx,TProfile_titlex,TProfile_nbinsy,TProfile_lowy,TProfile_highy,TProfile_titley);
 
     for (int i = 0 ; i < _num_loggers ; i++) {
-      loggers[i].open(logger_log_file[i],std::ios_base::app);
+      loggers[i].open(logger_log_file[i]);
+      // loggers[i].open(logger_log_file[i],std::ios_base::app);
     }
 
     for (int i = 0 ; i < _num_TH1F_perEVs ; i++) {
