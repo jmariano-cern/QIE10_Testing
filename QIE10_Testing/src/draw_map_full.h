@@ -225,6 +225,10 @@ void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char co
   text->SetTextSize(0.75);
   text->DrawLatex(0.5,0.5,temp_text);
 
+  sprintf(temp_text,"Run %i",run_num);
+  text->SetTextAlign(31);
+  text->SetTextSize(0.35);
+  text->DrawLatex(.98,0.05,temp_text);
 
 
   string saveName = title;
