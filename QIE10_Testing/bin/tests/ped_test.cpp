@@ -27,13 +27,16 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   TFile *file0 =  new TFile();
   sprintf(root_file_name,"../../dat/QIE10testing_%i_%d.root",run_num, SUITE_CODE);
   file0 = TFile::Open(root_file_name);
+  
   char dir_name[512];
   sprintf(dir_name,"mkdir -p ../../img/%i/%s/rootFiles",run_num,Folder_NAME);
   system(dir_name);
+  
   char Folder_ADC[]="ADC_Spectrum"; // For storing new plots in a different folder
   char dir_name_ADC[512];
   sprintf(dir_name_ADC,"mkdir -p ../../img/%i/%s/%s",run_num,Folder_NAME,Folder_ADC);
   system(dir_name_ADC);
+  
   char hist0_name[512];
   histData hist0;
   string sideName;
@@ -77,6 +80,7 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   
 
   TCanvas *canv = new TCanvas("canv","canv",100,100,1024,768);
+  TCanvas *canv2 = new TCanvas("canv2","canv2",100,100,1024,768);
 
 
   /////// INITIALIZE GENERAL ERROR MAP
@@ -135,9 +139,9 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "SIDE:"<< coords[0] << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " RMS Value: " << hist0.hist->GetRMS() << endl;
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+      
       canv->cd();
       hist0.hist->Draw();
-      canv->SetLogy();
       sideName="M";
       if (coords[0]>0){sideName="P";}
       sprintf(hist0_name,"../../img/%i/%s/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,Folder_ADC,"ADC_spectrum",sideName.c_str(),coords[4],coords[5],coords[6]);
@@ -193,8 +197,8 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   } // close ch plots
    
   
-  //// Draw ALL CapID pedestals 
-  canv->cd();
+  //// Draw ALL CapID pedestals
+  canv2->cd();
   gStyle->SetOptStat("emr");
   gStyle->SetOptTitle(1);
   
@@ -205,7 +209,7 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   gStyle->SetStatX(0.9);
   gStyle->SetStatY(0.9);
   sprintf(hist0_name,"../../img/%i/%s/%s/CapID_Pedestal_Means.png",run_num,Folder_NAME,Folder_cid);
-  canv->SaveAs(hist0_name);
+  canv2->SaveAs(hist0_name);
 
  ///// DRAW ERROR MAPS
   draw_map(lv2_err_map_gen, run_num, Folder_NAME, "Pedestal Test" );
