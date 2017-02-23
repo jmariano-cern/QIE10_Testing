@@ -80,21 +80,21 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   
 
   TCanvas *canv = new TCanvas("canv","canv",100,100,1024,768);
-  TCanvas *canv2 = new TCanvas("canv2","canv2",100,100,1024,768);
 
 
   /////// INITIALIZE GENERAL ERROR MAP
   int**** lv2_err_map_gen = create_error_map();
-  for (int i=0; i<numActiveChannels; i++) {
-    coords = setCoords(i);
-    lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;
-  }
 
   ////// PER TEST ERROR MAPS
   int**** lv2_err_map_mean = create_error_map();
   int**** lv2_err_map_rms = create_error_map();
   int**** lv2_err_map_cid_ped_mean = create_error_map();
 
+  for (int i=0; i<numActiveChannels; i++) {
+    coords = setCoords(i);
+    lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;
+    lv2_err_map_cid_ped_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;
+  }
   
 
   ///////// CH PLOTS
@@ -122,7 +122,7 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       if (coords[0]>0){sideName="P";}
       sprintf(hist0_name,"../../img/%i/%s/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,Folder_ADC,"ADC_spectrum",sideName.c_str(),coords[4],coords[5],coords[6]);
       canv->SaveAs(hist0_name);
-
+      canv->SetLogy(0);
       }
     } else {
       lv2_err_map_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;    
@@ -141,11 +141,13 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
       cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
       
       canv->cd();
+      canv->SetLogy();
       hist0.hist->Draw();
       sideName="M";
       if (coords[0]>0){sideName="P";}
       sprintf(hist0_name,"../../img/%i/%s/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,Folder_ADC,"ADC_spectrum",sideName.c_str(),coords[4],coords[5],coords[6]);
       canv->SaveAs(hist0_name);
+      canv->SetLogy(0);
 
       }
     } else {
@@ -156,49 +158,43 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
     sprintf(hist0_name,"%s","ADCvsCID");
     hist0 = processCH(hist0_name,run_num,coords,file0);
       
-      if (hist0.exists == 1) {
-      hist_temp = (TH1F*)hist0.hist->Clone("hist_temp"); // Cloning the histogram for playing with its ranges
-      int Test_Results = 0; // Its not very pretty but works
-      
+    if (hist0.exists == 1) {
+      //      hist_temp = (TH1F*)hist0.hist->Clone("hist_temp"); // Cloning the histogram for playing with its ranges
+
       for (int k=0 ; k != bin_counter ; ++k){
-      hist_temp->GetXaxis()->SetRangeUser(bins_x[k],bins_x[k+1]);
-      CapIDMeans[k]=hist_temp->GetMean(2);
-       
+	hist0.hist->GetXaxis()->SetRangeUser(bins_x[k],bins_x[k+1]);
+	CapIDMeans[k]=hist0.hist->GetMean(2);
       
-      if (( CapIDMeans[k] < ped_mean_low ) || ( CapIDMeans[k] > ped_mean_high) || ( hist_temp->GetEntries() < 10)) {
-      lv2_err_map_cid_ped_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+	if (( CapIDMeans[k] < ped_mean_low ) || ( CapIDMeans[k] > ped_mean_high) || ( hist0.hist->GetEntries() < 10)) {
+	  lv2_err_map_cid_ped_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       
       
-      cout << "CAPID PEDESTAL MEAN ERROR !!!!!! "<< endl;
-      cout << "SIDE:"<< coords[0]  << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << "  -------->" << k << ".Cap ID" " Mean Value: " << CapIDMeans[k]<< endl;
-      cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << "      -------->" << k << ".Cap ID" " Mean Value: " << CapIDMeans[k]<< endl;
-      cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+	  cout << "CAPID PEDESTAL MEAN ERROR !!!!!! "<< endl;
+	  cout << "SIDE:"<< coords[0]  << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << "  -------->" << k << ".Cap ID" " Mean Value: " << CapIDMeans[k]<< endl;
+	  cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << "      -------->" << k << ".Cap ID" " Mean Value: " << CapIDMeans[k]<< endl;
+	  cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
 
-      canv->cd();
-      hist0.hist->Draw();
-      sideName="M";
-      if (coords[0]>0){sideName="P";}
-      sprintf(hist0_name,"../../img/%i/%s/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,Folder_cid,"ADCvsCID",sideName.c_str(),coords[4],coords[5],coords[6]);
-      canv->SaveAs(hist0_name);
-
-      } else Test_Results++ ;
+	  canv->cd();
+	  hist0.hist->GetXaxis()->SetRange();
+	  hist0.hist->Draw("box");
+	  sideName="M";
+	  if (coords[0]>0){sideName="P";}
+	  sprintf(hist0_name,"../../img/%i/%s/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,Folder_cid,"ADCvsCID",sideName.c_str(),coords[4],coords[5],coords[6]);
+	  canv->SaveAs(hist0_name);
+	}
          
-      CapIDpedHist->Fill(CapIDMeans[k]);
+	CapIDpedHist->Fill(CapIDMeans[k]);
           
       } // k loop
       
-      if (Test_Results == bin_counter){ 
-      lv2_err_map_cid_ped_mean[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1;
       hist0.hist->Delete();
-      } 
-      
-      } 
+    }
       
   } // close ch plots
    
   
   //// Draw ALL CapID pedestals
-  canv2->cd();
+  canv->cd();
   gStyle->SetOptStat("emr");
   gStyle->SetOptTitle(1);
   
@@ -209,7 +205,7 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   gStyle->SetStatX(0.9);
   gStyle->SetStatY(0.9);
   sprintf(hist0_name,"../../img/%i/%s/%s/CapID_Pedestal_Means.png",run_num,Folder_NAME,Folder_cid);
-  canv2->SaveAs(hist0_name);
+  canv->SaveAs(hist0_name);
 
   
   int creationdate = file0->GetCreationDate().GetDate();
