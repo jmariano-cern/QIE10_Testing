@@ -30,7 +30,7 @@ ped )
 ici )
        FULL_TEST_NAME="Internal Charge Injection";
        TEST_NAME="ici";
-		Folder_NAME="ici_test";
+		Folder_NAME="iqi_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
@@ -38,7 +38,7 @@ ici )
 iqi )
        FULL_TEST_NAME="Internal Charge Injection";
        TEST_NAME="ici";
-                Folder_NAME="ici_test";
+                Folder_NAME="iqi_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
