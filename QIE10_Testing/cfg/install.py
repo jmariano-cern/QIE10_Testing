@@ -8,7 +8,7 @@ from sys import exit
 
 print 'Building map files...'
 cd(env['QIE10ROOT'] + '/src')
-call('./remap HFM01,HFM02,HFM03,HFM04,HFM05,HFM06,HFM07,HFM08,HFP01,HFP02,HFP03,HFP04,HFP05,HFP06,HFP07,HFP08')
+call('./remap')
 
 print 'Building the analyzer core...'
 call('python generate.py')

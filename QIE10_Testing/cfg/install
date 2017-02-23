@@ -1,4 +1,5 @@
 echo "Setting environment variables..."
+cp env.sh.default env.sh
 echo -e "export QIE10ROOT=$(cd .. && pwd)\n$(cat env.sh)" > env.sh
 source ./env.sh
 echo source `pwd`/env.sh >> ~/.bashrc
