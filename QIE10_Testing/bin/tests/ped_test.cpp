@@ -211,11 +211,14 @@ void ped_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   sprintf(hist0_name,"../../img/%i/%s/%s/CapID_Pedestal_Means.png",run_num,Folder_NAME,Folder_cid);
   canv2->SaveAs(hist0_name);
 
+  
+  int creationdate = file0->GetCreationDate().GetDate();
+
  ///// DRAW ERROR MAPS
-  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "Pedestal Test" );
-  draw_map(lv2_err_map_mean, run_num, Folder_NAME, "Pedestal Mean" );
-  draw_map(lv2_err_map_rms, run_num, Folder_NAME, "Pedestal RMS" );
-  draw_map(lv2_err_map_cid_ped_mean, run_num, Folder_NAME, "CapID Pedestal Error" );
+  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "Pedestal Test" , creationdate);
+  draw_map(lv2_err_map_mean, run_num, Folder_NAME, "Pedestal Mean" , creationdate);
+  draw_map(lv2_err_map_rms, run_num, Folder_NAME, "Pedestal RMS" , creationdate);
+  draw_map(lv2_err_map_cid_ped_mean, run_num, Folder_NAME, "CapID Pedestal Error" , creationdate);
   
 
 } // close function

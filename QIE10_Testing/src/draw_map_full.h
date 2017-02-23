@@ -35,7 +35,7 @@ int**** create_error_map(){
   return lv2_err_map;
 }
 
-void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char const* title){
+void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char const* title, int date){
 
   /*
   int HF_num_adj = 0;
@@ -226,10 +226,21 @@ void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char co
   text->DrawLatex(0.5,0.5,temp_text);
 
   sprintf(temp_text,"Run %i",run_num);
-  text->SetTextAlign(31);
+  text->SetTextAlign(33);
   text->SetTextSize(0.35);
-  text->DrawLatex(.98,0.05,temp_text);
+  text->DrawLatex(.98,0.98,temp_text);
 
+  if (date > 0){
+    int year = int(date/10000);
+    int month = int((date-year*10000)/100);
+    int day = int((date-year*10000-month*100)/1);
+    
+     
+    sprintf(temp_text,"%i/%i/%i",day, month, year);
+    text->SetTextAlign(31);
+    text->SetTextSize(0.35);
+    text->DrawLatex(.98,0.05,temp_text);
+  }
 
   string saveName = title;
   replace(saveName.begin(),saveName.end(), ' ', '_');
@@ -237,4 +248,8 @@ void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char co
   c1->SaveAs(figure_name);
   c1->Close();
 
+}
+
+void draw_map(int**** lv2_err_map, int run_num, char const* folder_name, char const* title){
+  draw_map(lv2_err_map, run_num, folder_name, title, 0);
 }

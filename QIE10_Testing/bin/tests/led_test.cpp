@@ -213,12 +213,13 @@ void led_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   } // close ch plots
     
 
+  int creationdate = file0->GetCreationDate().GetDate();
   ///// DRAW ERROR MAPS
-  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "LED Test" );
-  draw_map(lv2_err_map_timing_rms, run_num, Folder_NAME, "Timing RMS" );
-  draw_map(lv2_err_map_qsum_mean, run_num, Folder_NAME, "QSum Mean" );
-  draw_map(lv2_err_map_qsum_rms, run_num, Folder_NAME, "QSum RMS" );
-  draw_map(lv2_err_map_qratio_mean, run_num, Folder_NAME, "Qratio Mean" );
-  draw_map(lv2_err_map_qratio_rms, run_num, Folder_NAME, "Qratio RMS" );
+  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "LED Test" , creationdate);
+  draw_map(lv2_err_map_timing_rms, run_num, Folder_NAME, "Timing RMS" , creationdate);
+  draw_map(lv2_err_map_qsum_mean, run_num, Folder_NAME, "QSum Mean" , creationdate);
+  draw_map(lv2_err_map_qsum_rms, run_num, Folder_NAME, "QSum RMS" , creationdate);
+  draw_map(lv2_err_map_qratio_mean, run_num, Folder_NAME, "Qratio Mean" , creationdate);
+  draw_map(lv2_err_map_qratio_rms, run_num, Folder_NAME, "Qratio RMS" , creationdate);
 
 } // close function

@@ -40,6 +40,7 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   int ADCPeakMax = 150;
   int ADCRefMin = 65;
   int ADCRefMax = 100;
+  int ADCEchoMax = 20;
   
 
   //////// full system PLOTS
@@ -62,6 +63,7 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   ////// PER TEST ERROR MAPS
   int**** lv2_err_map_mainpeak = create_error_map();
   int**** lv2_err_map_reflection = create_error_map();
+  int**** lv2_err_map_echo = create_error_map();
 
 
   ///////// CH PLOTS
@@ -127,15 +129,46 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
 
 
 
+    ////// Pulse Echo
+    sprintf(hist0_name,"%s","ADCvsTS");
+    hist0 = processCH(hist0_name,run_num,coords,file0); 
+    hist0.hist->GetXaxis()->SetRange(peakTS+5,peakTS+5);
+    if ((hist0.exists == 0) ||  ( hist0.hist->GetMean(2) > ADCEchoMax ) || ( hist0.hist->GetEntries() < 10)) {
+      lv2_err_map_echo [coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+      lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
+      if (hist0.exists == 1) {
+      cout << "Pulse Echo ERROR !!!!!! "<< endl;
+      cout << "SIDE:"<< coords[0] << " Crate:"<< coords[4] <<" Slot:"<< coords[5] <<" Channel:"<< coords[6] << " -------->" << " Reflection Value: " << hist0.hist->GetMean(2) << endl;
+      cout << "SIDE:"<< coords[0]  << " Eta:"<< coords[1] <<" Phi:"<< coords[2] <<" Depth:"<< coords[3] << " -------->" << " Reflection Value: " << hist0.hist->GetMean(2) << endl;
+      cout << "----------------------------------------------------------------ooo------------------------------------------------------------------------------------ "<< endl;
+      canv->cd();
+      hist0.hist->GetXaxis()->SetRange();
+      hist0.hist->Draw();
+      //      canv->SetLogy();
+      sideName="M";
+      if (coords[0]>0){sideName="P";}
+      sprintf(hist0_name,"../../img/%i/%s/%s_HF%s0%i_slot%i_channel%i.png",run_num,Folder_NAME,"ADCvsTS",sideName.c_str(),coords[4],coords[5],coords[6]);
+      canv->SaveAs(hist0_name);
+
+      }
+    } else {
+      lv2_err_map_echo[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 1; 
+      hist0.hist->Delete();
+    }
+
+
+
  
     
   } // close ch plots
   
   
+  int creationdate = file0->GetCreationDate().GetDate();
 
   ///// DRAW ERROR MAPS
-  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "ICI Test" );
-  draw_map(lv2_err_map_mainpeak, run_num, Folder_NAME, "ICI Main Peak" );
-  draw_map(lv2_err_map_reflection, run_num, Folder_NAME, "ICI Reflection" );
+  draw_map(lv2_err_map_gen, run_num, Folder_NAME, "IQI Test" , creationdate);
+  draw_map(lv2_err_map_mainpeak, run_num, Folder_NAME, "IQI Main Peak" , creationdate);
+  draw_map(lv2_err_map_reflection, run_num, Folder_NAME, "IQI Reflection" , creationdate);
+  draw_map(lv2_err_map_echo, run_num, Folder_NAME, "IQI Pulse Echo" , creationdate);
 
 } // close function
