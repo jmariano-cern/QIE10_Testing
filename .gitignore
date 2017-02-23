@@ -34,3 +34,4 @@ QIE10_Testing/cfg/env.sh
 QIE10_Testing/cfg/ngHF_emap.txt
 QIE10_Testing/src/QIE10_init.h
 QIE10_Testing/src/QIE10_loop.h
+QIE10_Testing/src/ActiveChannels.h
