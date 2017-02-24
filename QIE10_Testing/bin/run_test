@@ -51,6 +51,14 @@ led )
        SCAN_DIMENSION=0;
        ;;
 
+laser )
+       FULL_TEST_NAME="LASER";
+       TEST_NAME="laser";
+                Folder_NAME="laser_test";
+       SUITE_CODE=2;
+       SCAN_DIMENSION=0;
+       ;;
+
 
 
 *   )  echo "you made a mistake :-(";
