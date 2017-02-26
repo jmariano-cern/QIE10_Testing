@@ -17,8 +17,9 @@
 #include "../../src/DETcoords2FEcoords.h"
 #include "./ManageCoords.h"
 #include "./HistogramTools.h"
+#include "./DetectorPlots.h"
 
-// using namespace std;
+using namespace std;
 
 
 void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
@@ -46,7 +47,10 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   float qratio_rms_low = 0.001;
   float qratio_rms_high = 0.1;
 
-  TH2F* timingVsLocation = new TH2F("timing","timing",144,0,72,82,-41,41);
+  SquareHist timing_detector_hist("Absolute Timing (ns)",25,75);
+  SquareHistInv timing_inverted_detector_hist("Absolute Timing (ns) -- physical coordinates",25,75);
+  PolarHist timing_polar_hist("Absolute Timing (ns) -- polar plot",25,75);
+  PolarHistInv timing_inverted_polar_hist("Absolute Timing (ns) -- physical polar plot",25,75);
 
   //////// full system PLOTS
   sprintf(hist0_name,"%s","T_abs");
@@ -86,7 +90,10 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
     ////// Timing RMS  
     sprintf(hist0_name,"%s","T_abs");
     hist0 = processCH(hist0_name,run_num,coords,file0);	
-    timingVsLocation->Fill(coords[2]+(coords[3]-1)*0.5,coords[1],hist0.hist->GetMean());
+    timing_detector_hist.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
+    timing_inverted_detector_hist.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
+    timing_polar_hist.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
+    timing_inverted_polar_hist.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
     if ((hist0.exists == 0) || (hist0.hist->GetRMS() > timing_rms_high ) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_timing_rms [coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
@@ -215,17 +222,7 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
  
     
   } // close ch plots
-    
-  canv->cd();
-  canv->SetLogy(0);
-  gStyle->SetOptStat(0);
-  gStyle->SetPalette(55);
-  timingVsLocation->Draw("colz");
-  timingVsLocation->GetZaxis()->SetRangeUser(25,75);
-  sprintf(hist0_name,"../../img/%i/%s/TimingVsLocation.png",run_num,Folder_NAME);
-  canv->SaveAs(hist0_name);
-
-    
+        
   int creationdate = file0->GetCreationDate().GetDate();
   ///// DRAW ERROR MAPS
   draw_map(lv2_err_map_gen, run_num, Folder_NAME, "LASER Test" , creationdate);
@@ -234,5 +231,10 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   draw_map(lv2_err_map_qsum_rms, run_num, Folder_NAME, "QSum RMS" , creationdate);
   draw_map(lv2_err_map_qratio_mean, run_num, Folder_NAME, "Qratio Mean" , creationdate);
   draw_map(lv2_err_map_qratio_rms, run_num, Folder_NAME, "Qratio RMS" , creationdate);
+
+  timing_detector_hist.Draw(run_num,Folder_NAME,"timing_detector_hist");
+  timing_inverted_detector_hist.Draw(run_num,Folder_NAME,"timing_inverted_detector_hist");
+  timing_polar_hist.Draw(run_num,Folder_NAME,"timing_polar_hist");
+  timing_inverted_polar_hist.Draw(run_num,Folder_NAME,"timing_inverted_polar_hist");
 
 } // close function
