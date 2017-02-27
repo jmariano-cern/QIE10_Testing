@@ -59,8 +59,6 @@ laser )
        SCAN_DIMENSION=0;
        ;;
 
-
-
 *   )  echo "you made a mistake :-(";
        echo "aborting tests";
        GO_FLAG=0;
@@ -73,10 +71,21 @@ if [ $ANALYZE_FLAG -eq 1 ]
   if [ $GO_FLAG -eq 1 ]
     then
     echo "Analyzing run $2 with suite code $SUITE_CODE..."; 
-    analyze $2 $SUITE_CODE $SCAN_DIMENSION
+    ANALYZER_RETURN_CODE=$(analyze $2 $SUITE_CODE $SCAN_DIMENSION)
   fi
+else
+  ANALYZER_RETURN_CODE=""
 fi
 
+if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo "ok" )" != "ok" ]
+  then
+  GO_FLAG=0
+  echo
+  echo $ANALYZER_RETURN_CODE | grep --color ERROR
+  echo
+else
+  echo $ANALYZER_RETURN_CODE
+fi
 
 if [ $GO_FLAG -eq 1 ]
   then

@@ -1,6 +1,8 @@
 import os
 import FWCore.ParameterSet.Config as cms
 from getpass import getuser as user
+import subprocess
+import sys
 
 process = cms.Process("ReflectionAnalysis")
 
@@ -25,6 +27,15 @@ runNumber = sys.argv[2]
 
 #if runNumber not in os.listdir('../img'):
 #    os.makedirs('../img/' + runNumber)
+
+
+cmd = 'echo "cd /eos/cms/store/group/dpg_hcal/comm_hcal/USC/" | eos && echo "ls ." | eos'
+
+eos_runs = subprocess.check_output(cmd, shell=True)
+
+if (eos_runs.find(str(runNumber)) == -1):
+    print "ERROR: run " + str(runNumber) + " not found in /eos/cms/store/group/dpg_hcal/comm_hcal/USC/"
+    sys.exit()
 
 process.source = cms.Source("HcalTBSource",
     fileNames = cms.untracked.vstring(
