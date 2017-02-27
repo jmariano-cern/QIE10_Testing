@@ -3,6 +3,7 @@
 #include "TH2D.h"
 #include "TMath.h"
 #include "TPaveText.h"
+#include "TPad.h"
 
 int phiOffset(Int_t depth) {
   if ((depth == 1) || (depth == 2)){
@@ -50,7 +51,9 @@ class SquareHist: public DetectorHist {
 };
 
 SquareHist::SquareHist(const char* title, float z_min_in, float z_max_in) {
-  hist = new TH2F(title, title, phi_num, 1., phi_num+1, (eta_num*4)+1, -eta_max-0.5, eta_max+0.5);
+  char name[512] = "";
+  sprintf(name,"%s_SquareHist",title);
+  hist = new TH2F(name, title, phi_num, 1., phi_num+1, (eta_num*4)+1, -eta_max-0.5, eta_max+0.5);
   z_min = z_min_in;
   z_max = z_max_in;
 }
@@ -77,9 +80,16 @@ void SquareHist::Draw(int run_num,const char* folder_name, const char* png_name)
   gStyle->SetNumberContours(50);
   hist->GetXaxis()->SetTitle("i#phi");
   hist->GetYaxis()->SetTitle("i#eta");
-  hist->GetZaxis()->SetRangeUser(z_min,z_max);
   hist->Draw("COLZ");
   hist->GetZaxis()->SetRangeUser(z_min,z_max);
+  hist->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char hist_line2[512] = "";
+  sprintf(hist_line2,"run %i",run_num);
+  TPaveText* hist_title = (TPaveText*)gPad->FindObject("title");
+  hist_title->SetY1NDC(0.91);
+  hist_title->SetY2NDC(0.98);
+  hist_title->InsertText(hist_line2);
   char figure_name[512] = "";
   sprintf(figure_name,"../../img/%i/%s/%s.png",run_num,folder_name,png_name);
   c_temp->SaveAs(figure_name);
@@ -102,7 +112,9 @@ class SquareHistInv: public DetectorHist {
 };
 
 SquareHistInv::SquareHistInv(const char* title, float z_min_in, float z_max_in) {
-  hist = new TH2F(title, title, phi_num, 1., phi_num+1, 4*(eta_max-eta_min)+5, eta_min-eta_max-1.25, eta_max-eta_min+1.25);
+  char name[512] = "";
+  sprintf(name,"%s_SquareHistInv",title);
+  hist = new TH2F(name, title, phi_num, 1., phi_num+1, 4*(eta_max-eta_min)+5, eta_min-eta_max-1.25, eta_max-eta_min+1.25);
   z_min = z_min_in;
   z_max = z_max_in;
 }
@@ -131,6 +143,14 @@ void SquareHistInv::Draw(int run_num,const char* folder_name, const char* png_na
   hist->GetYaxis()->SetTitle("i#eta_{max}-i#eta");
   hist->Draw("COLZ");
   hist->GetZaxis()->SetRangeUser(z_min,z_max);
+  hist->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char hist_line2[512] = "";
+  sprintf(hist_line2,"run %i",run_num);
+  TPaveText* hist_title = (TPaveText*)gPad->FindObject("title");
+  hist_title->SetY1NDC(0.91);
+  hist_title->SetY2NDC(0.98);
+  hist_title->InsertText(hist_line2);
   char figure_name[512] = "";
   sprintf(figure_name,"../../img/%i/%s/%s.png",run_num,folder_name,png_name);
   c_temp->SaveAs(figure_name);
@@ -156,10 +176,12 @@ class PolarHist: public DetectorHist {
 };
 
 PolarHist::PolarHist(const char* title, float z_min_in, float z_max_in) {
-  sprintf(titleM,"%s_HFM",title);
-  sprintf(titleP,"%s_HFP",title);
-  histM = new TH2F(titleM, titleM, phi_num, 0., 2.*TMath::Pi(), (eta_num*2)+2, 0., eta_max+1.25);
-  histP = new TH2F(titleP, titleP, phi_num, 0., 2.*TMath::Pi(), (eta_num*2)+2, 0., eta_max+1.25);
+  char nameM[512] = "";
+  char nameP[512] = "";
+  sprintf(nameM,"%s_PolarHist_M",title);
+  sprintf(nameP,"%s_PolarHist_P",title);
+  histM = new TH2F(nameM, title, phi_num, 0., 2.*TMath::Pi(), (eta_num*2)+2, 0., eta_max+1.25);
+  histP = new TH2F(nameP, title, phi_num, 0., 2.*TMath::Pi(), (eta_num*2)+2, 0., eta_max+1.25);
   z_min = z_min_in;
   z_max = z_max_in;
 }
@@ -192,6 +214,14 @@ void PolarHist::Draw(int run_num,const char* folder_name, const char* png_name) 
   frameM->GetYaxis()->SetTitle("i#eta");
   histM->Draw("COLZ POL SAME");
   histM->GetZaxis()->SetRangeUser(z_min,z_max);
+  histM->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char histM_line2[512] = "";
+  sprintf(histM_line2,"HFM -- run %i",run_num);
+  TPaveText* histM_title = (TPaveText*)gPad->FindObject("title");
+  histM_title->SetY1NDC(0.91);
+  histM_title->SetY2NDC(0.98);
+  histM_title->InsertText(histM_line2);
   c_temp->cd(2);
   TH2F* frameP = new TH2F("framing hist plus", "framing hist plus", depth_num*eta_num/2, -eta_max-4, eta_max+4,  depth_num*eta_num/2, -eta_max-4, eta_max+4);
   frameP->SetTitle(histP->GetTitle());
@@ -200,6 +230,14 @@ void PolarHist::Draw(int run_num,const char* folder_name, const char* png_name) 
   frameP->GetYaxis()->SetTitle("i#eta");
   histP->Draw("COLZ POL SAME");
   histP->GetZaxis()->SetRangeUser(z_min,z_max);
+  histP->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char histP_line2[512] = "";
+  sprintf(histP_line2,"HFP -- run %i",run_num);
+  TPaveText* histP_title = (TPaveText*)gPad->FindObject("title");
+  histP_title->SetY1NDC(0.91);
+  histP_title->SetY2NDC(0.98);
+  histP_title->InsertText(histP_line2);
   char figure_name[512] = "";
   sprintf(figure_name,"../../img/%i/%s/%s.png",run_num,folder_name,png_name);
   c_temp->SaveAs(figure_name);
@@ -227,10 +265,12 @@ class PolarHistInv: public DetectorHist {
 };
 
 PolarHistInv::PolarHistInv(const char* title, float z_min_in, float z_max_in) {
-  sprintf(titleM,"%s_HFM",title);
-  sprintf(titleP,"%s_HFP",title);
-  histM = new TH2F(titleM, titleM, phi_num, 0., 2.*TMath::Pi(), 2*(eta_max-eta_min)+4, 0., eta_max-eta_min+1.75);
-  histP = new TH2F(titleP, titleP, phi_num, 0., 2.*TMath::Pi(), 2*(eta_max-eta_min)+4, 0., eta_max-eta_min+1.75);
+  char nameM[512] = "";
+  char nameP[512] = "";
+  sprintf(nameM,"%s_PolarHistInv_M",title);
+  sprintf(nameP,"%s_PolarHistInv_P",title);
+  histM = new TH2F(nameM, title, phi_num, 0., 2.*TMath::Pi(), 2*(eta_max-eta_min)+4, 0., eta_max-eta_min+1.75);
+  histP = new TH2F(nameP, title, phi_num, 0., 2.*TMath::Pi(), 2*(eta_max-eta_min)+4, 0., eta_max-eta_min+1.75);
   z_min = z_min_in;
   z_max = z_max_in;
 }
@@ -263,6 +303,14 @@ void PolarHistInv::Draw(int run_num,const char* folder_name, const char* png_nam
   frameM->GetYaxis()->SetTitle("i#eta_{max}-i#eta");
   histM->Draw("COLZ POL SAME");
   histM->GetZaxis()->SetRangeUser(z_min,z_max);
+  histM->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char histM_line2[512] = "";
+  sprintf(histM_line2,"HFM -- run %i",run_num);
+  TPaveText* histM_title = (TPaveText*)gPad->FindObject("title");
+  histM_title->SetY1NDC(0.91);
+  histM_title->SetY2NDC(0.98);
+  histM_title->InsertText(histM_line2);
   c_temp->cd(2); 
   TH2F* frameP = new TH2F("framing hist plus", "framing hist plus", 2*(eta_max-eta_min), eta_min-eta_max-3, eta_max-eta_min+3, 2*(eta_max-eta_min), eta_min-eta_max-3, eta_max-eta_min+3);
   frameP->SetTitle(histP->GetTitle());
@@ -271,6 +319,14 @@ void PolarHistInv::Draw(int run_num,const char* folder_name, const char* png_nam
   frameP->GetYaxis()->SetTitle("i#eta_{max}-i#eta");
   histP->Draw("COLZ POL SAME");
   histP->GetZaxis()->SetRangeUser(z_min,z_max);
+  histP->GetZaxis()->SetLabelSize(0.02);
+  c_temp->Update();
+  char histP_line2[512] = "";
+  sprintf(histP_line2,"HFP -- run %i",run_num);
+  TPaveText* histP_title = (TPaveText*)gPad->FindObject("title");
+  histP_title->SetY1NDC(0.91);
+  histP_title->SetY2NDC(0.98);
+  histP_title->InsertText(histP_line2);
   char figure_name[512] = "";
   sprintf(figure_name,"../../img/%i/%s/%s.png",run_num,folder_name,png_name);
   c_temp->SaveAs(figure_name);

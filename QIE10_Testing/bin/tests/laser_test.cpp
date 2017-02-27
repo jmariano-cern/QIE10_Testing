@@ -48,9 +48,12 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   float qratio_rms_high = 0.1;
 
   SquareHist timing_detector_hist("Absolute Timing (ns)",25,75);
-  SquareHistInv timing_inverted_detector_hist("Absolute Timing (ns) -- physical coordinates",25,75);
-  PolarHist timing_polar_hist("Absolute Timing (ns) -- polar plot",25,75);
-  PolarHistInv timing_inverted_polar_hist("Absolute Timing (ns) -- physical polar plot",25,75);
+  SquareHistInv timing_inverted_detector_hist("Absolute Timing (ns)",25,75);
+  PolarHist timing_polar_hist("Absolute Timing (ns)",25,75);
+  PolarHistInv timing_inverted_polar_hist("Absolute Timing (ns)",25,75);
+
+  SquareHist Qsum_detector("Integrated Charge (fC)",0,5000);
+  PolarHistInv Qsum_detector_polar("Integrated Charge (fC)",0,5000);
 
   //////// full system PLOTS
   sprintf(hist0_name,"%s","T_abs");
@@ -120,6 +123,8 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
     ////// QSum Mean 
     sprintf(hist0_name,"%s","QSum");
     hist0 = processCH(hist0_name,run_num,coords,file0);
+    Qsum_detector.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
+    Qsum_detector_polar.Fill(coords[1],coords[2],coords[3],hist0.hist->GetMean());
     if ((hist0.exists == 0) ||  ( hist0.hist->GetMean() < qsum_mean_low  ) || (hist0.hist->GetMean() > qsum_mean_high ) || ( hist0.hist->GetEntries() < 10)) {
       lv2_err_map_qsum_mean [coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
       lv2_err_map_gen[coords[0]][coords[4]-1][coords[5]-1][coords[6]-1] = 0;
@@ -236,5 +241,8 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   timing_inverted_detector_hist.Draw(run_num,Folder_NAME,"timing_inverted_detector_hist");
   timing_polar_hist.Draw(run_num,Folder_NAME,"timing_polar_hist");
   timing_inverted_polar_hist.Draw(run_num,Folder_NAME,"timing_inverted_polar_hist");
+
+  Qsum_detector.Draw(run_num,Folder_NAME,"Qsum_detector");
+  Qsum_detector_polar.Draw(run_num,Folder_NAME,"Qsum_detector_polar");
 
 } // close function
