@@ -359,14 +359,25 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
 
     for (int i = 0 ; i < _num_TH1F_perEVs ; i++) {
       sprintf(histoName,"%s",TH1F_perEV_name.at(i).c_str());
-      TH1F_perEVs.push_back(new TH1F(histoName,histoName,TH1F_perEV_nbinsx[i],TH1F_perEV_lowx[i],TH1F_perEV_highx[i]));
+      if (TH1F_perEV_nbinsx[i]==-1){
+	TH1F_perEVs.push_back(new TH1F(histoName,histoName,247,adc2fC_QIE10_bins));
+      } else {
+	cout << histoName << endl;
+	TH1F_perEVs.push_back(new TH1F(histoName,histoName,TH1F_perEV_nbinsx[i],TH1F_perEV_lowx[i],TH1F_perEV_highx[i]));
+      }
       TH1F_perEVs.back()->GetXaxis()->SetTitle(TH1F_perEV_titlex.at(i).c_str());
     }
     
 
     for (int i = 0 ; i < _num_TH2F_perEVs ; i++) {
       sprintf(histoName,"%s",TH2F_perEV_name.at(i).c_str());
-      TH2F_perEVs.push_back(new TH2F(histoName,histoName,TH2F_perEV_nbinsx[i],TH2F_perEV_lowx[i],TH2F_perEV_highx[i],TH2F_perEV_nbinsy[i],TH2F_perEV_lowy[i],TH2F_perEV_highy[i]));
+      // if (TH2F_perEV_nbinsx[i]==-1){
+      // 	TH2F_perEVs.push_back(new TH2F(histoName,histoName,247,adc2fC_QIE10_bins,TH2F_perEV_nbinsy[i],TH2F_perEV_lowy[i],TH2F_perEV_highy[i]));
+      // } else if (TH2F_perEV_nbinsy[i]==-1){
+      // 	TH2F_perEVs.push_back(new TH2F(histoName,histoName,TH2F_perEV_nbinsx[i],TH2F_perEV_lowx[i],TH2F_perEV_highx[i],247,adc2fC_QIE10_bins));
+      // } else {
+	TH2F_perEVs.push_back(new TH2F(histoName,histoName,TH2F_perEV_nbinsx[i],TH2F_perEV_lowx[i],TH2F_perEV_highx[i],TH2F_perEV_nbinsy[i],TH2F_perEV_lowy[i],TH2F_perEV_highy[i]));
+	//      }
       TH2F_perEVs.back()->GetXaxis()->SetTitle(TH2F_perEV_titlex.at(i).c_str());
       TH2F_perEVs.back()->GetYaxis()->SetTitle(TH2F_perEV_titley.at(i).c_str());
     }
@@ -413,7 +424,11 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
       for (int i = 0 ; i < _num_TH1F_perCHs ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TH1F_perCH_name.at(i).c_str(),depth,iphi,ieta);
 	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH1F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
-	TH1F_perCHs[i].push_back(new TH1F(histoName,histoName,TH1F_perCH_nbinsx[i],TH1F_perCH_lowx[i],TH1F_perCH_highx[i]));
+	if (TH1F_perCH_nbinsx[i]==-1){
+	  TH1F_perCHs[i].push_back(new TH1F(histoName,histoName,247,adc2fC_QIE10_bins));
+	} else {
+	  TH1F_perCHs[i].push_back(new TH1F(histoName,histoName,TH1F_perCH_nbinsx[i],TH1F_perCH_lowx[i],TH1F_perCH_highx[i]));
+	}
 	TH1F_perCHs[i].back()->GetXaxis()->SetTitle(TH1F_perCH_titlex.at(i).c_str());
       }
 
@@ -433,7 +448,13 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
       for (int i = 0 ; i < _num_TH2F_perCHs ; i++) {
 	sprintf(histoName,"%s_depth%i_iphi%i_ieta%i",TH2F_perCH_name.at(i).c_str(),depth,iphi,ieta);
 	sprintf(histoName,"%s_HF%s0%i_slot%i_channel%i",TH2F_perCH_name.at(i).c_str(),sideName.c_str(),crate,slot,channel);
-	TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));      
+	// if (TH2F_perCH_nbinsx[i]==-1){
+	//   TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,247,adc2fC_QIE10_bins,TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));
+	// } else if (TH2F_perCH_nbinsx[i]==-1){
+	//   TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],247,adc2fC_QIE10_bins));
+	// } else {
+	  TH2F_perCHs[i].push_back(new TH2F(histoName,histoName,TH2F_perCH_nbinsx[i],TH2F_perCH_lowx[i],TH2F_perCH_highx[i],TH2F_perCH_nbinsy[i],TH2F_perCH_lowy[i],TH2F_perCH_highy[i]));      
+	  //	}
 	TH2F_perCHs[i].back()->GetXaxis()->SetTitle(TH2F_perCH_titlex.at(i).c_str());
 	TH2F_perCHs[i].back()->GetYaxis()->SetTitle(TH2F_perCH_titley.at(i).c_str());
       }
