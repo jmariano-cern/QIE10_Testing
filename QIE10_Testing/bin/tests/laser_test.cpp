@@ -41,7 +41,7 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   float qsum_mean_low = 150;
   float qsum_mean_high = 10000;
   float qsum_rms_low = 1;
-  float qsum_rms_high = 500;
+  float qsum_rms_high = 650;
   float qratio_mean_low = 0.4;
   float qratio_mean_high = 1;
   float qratio_rms_low = 0.001;
