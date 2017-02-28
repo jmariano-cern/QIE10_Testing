@@ -59,6 +59,14 @@ laser )
        SCAN_DIMENSION=0;
        ;;
 
+phasescan )
+       FULL_TEST_NAME="Phase Scan";
+       TEST_NAME="phase_test";
+                Folder_NAME="phase_test";
+       SUITE_CODE=5;
+       SCAN_DIMENSION=1;
+       ;;
+
 *   )  echo "you made a mistake :-(";
        echo "aborting tests";
        GO_FLAG=0;
