@@ -81,8 +81,8 @@ if len(sys.argv) > 3:
     suite_code = int(sys.argv[3])
 
 sequencer_flag = 0
-#if len(sys.argv) == 5:
-#    sequencer_flag = int(sys.argv[4])
+if len(sys.argv) == 5:
+    sequencer_flag = int(sys.argv[4])
 
 process.hcalAnalyzer = cms.EDAnalyzer('QIE10_testing',
         OutFileName = cms.untracked.string('$QIE10ROOT/dat/QIE10testing_'+runNumber+'_'+str(suite_code)+'.root'),

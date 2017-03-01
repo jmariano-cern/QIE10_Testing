@@ -14,7 +14,7 @@ case "$1" in
 cid ) 
        FULL_TEST_NAME="CapID";
        TEST_NAME="cid";
-       Folder_NAME="cid_test";
+       FOLDER_NAME="cid_test";
        SUITE_CODE=1;
        SCAN_DIMENSION=0;
        ;;
@@ -22,7 +22,7 @@ cid )
 ped )
        FULL_TEST_NAME="Pedestal";
        TEST_NAME="ped";
-       Folder_NAME="ped_test";
+       FOLDER_NAME="ped_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
@@ -30,7 +30,7 @@ ped )
 ici )
        FULL_TEST_NAME="Internal Charge Injection";
        TEST_NAME="ici";
-		Folder_NAME="iqi_test";
+       FOLDER_NAME="iqi_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
@@ -38,7 +38,7 @@ ici )
 iqi )
        FULL_TEST_NAME="Internal Charge Injection";
        TEST_NAME="ici";
-                Folder_NAME="iqi_test";
+       FOLDER_NAME="iqi_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
@@ -46,7 +46,7 @@ iqi )
 led )
        FULL_TEST_NAME="LED";
        TEST_NAME="led";
-                Folder_NAME="led_test";
+       FOLDER_NAME="led_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
@@ -54,20 +54,21 @@ led )
 laser )
        FULL_TEST_NAME="LASER";
        TEST_NAME="laser";
-                Folder_NAME="laser_test";
+       FOLDER_NAME="laser_test";
        SUITE_CODE=2;
        SCAN_DIMENSION=0;
        ;;
 
 phasescan )
        FULL_TEST_NAME="Phase Scan";
-       TEST_NAME="phase_test";
-                Folder_NAME="phase_test";
+       TEST_NAME="phase";
+       FOLDER_NAME="phase_test";
        SUITE_CODE=5;
        SCAN_DIMENSION=1;
        ;;
 
-*   )  echo "you made a mistake :-(";
+* )
+       echo "you made a mistake :-(";
        echo "aborting tests";
        GO_FLAG=0;
        ;;
