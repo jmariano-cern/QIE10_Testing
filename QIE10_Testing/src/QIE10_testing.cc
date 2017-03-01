@@ -362,7 +362,6 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
       if (TH1F_perEV_nbinsx[i]==-1){
 	TH1F_perEVs.push_back(new TH1F(histoName,histoName,247,adc2fC_QIE10_bins));
       } else {
-	cout << histoName << endl;
 	TH1F_perEVs.push_back(new TH1F(histoName,histoName,TH1F_perEV_nbinsx[i],TH1F_perEV_lowx[i],TH1F_perEV_highx[i]));
       }
       TH1F_perEVs.back()->GetXaxis()->SetTitle(TH1F_perEV_titlex.at(i).c_str());
