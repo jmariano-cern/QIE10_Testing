@@ -47,10 +47,10 @@ void laser_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   float qratio_rms_low = 0.001;
   float qratio_rms_high = 0.1;
 
-  SquareHist timing_detector_hist("Absolute Timing (ns)",25,75);
-  SquareHistInv timing_inverted_detector_hist("Absolute Timing (ns)",25,75);
-  PolarHist timing_polar_hist("Absolute Timing (ns)",25,75);
-  PolarHistInv timing_inverted_polar_hist("Absolute Timing (ns)",25,75);
+  SquareHist timing_detector_hist("Absolute Timing (ns)",50,150);
+  SquareHistInv timing_inverted_detector_hist("Absolute Timing (ns)",50,150);
+  PolarHist timing_polar_hist("Absolute Timing (ns)",50,150);
+  PolarHistInv timing_inverted_polar_hist("Absolute Timing (ns)",50,150);
 
   SquareHist Qsum_detector("Integrated Charge (fC)",0,5000);
   PolarHistInv Qsum_detector_polar("Integrated Charge (fC)",0,5000);
