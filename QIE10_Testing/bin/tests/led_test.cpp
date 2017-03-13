@@ -37,9 +37,9 @@ void led_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
  
   float timing_rms_high= 20;
   float qsum_mean_low = 150;
-  float qsum_mean_high = 10000;
+  float qsum_mean_high = 100000;
   float qsum_rms_low = 1;
-  float qsum_rms_high = 500;
+  float qsum_rms_high = 25000;
   float qratio_mean_low = 0.85;
   float qratio_mean_high = 1;
   float qratio_rms_low = 0.001;
