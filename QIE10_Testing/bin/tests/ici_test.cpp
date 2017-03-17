@@ -40,7 +40,7 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   int ADCPeakMax = 150;
   int ADCRefMin = 65;
   int ADCRefMax = 100;
-  int ADCEchoMax = 20;
+  int ADCEchoMax = 25;
   
 
   //////// full system PLOTS
