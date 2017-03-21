@@ -1,0 +1,113 @@
+#!/bin/bash
+
+GO_FLAG=1;
+
+if [ "$#" -eq 3 ]
+  then
+  ANALYZE_FLAG=$3;
+else 
+  ANALYZE_FLAG=1; # ANALYZE BY DEFAULT  
+fi
+
+case "$1" in 
+
+cid ) 
+       FULL_TEST_NAME="CapID";
+       TEST_NAME="cid";
+       FOLDER_NAME="cid_test";
+       SUITE_CODE=1;
+       SCAN_DIMENSION=0;
+       ;;
+
+ped )
+       FULL_TEST_NAME="Pedestal";
+       TEST_NAME="ped";
+       FOLDER_NAME="ped_test";
+       SUITE_CODE=4;
+       SCAN_DIMENSION=1;
+       ;;
+       
+ici )
+       FULL_TEST_NAME="Internal Charge Injection";
+       TEST_NAME="ici";
+       FOLDER_NAME="iqi_test";
+       SUITE_CODE=6;
+       SCAN_DIMENSION=1;
+       ;;
+
+iqi )
+       FULL_TEST_NAME="Internal Charge Injection";
+       TEST_NAME="ici";
+       FOLDER_NAME="iqi_test";
+       SUITE_CODE=6;
+       SCAN_DIMENSION=1;
+       ;;
+
+led )
+       FULL_TEST_NAME="LED";
+       TEST_NAME="led";
+       FOLDER_NAME="led_test";
+       SUITE_CODE=7;
+       SCAN_DIMENSION=1;
+       ;;
+
+laser )
+       FULL_TEST_NAME="LASER";
+       TEST_NAME="laser";
+       FOLDER_NAME="laser_test";
+       SUITE_CODE=2;
+       SCAN_DIMENSION=0;
+       ;;
+
+phasescan )
+       FULL_TEST_NAME="Phase Scan";
+       TEST_NAME="phase";
+       FOLDER_NAME="phase_test";
+       SUITE_CODE=5;
+       SCAN_DIMENSION=1;
+       ;;
+
+rinsel )
+       FULL_TEST_NAME="RinSel Scan";
+       TEST_NAME="rin";
+       FOLDER_NAME="rin_test";
+       SUITE_CODE=8;
+       SCAN_DIMENSION=1;
+       ;;
+
+* )
+       echo "you made a mistake :-(";
+       echo "aborting tests";
+       GO_FLAG=0;
+       ;;
+
+esac
+
+if [ $ANALYZE_FLAG -eq 1 ]
+  then
+  if [ $GO_FLAG -eq 1 ]
+    then
+    echo "Analyzing run $2 with suite code $SUITE_CODE..."; 
+    ANALYZER_RETURN_CODE=$(analyze $2 $SUITE_CODE $SCAN_DIMENSION)
+  fi
+else
+  ANALYZER_RETURN_CODE=""
+fi
+
+if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo "ok" )" != "ok" ]
+  then
+  GO_FLAG=0
+  echo
+  echo $ANALYZER_RETURN_CODE | grep --color ERROR
+  echo
+else
+  echo $ANALYZER_RETURN_CODE
+fi
+
+if [ $GO_FLAG -eq 1 ]
+  then
+  echo "Running $FULL_TEST_NAME test on run $2..."
+  cd $QIE10ROOT/bin/tests && \
+  root -l -q -b -x "${TEST_NAME}_test.cpp+($2, ${SUITE_CODE}, \"${Folder_NAME}\")" && \
+  cd - > /dev/null
+fi
