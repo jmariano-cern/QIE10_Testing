@@ -88,19 +88,23 @@ if [ $ANALYZE_FLAG -eq 1 ]
   if [ $GO_FLAG -eq 1 ]
     then
     echo "Analyzing run $2 with suite code $SUITE_CODE..."; 
+    echo "analyze $2 $SUITE_CODE $SCAN_DIMENSION"
     ANALYZER_RETURN_CODE=$(analyze $2 $SUITE_CODE $SCAN_DIMENSION)
   fi
 else
   ANALYZER_RETURN_CODE=""
 fi
 
-if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo "ok" )" != "ok" ]
+okay="ok"
+
+if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo $okay )" != "ok" ]
   then
   GO_FLAG=0
   echo
   echo $ANALYZER_RETURN_CODE | grep --color ERROR
   echo
 else
+  echo "HERE"
   echo $ANALYZER_RETURN_CODE
 fi
 
@@ -108,6 +112,7 @@ if [ $GO_FLAG -eq 1 ]
   then
   echo "Running $FULL_TEST_NAME test on run $2..."
   cd $QIE10ROOT/bin/tests && \
-  root -l -q -b -x "${TEST_NAME}_test.cpp+($2, ${SUITE_CODE}, \"${Folder_NAME}\")" && \
+  root -l -q -b -x "${TEST_NAME}_test.cpp+($2)" && \
+  # root -l -q -b -x "${TEST_NAME}_test.cpp+($2, ${SUITE_CODE}, \"${Folder_NAME}\")" && \
   cd - > /dev/null
 fi
