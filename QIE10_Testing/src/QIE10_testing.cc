@@ -502,8 +502,8 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     global = pre_loop(slow_data.parameter,slow_data.val,_suite_code,global,qie10df,j,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
     //********** LOOP ************
-	
-    for(int i=0; i<nTS; ++i)
+    // This is a starting at TS1, to avoid TS0 corruption (move back when fixed) #TS0Corruption
+    for(int i=1; i<nTS; ++i)
       {
 
 	global = loop(slow_data.parameter,slow_data.val,_suite_code,global,qie10df,i,j,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
