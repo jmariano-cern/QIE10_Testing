@@ -35,7 +35,7 @@ void ici_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   string sideName;
   int* coords;
  
-  int peakTS = 4;
+  int peakTS = 5;
   int ADCPeakMin = 140;
   int ADCPeakMax = 150;
   int ADCRefMin = 65;
