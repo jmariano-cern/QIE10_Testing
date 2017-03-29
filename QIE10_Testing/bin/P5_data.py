@@ -23,25 +23,40 @@ import sys
 #
 #   Change the filename to process
 #
+
+isCopiedLocal = False
+if 'Local' in sys.argv:
+    isCopiedLocal = True
+    sys.argv.remove('Local')
+
 runNumber = sys.argv[2]
+
+
 
 #if runNumber not in os.listdir('../img'):
 #    os.makedirs('../img/' + runNumber)
 
+if not isCopiedLocal:
+    cmd = 'echo "cd /eos/cms/store/group/dpg_hcal/comm_hcal/USC/" | eos && echo "ls ." | eos'
 
-cmd = 'echo "cd /eos/cms/store/group/dpg_hcal/comm_hcal/USC/" | eos && echo "ls ." | eos'
+    eos_runs = subprocess.check_output(cmd, shell=True)
 
-eos_runs = subprocess.check_output(cmd, shell=True)
-
-if (eos_runs.find(str(runNumber)) == -1):
-    print "ERROR: run " + str(runNumber) + " not found in /eos/cms/store/group/dpg_hcal/comm_hcal/USC/"
-    sys.exit()
-
-process.source = cms.Source("HcalTBSource",
-    fileNames = cms.untracked.vstring(
-        'root://eoscms.cern.ch//eos/cms/store/group/dpg_hcal/comm_hcal/USC/run' + runNumber + '/USC_'+ runNumber + '.root'
+    if (eos_runs.find(str(runNumber)) == -1):
+        print "ERROR: run " + str(runNumber) + " not found in /eos/cms/store/group/dpg_hcal/comm_hcal/USC/"
+        sys.exit()
+    
+    process.source = cms.Source("HcalTBSource",
+        fileNames = cms.untracked.vstring(
+            'root://eoscms.cern.ch//eos/cms/store/group/dpg_hcal/comm_hcal/USC/run' + runNumber + '/USC_'+ runNumber + '.root'
+        )
     )
-)
+
+else:
+    process.source = cms.Source("HcalTBSource",
+        fileNames = cms.untracked.vstring(
+            'file:/afs/cern.ch/user/d/dnoonan/work/USC_'+ runNumber + '.root'
+        )
+    )
 
 process.options = cms.untracked.PSet(
         wantSummary = cms.untracked.bool(False)

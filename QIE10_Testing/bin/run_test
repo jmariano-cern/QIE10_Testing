@@ -2,12 +2,32 @@
 
 GO_FLAG=1;
 
-if [ "$#" -eq 3 ]
+LOCAL_FLAG="";
+
+
+if [ "$#" -eq 4 ] && [ "$4" = "-l" ]
+  then
+  ANALYZE_FLAG=$3;
+  LOCAL_FLAG="Local";
+fi
+if [ "$#" -eq 4 ] && [ "$3" = "-l" ]
+  then
+  ANALYZE_FLAG=$4;
+  LOCAL_FLAG="Local";
+fi
+
+if [ "$#" -eq 3 ] && [ "$3" = "-l" ]
+  then
+  ANALYZE_FLAG=1;
+  LOCAL_FLAG="Local";
+else if [ "$#" -eq 3 ]
   then
   ANALYZE_FLAG=$3;
 else 
   ANALYZE_FLAG=1; # ANALYZE BY DEFAULT  
 fi
+fi
+
 
 case "$1" in 
 
@@ -67,6 +87,14 @@ phasescan )
        SCAN_DIMENSION=1;
        ;;
 
+phase )
+       FULL_TEST_NAME="Phase Scan";
+       TEST_NAME="phase";
+       FOLDER_NAME="phase_test";
+       SUITE_CODE=5;
+       SCAN_DIMENSION=1;
+       ;;
+
 * )
        echo "you made a mistake :-(";
        echo "aborting tests";
@@ -80,7 +108,7 @@ if [ $ANALYZE_FLAG -eq 1 ]
   if [ $GO_FLAG -eq 1 ]
     then
     echo "Analyzing run $2 with suite code $SUITE_CODE..."; 
-    ANALYZER_RETURN_CODE=$(analyze $2 $SUITE_CODE $SCAN_DIMENSION)
+    ANALYZER_RETURN_CODE=$(analyze $2 $SUITE_CODE $SCAN_DIMENSION $LOCAL_FLAG)
   fi
 else
   ANALYZER_RETURN_CODE=""
