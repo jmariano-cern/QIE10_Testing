@@ -54,7 +54,7 @@ if not isCopiedLocal:
 else:
     process.source = cms.Source("HcalTBSource",
         fileNames = cms.untracked.vstring(
-            'file:/afs/cern.ch/user/d/dnoonan/work/USC_'+ runNumber + '.root'
+            'file:/afs/cern.ch/work/' + user()[0] + '/' + user() + '/USC_'+ runNumber + '.root'
         )
     )
 

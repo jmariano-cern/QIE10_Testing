@@ -114,7 +114,7 @@ else
   ANALYZER_RETURN_CODE=""
 fi
 
-if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo "ok" )" != "ok" ]
+if [ "$(echo $ANALYZER_RETURN_CODE | grep --color ERROR || echo "ok")" != "ok" ]
   then
   GO_FLAG=0
   echo
