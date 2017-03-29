@@ -41,8 +41,8 @@ void phase_test(Int_t run_num, Int_t SUITE_CODE, const char *Folder_NAME) {
   TProfile* profile2;
   TF1* fit2;
 
-  float offsetMax = 115;
-  float offsetMin = 104;
+  float offsetMax = 250;
+  float offsetMin = 0;
 
   //////// full system PLOTS
   sprintf(hist0_name,"%s","phase_scan");
