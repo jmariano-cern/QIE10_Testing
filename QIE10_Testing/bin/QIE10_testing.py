@@ -58,7 +58,7 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
                                    HcalFirstFED = cms.untracked.int32(928),
                                    ComplainEmptyData = cms.untracked.bool(False),
                                    #       UnpackCalib = cms.untracked.bool(True),
-                                   FEDs = cms.untracked.vint32(928,930,932,1180,1186,1194),
+                                   FEDs = cms.untracked.vint32(928,930,932,1180,1186,1194,999),
                                    firstSample = cms.int32(0),
                                    lastSample = cms.int32(10)
                                    )

@@ -377,6 +377,10 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
   
   pre_event_loop(slow_data.parameter,slow_data.val,_suite_code,_event_num,_qie10Info,_trees,TH1F_perEVs,TH1F_perCHs,TH1F_PerTSs,TH2F_perEVs,TH2F_perCHs,TH2F_PerTSs,TProfiles,loggers);
 
+  if(_event_num%1000 == 0) {
+    cout << "Beginning event number " << _event_num << endl; 
+  }
+  
   for (unsigned int j=0; j < nCH ; j++){
 
     QIE10DataFrame qie10df = static_cast<QIE10DataFrame>(qie10dc[j]);
@@ -384,13 +388,16 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     // Extract info on detector location
     DetId detid = qie10df.detid();
     HcalDetId hcaldetid = HcalDetId(detid);
-    // bool flag0 = 0;
-    // bool flag1 = 0;
+    bool flag0 = 0;
+    bool flag1 = 0;
     int iphi = hcaldetid.iphi();
     int depth = hcaldetid.depth();
     int ieta = hcaldetid.ieta();
 
-    /*
+    if(_event_num%1000 == 0) {
+      cout << "Processing channel -- iphi: " <<  iphi << ", depth: " << depth << ", ieta: " << ieta << endl; 
+    }
+
     if (hcaldetid.iphi() > 28) {
       iphi = hcaldetid.iphi()-28;
       flag1 = 1;
@@ -411,7 +418,6 @@ void QIE10_testing::getData(const edm::Event &iEvent, const edm::EventSetup &iSe
     else {
       depth = hcaldetid.depth();    
     }
-    */
 
     int nTS = qie10df.samples();
 
